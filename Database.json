@@ -1,0 +1,18 @@
+{
+    "workspace":[
+        {
+            "id":1,
+            "title":"java Project",
+            "mode":"public",
+            "boards":[]
+
+        },{
+            "id":2,
+            "title":"Python Project",
+            "mode":"privete",
+            "boards":[]
+
+        }
+    ],
+    "users":[]
+}
