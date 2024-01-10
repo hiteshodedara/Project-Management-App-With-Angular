@@ -1,3 +1,11 @@
 <div class="mainsidebardiv" >
-    <!-- <button class="btn btn-primary " (click)="on_sidebar_close()"> close</button> -->
+    <p-menu  [model]="sidebar_menu_item"></p-menu>
+
+
+    <!-- Sidebar close button -->
+  <div class="sidebarclosebtn sticky-bottom top-100 d-flex justify-content-end ">
+    <button class="btn btn-primary" (click)="on_sidebar_close()">
+      <i class="pi pi-arrow-left"></i>
+    </button>
+  </div>
 </div>

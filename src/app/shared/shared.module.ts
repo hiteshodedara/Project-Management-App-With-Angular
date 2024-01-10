@@ -6,6 +6,10 @@ import { MenubarModule } from 'primeng/menubar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { TooltipModule } from 'primeng/tooltip';
+import { MenuModule } from 'primeng/menu';
+
+
+
 @NgModule({
   declarations: [
     TopmenubarComponent,
@@ -17,7 +21,8 @@ import { TooltipModule } from 'primeng/tooltip';
     FormsModule,
     ReactiveFormsModule,
     TieredMenuModule,
-    TooltipModule
+    TooltipModule,
+    MenuModule
 
   ],
   exports: [

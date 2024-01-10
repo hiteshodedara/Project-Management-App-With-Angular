@@ -12,4 +12,9 @@ export class AuthorizedComponent {
     this.sidebar_show=false;
   }
 
+
+  for_openSidebar(){
+    this.sidebar_show=true;
+  }
+
 }

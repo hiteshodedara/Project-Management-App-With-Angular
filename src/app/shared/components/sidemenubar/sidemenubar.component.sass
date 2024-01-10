@@ -1,4 +1,46 @@
 .mainsidebardiv
-    max-width: 20vw
-    background: #000
+    max-width: 250px
+    background: #e0dbf0
     height: 94.3vh
+
+
+$HoverColor: #3a277db6
+:host ::ng-deep
+  .p-menu
+    width: 100%
+    padding: 0
+    background-color:#e0dbf0 
+    border: 0
+    
+      
+  .p-menuitem-link
+    text-decoration: none
+    margin-left: 10px
+    
+
+  .p-submenu-header
+    background:#e0dbf0
+
+  .p-menu-list
+    margin-bottom: 0
+    padding-left: 0
+
+    
+  .p-menuitem-link-active
+    &:active
+      
+      background: $HoverColor
+
+    
+
+  .p-menuitem-text 
+    color: #000
+  .p-menuitem-icon 
+    color: #000
+  
+   
+
+  .p-menuitem-content
+    
+    &:hover
+      background-color: $HoverColor
