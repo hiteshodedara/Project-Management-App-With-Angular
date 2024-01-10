@@ -1,18 +1,42 @@
 {
-    "workspace":[
-        {
-            "id":1,
-            "title":"java Project",
-            "mode":"public",
-            "boards":[]
-
-        },{
-            "id":2,
-            "title":"Python Project",
-            "mode":"privete",
-            "boards":[]
-
-        }
-    ],
-    "users":[]
+  "workspace": [
+    {
+      "id": 1,
+      "title": "java Project",
+      "mode": "public",
+      "boards": []
+    },
+    {
+      "id": 2,
+      "title": "Python Project",
+      "mode": "privete",
+      "boards": []
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "hitesh odedara",
+      "email": "hiteshodedara1010@gmail.com",
+      "password": "hitesh1234@"
+    },
+    {
+      "id": "2",
+      "name": "dipen kukadiya",
+      "email": "dipenkukadiya@gmail.com",
+      "password": "dipen12345"
+    },
+    {
+      "id": 3,
+      "name": "timbasagar",
+      "email": "sagertimba@gmail.com",
+      "password": "sagar12345@"
+    },
+    {
+      "id": 4,
+      "name": "adminuser",
+      "email": "admin@gmail.com",
+      "password": "admin12345@"
+    }
+  ]
 }

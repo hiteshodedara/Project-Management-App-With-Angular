@@ -10,18 +10,25 @@ import { WorkspacemembersComponent } from './modules/workspacemembers/workspacem
 import { BoardhomeComponent } from './modules/boardhome/boardhome.component';
 import { BoardShowComponent } from './modules/board-show/board-show.component';
 import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
+import { loginaccessGuard } from './guards/loginaccess.guard';
+import { secureloginpageGuard } from './guards/secureloginpage.guard';
 
 const routes: Routes = [
-  {path:'u',component:UnauthorizedComponent,
-  children:[
+{path:'',redirectTo:'u',pathMatch:'full'},
+  {path:'u'
+  ,component:UnauthorizedComponent
+  ,canActivate:[secureloginpageGuard]
+  ,children:[
     {path:'',redirectTo:'loginpage',pathMatch:'full'},
     {path:'loginpage',component:LoginpageComponent},
     {path:'registerpage',component:RegisterpageComponent},
     {path:'forgotpasswordpage',component:ForgotPasswordComponent},
 
   ]},
-  {path:'a',component:AuthorizedComponent
-,children:[
+  {path:'a'
+  ,component:AuthorizedComponent
+  ,canActivate:[loginaccessGuard]
+  ,children:[
   {path:'',redirectTo:'workspacehome',pathMatch:'full'},
   {path:"workspacehome",component:WorkspacehomeComponent},
   {path:"workspacemembers",component:WorkspacemembersComponent},

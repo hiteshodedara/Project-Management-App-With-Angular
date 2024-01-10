@@ -1,1 +1,49 @@
-<p>loginpage works!</p>
+<div class="container-fluid d-flex justify-content-center align-items-center mainbody"
+    style="min-height: 100vh; background-image: url('../../../assets/images/blob-haikei.png'); background-size: cover;">
+
+    <div class="card p-5 w-50 overflow-hidden" style="background-color: rgba(255, 255, 255, 0.8);">
+        <div class="card-title d-flex justify-content-center">
+            <label class="loginpagetitle">Login Page</label>
+        </div>
+        <form [formGroup]="userLoginForm" (ngSubmit)="onClickLogin()">
+
+            <div class="mb-3">
+                <label for="email" class="form-label fw-bolder">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter Email" formControlName="email">
+                <div *ngIf="userLoginForm.get('email')?.hasError('required') && userLoginForm.get('email')?.touched" class="text-danger">
+                    Email is required.
+                </div>
+                <div *ngIf="userLoginForm.get('email')?.hasError('email') && userLoginForm.get('email')?.touched" class="text-danger">
+                    Enter a valid email address.
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword" class="form-label fw-bolder">Password</label>
+                <div class="input-group">
+                    <input [type]="showPassword ?'text':'password'" class="form-control" id="exampleInputPassword"
+                        placeholder="Enter password" formControlName="password">
+                    <span class="input-group-text" (click)="onPasswordShow()">
+                        <i class="fa" [ngClass]="{ 'fa-eye': showPassword, 'fa-eye-slash': !showPassword }"></i>
+                    </span>
+                </div>
+                <!-- Display validation error message -->
+                <div *ngIf="userLoginForm.get('password')?.hasError('required') && userLoginForm.get('password')?.touched"
+                    class="text-danger">
+                    Password is required.
+                </div>
+                <div *ngIf="userLoginForm.get('password')?.hasError('minlength') && userLoginForm.get('password')?.touched"
+                    class="text-danger">
+                    Minimum length is 10 characters.
+                </div>
+
+            </div>
+
+            <div class="button d-flex justify-content-end">
+                <a class="btn btn-outline-success btn-lg mx-2" routerLink="/u/registerpage">Go Register</a>
+                <button type="submit" class="btn btn-outline-success btn-lg">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p-toast></p-toast>

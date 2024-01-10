@@ -9,6 +9,8 @@ import { BoardtodolistitemComponent } from '../../modules/boardtodolistitem/boar
 import { BoardShowComponent } from '../../modules/board-show/board-show.component';
 import { TodoPopupModelComponent } from '../../modules/todo-popup-model/todo-popup-model.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -26,6 +28,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     SharedModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class AuthorizedModule { }

@@ -4,7 +4,9 @@ import { UnauthorizedComponent } from './unauthorized.component';
 import { LoginpageComponent } from '../../modules/loginpage/loginpage.component';
 import { RegisterpageComponent } from '../../modules/registerpage/registerpage.component';
 import { ForgotPasswordComponent } from '../../modules/forgot-password/forgot-password.component';
-
+import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
 
 
 @NgModule({
@@ -15,7 +17,11 @@ import { ForgotPasswordComponent } from '../../modules/forgot-password/forgot-pa
     ForgotPasswordComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ToastModule
   ]
 })
 export class UnauthorizedModule { }
