@@ -1,1 +1,44 @@
-<p>topmenubar works!</p>
+<div class="topmenuwrapper">
+
+    <p-menubar [model]="topmenuItems" [autoDisplay]="false">
+        <ng-template pTemplate="start">
+            <div class="topmenus d-flex ">
+                <div class="logo-img px-2 ">
+                    <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" height="40" class="mr-2" />
+                </div>
+                <div class="logo-text d-flex justify-content-center align-content-center   px-2  ">
+                    <a class="text-white  text-decoration-none align-self-center fs-4 fw-bolder   ">Todo App</a>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="end">
+            <div class="endmenus d-flex align-items-center justify-content-center ">
+                <div class="searchbox">
+                    <input type="text" placeholder="Search" class="form-control" />
+                   </div>
+                <div class="userprofile mx-2 " pTooltip="User Profile" tooltipPosition="bottom">
+                    <button class="userProfilename btn" (click)="profilemenu.toggle($event)">HO</button>
+                </div>
+            </div>
+        </ng-template>
+    </p-menubar>
+</div>
+
+
+<div class="profilemenuwrapper">
+    
+    <!-- for userProfile menu  -->
+    <p-tieredMenu #profilemenu [model]="profilemenuItems" [popup]="true"></p-tieredMenu>
+
+
+    <!-- for workspace menuitem show -->
+    <p-tieredMenu #workspacemenu [model]="workspacemenuItems" [popup]="true"></p-tieredMenu>
+
+    <!-- for workspace menuitem show -->
+    <p-tieredMenu #recentmenu [model]="recentmenuItems" [popup]="true"></p-tieredMenu>
+
+    <!-- for starred menuitem show -->
+    <p-tieredMenu #starredmenu [model]="starredmenuItems" [popup]="true"></p-tieredMenu>
+
+</div>
+

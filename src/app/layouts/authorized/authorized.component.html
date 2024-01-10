@@ -1,1 +1,14 @@
-<router-outlet></router-outlet>
+<div class="row ">
+    <div class="col">
+        <app-topmenubar></app-topmenubar>
+    </div>
+</div>
+<div class="row">
+    <div *ngIf="sidebar_show" class="col">
+        <app-sidemenubar  (sidebar_close)="close_sidebar()"></app-sidemenubar>
+    </div>
+   
+    <div class="col dashboard">
+        <router-outlet></router-outlet>
+    </div>
+</div>

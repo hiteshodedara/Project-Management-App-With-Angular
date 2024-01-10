@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AuthorizedComponent {
 
+  sidebar_show:boolean = true;
+  close_sidebar(){
+    this.sidebar_show=false;
+  }
+
 }
