@@ -1,8 +1,29 @@
-<div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+<div class="maindiv d-flex justify-content-center align-items-center bg-primary-subtle ">
+
+  <div class="card workspacescard">
+    <div class="card-title workspacetitle p-3  d-flex justify-content-center overflow-hidden align-items-center ">
+      <h1>Workspaces</h1>
+    </div>
+    <div class="card-body workspacebody d-flex justify-content-center overflow-scroll ">
+      <div class="card sub-card p-2  ">
+        <ul class=" workspaces-ul" *ngFor="let item of workspaces|async">
+          <li class="card">
+           <div class="workspacemanage d-flex justify-content-between p-1 bg-dark-subtle">
+            <div class="workspacetitlebody">
+              <label id="idofworkspace" class="align-self-center mx-2 ">{{item.id}}</label>
+              <button class="btn bg-secondary-subtle  btn-workspace fs-5">{{item.title}}</button>
+            </div>
+            
+            <button class="btn btn-setting d-flex align-items-center "><i class="pi pi-cog fs-5 "></i></button>
+           </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="addworkspacebtndiv p-2 d-flex justify-content-center ">
+      <label class=" total-length">{{workspaces.length|async}}</label>
+      <button class="btn btn-primary ">Add Workspace</button>
+    </div>
   </div>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-  </div>
+
+</div>

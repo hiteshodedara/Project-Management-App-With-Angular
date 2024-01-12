@@ -39,4 +39,82 @@
       "password": "admin12345@"
     }
   ]
+
+
+
+
+,
+	"workspaces":[
+		{
+			"id":1,
+			"title":"workspace 1",
+			"discripetion":"this workspace for my test projects",
+			"creation date":"12-07-2002",
+			"boards":[
+				{
+					"id":1,
+					"title":"board 1",
+					"is_favarate":false,
+					"todolist":[],
+					"todos":[]
+					
+				},
+        {
+					"id":2,
+					"title":"board 2",
+					"is_favarate":false,
+					"todolist":[],
+					"todos":[]
+					
+				}
+			
+			]
+		
+		},
+    {
+			"id":2,
+			"title":"workspace 2",
+			"discripetion":"this workspace for my test projects2",
+			"creation date":"12-07-2002",
+			"boards":[
+				{
+					"id":1,
+					"title":"board 1",
+					"is_favarate":false,
+					"todolist":[],
+					"todos":[]
+					
+				}
+			
+			]
+		
+		},
+    {
+			"id":3,
+			"title":"workspace 3",
+			"discripetion":"this workspace for my test projects 3",
+			"creation date":"12-07-2002",
+			"boards":[
+				{
+					"id":1,
+					"title":"board 1",
+					"is_favarate":false,
+					"todolist":[
+            {
+              "id":1,
+              "title":"todo 1",
+              "index":1,
+              "is_archiverd":false,
+              "creation_date":"12-07-2002"
+            }
+          ],
+					"todos":[]
+					
+				}
+			
+			]
+		
+		}
+	
+	]
 }
