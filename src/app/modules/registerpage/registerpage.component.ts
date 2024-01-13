@@ -43,19 +43,17 @@ export class RegisterpageComponent implements OnInit {
 
   onClickRegister() {
     if (this.userRegistrationForm.valid) {
-      this.authuser.getallUser().subscribe((res: any) => {
-        const countofuser = res.length;
         
         const user: Registeruser = {
-          id: countofuser + 1,
-          name: this.userRegistrationForm.get('userName')?.value,
+          username: this.userRegistrationForm.get('userName')?.value,
           email: this.userRegistrationForm.get('email')?.value,
           password: this.userRegistrationForm.get('password')?.value
         };
-  
+        console.log(user);
+        
         this.authuser.addNewUser(user).subscribe(
-          () => {
-            console.log("Registered successfully!");
+          (res) => {
+            console.log("Registered successfully!",res);
             this.messageService.add({ severity: 'success', summary: 'Registered successfully!', detail: 'valid credentials!' });
 
             setTimeout(() => {
@@ -63,22 +61,10 @@ export class RegisterpageComponent implements OnInit {
               this.router.navigate(['/u/loginpage']);
             }, 1000);
 
-          },
-          (error) => {
-            this.messageService.add({ severity: 'error', summary: 'Invalid credentials!', detail: 'Enter valid credentials!' });
-            console.error('Registration failed:', error);
           }
         );
-      }, (error) => {
-        this.messageService.add({ severity: 'info', summary: 'Server Down!', detail: 'Wait for Restart Server!' });
-        console.error('Failed to fetch user count:', error);
-      });
-    } else {
-      this.userRegistrationForm.markAllAsTouched();
-      this.messageService.add({ severity: 'info', summary: 'Form is invalid', detail: 'Form is invalid. Please check the fields.' });
-      console.error('Form is invalid. Please check the fields.');
-    }
-  }
+     
+        }}
   
 
 

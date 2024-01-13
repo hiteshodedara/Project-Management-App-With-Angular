@@ -36,13 +36,17 @@ export class LoginpageComponent implements OnInit {
   onClickLogin() {
     if (this.userLoginForm.valid) {
       const loginuser:Loginuser=this.userLoginForm.value;
+      console.log("login:",loginuser);
+      
       this.loginuserservice.validateLoginCredentials(loginuser)
-        .subscribe(isValid => {
-          if (isValid) {
+        .subscribe((result:any) => {
+          console.log(result);
+          
+          if (result) {
             // Login successful logic
             this.messageService.add({ severity: 'success', summary: 'Login successful!', detail: 'valid credentials!' });
-            console.log('Login successful!');
-            localStorage.setItem('loginuser', JSON.stringify(loginuser));
+            console.log('Login successful!',result);
+            localStorage.setItem('loginuser', JSON.stringify(result));
             setTimeout(() => {
               this.router.navigate(['/a']);
             }, 1000);

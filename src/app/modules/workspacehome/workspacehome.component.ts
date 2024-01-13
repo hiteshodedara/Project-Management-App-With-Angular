@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthuserService } from 'src/app/services/authuser.service';
 import { WorkspaceService } from 'src/app/services/workspace.service';
 
 @Component({
@@ -10,10 +11,14 @@ export class WorkspacehomeComponent implements OnInit{
 
   workspaces:any;
 
-  constructor(private workspaceService:WorkspaceService) { }
+  constructor(private workspaceService:WorkspaceService,private authuser:AuthuserService) { }
   
   ngOnInit(): void {
       this.workspaces=this.workspaceService.getallWorkspaces();
 
+  }
+
+  on_get() {
+    this.authuser.getuserinfo()
   }
 }

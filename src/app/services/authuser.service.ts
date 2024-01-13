@@ -1,55 +1,54 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Registeruser } from '../models/registeruser';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Loginuser } from '../models/loginuser';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthuserService {
-  UserURL = 'http://localhost:3000/users';
+  private userURL = 'http://localhost:8080/api/v1';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  isUserLogin() {
-    const curruntuser=localStorage.getItem('loginuser')
-    let user='';
-    if(curruntuser){;
-      user=JSON.parse(curruntuser)
-    }
-
-    if(user){
-      return true;
-    }else{
-      return false;
-    }
-
-    
-    
-
-    
-    
+  isUserLogin(): boolean {
+    const currentUser = localStorage.getItem('loginuser');
+    return !!currentUser; // Returns true if currentUser is not null or undefined
   }
 
-  getallUser(): Observable<Registeruser[]> {
-    return this.http.get<Registeruser[]>(this.UserURL);
+  getAllUsers(): Observable<Registeruser[]> {
+    return this.http.get<Registeruser[]>(this.userURL);
+  }
+
+  getuserinfo(){
+    const currentUser = localStorage.getItem('loginuser');
+    if(currentUser){
+      const data:string= JSON.parse(currentUser);
+      const newdata=data.trim();
+      
+
+      const base64EncodedString = newdata // Your Base64-encoded string
+      console.log('Encoded String:', base64EncodedString.trim());
+
+      try {
+        const decodedString = atob(base64EncodedString);
+        console.log('Decoded String:', decodedString);
+      } catch  {
+        console.error('Error decoding string:');
+      }
+
+      
+    }
   }
 
   // check login user 
-  validateLoginCredentials(credentials: any): Observable<boolean> {
-    return this.getallUser().pipe(
-      map((users: Registeruser[]) =>
-        users.some(
-          (user: Registeruser) =>
-            user.email === credentials.email && user.password === credentials.password
-        )
-      )
-    );
+  validateLoginCredentials(credentials: Loginuser): Observable<string> {
+    return this.http.post(`${this.userURL}/login`, credentials, { responseType: 'text' });
   }
 
   addNewUser(user: Registeruser) {
-    return this.http.post(this.UserURL, user);
+    
+    return this.http.post(`${this.userURL}/register`, user);
   }
 }

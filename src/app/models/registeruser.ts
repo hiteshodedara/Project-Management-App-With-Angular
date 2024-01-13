@@ -1,6 +1,6 @@
 export interface Registeruser {
     id?:number|undefined;
-    name:string;
+    username:string;
     email:string;
     password:string;
 }
