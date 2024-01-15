@@ -1,31 +1,30 @@
-<div class="maindiv d-flex justify-content-center align-items-center bg-primary-subtle ">
+<div class="maindiv d-flex justify-content-center align-items-center bg-light  ">
 
-  <div class="card workspacescard">
-    <div class="card-title workspacetitle p-3  d-flex justify-content-center overflow-hidden align-items-center ">
-      <h1>Workspaces</h1>
+  <div class="card workspacescard bg-success-subtle">
+    <div class="card-title  m-0  workspacetitle p-3  d-flex justify-content-center overflow-hidden align-items-center ">
+      <h1 class="fw-bolder  ">Workspaces</h1>
     </div>
-    <div class="card-body workspacebody d-flex justify-content-center overflow-scroll ">
-      <div class="card sub-card p-2  ">
-        <ul class=" workspaces-ul" *ngFor="let item of workspaces|async">
-          <li class="card">
-           <div class="workspacemanage d-flex justify-content-between p-1 bg-dark-subtle">
-            <div class="workspacetitlebody">
-              <label id="idofworkspace" class="align-self-center mx-2 ">{{item.id}}</label>
-              <button class="btn bg-secondary-subtle  btn-workspace fs-5">{{item.title}}</button>
+    <div class="card-body workspacebody d-flex   justify-content-center overflow-y-auto   ">
+      <div class="card sub-card p-2  bg-dark-subtle  ">
+        <ul class=" workspaces-ul" *ngFor="let item of workspaces$|async">
+          <li class="card overflow-hidden ">
+           <div class="workspacemanage  p-1 bg-secondary   ">
+            <div class="workspacetitlebody d-flex  justify-content-between" *ngIf="item">
+              <label id="idofworkspace" class="align-self-center text-light  fs-5">{{item.id}}</label>
+              <button class="btn btn-secondary mx-2  btn-workspace fs-5">{{item.title}}</button>
+              <button class="btn btn-secondary   d-flex align-items-center "><i class="pi pi-cog fs-5 "></i></button>
             </div>
-            
-            <button class="btn btn-setting d-flex align-items-center "><i class="pi pi-cog fs-5 "></i></button>
            </div>
           </li>
         </ul>
+        <div class="noitem text-center " *ngIf="!workspaces$">
+          <h2>Workspace are Not Available.</h2>
+        </div>
       </div>
     </div>
     <div class="addworkspacebtndiv p-2 d-flex justify-content-center ">
-      <label class=" total-length">{{workspaces.length|async}}</label>
-      <button class="btn btn-primary ">Add Workspace</button>
+      <button class="btn btn-success  ">Add Workspace</button>
     </div>
   </div>
 
 </div>
-
-<button (click)="on_get()">get</button>

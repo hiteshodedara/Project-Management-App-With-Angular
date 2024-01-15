@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,20 +8,31 @@ import { of } from 'rxjs';
 export class WorkspaceService {
 
 
-  workspace=[
-    {id:1,title:"rajkot team"},
-    {id:2,title:"ahemdabad team"},
-    {id:3,title:"hitesh team"},
-    {id:3,title:"hitesh team"},
-    {id:3,title:"hitesh team"},
-    {id:3,title:"hitesh team"},
-    {id:3,title:"hitesh team"},
-    {id:3,title:"hitesh team"},
-  ]
+  private DBurl = "http://localhost:3000/workspaces";
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getallWorkspaces(){
-    return of(this.workspace)
+  getAllWorkspaces(): Observable<any> {
+    return this.http.get(this.DBurl);
   }
+
+  getWorkspaceById(workspaceId: number): Observable<any> {
+    return this.http.get(`${this.DBurl}/${workspaceId}`);
+  }
+
+  addWorkspace(newWorkspace: any): Observable<any> {
+    return this.http.post(this.DBurl, newWorkspace);
+  }
+  deleteWorkspace(workspaceId: number): Observable<any> {
+    return this.http.delete(`${this.DBurl}/${workspaceId}`);
+  }
+
+  updateWorkspace(workspaceId: number, updatedWorkspace: any): Observable<any> {
+    return this.http.put(`${this.DBurl}/${workspaceId}`, updatedWorkspace);
+  }
+
+  
+
+  
+  
 }

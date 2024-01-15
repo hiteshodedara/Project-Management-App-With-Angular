@@ -1,120 +1,298 @@
 {
-  "workspace": [
+  "workspaces": [
     {
       "id": 1,
-      "title": "java Project",
-      "mode": "public",
-      "boards": []
+      "title": "hitesh office",
+      "description": "for office work",
+      "boards": [
+        {
+          "id": 1,
+          "title": "Board1",
+          "todolists": [
+            {
+              "id": 1,
+              "key": "todo",
+              "name": "Todo",
+              "isarchive": false,
+              "index": 1
+            },
+            {
+              "id": 2,
+              "key": "prosess",
+              "name": "Prosess",
+              "isarchive": false,
+              "index": 2
+            },
+            {
+              "id": 3,
+              "key": "complete",
+              "name": "Complete",
+              "isarchive": false,
+              "index": 3
+            }
+          ],
+          "todos": [
+            {
+              "id": 539,
+              "key": "prosess",
+              "title": "bgdfscdaxs",
+              "discription": "kjus",
+              "assigneduser": {
+                "id": 2,
+                "name": "Kukadiya Dipen"
+              },
+              "todocreater": {
+                "uid": 1,
+                "username": "Hitesh",
+                "sdate": "2023-12-05T12:46:41.584Z",
+                "edate": "2023-12-05T12:46:41.584Z"
+              }
+            },
+            {
+              "id": 1186,
+              "key": "bug436",
+              "title": "iouikyjhtgrfed",
+              "discription": "ikuyjthrgefdws",
+              "assigneduser": {
+                "id": 3,
+                "name": "Karva Tarnum"
+              },
+              "todocreater": {
+                "uid": 1,
+                "username": "Hitesh",
+                "sdate": "2023-12-12T12:27:17.124Z",
+                "edate": "2023-12-12T12:27:17.124Z"
+              }
+            },
+            {
+              "id": 436,
+              "key": "prosess",
+              "title": "adadada",
+              "discription": "dadad",
+              "assigneduser": {
+                "id": 1,
+                "name": "Odedara Hitesh"
+              },
+              "todocreater": {
+                "uid": 1,
+                "username": "Hitesh",
+                "sdate": "2023-12-26T06:08:25.001Z",
+                "edate": "2023-12-26T06:08:25.001Z"
+              }
+            },
+            {
+              "id": 930,
+              "key": "prosess",
+              "title": "htfd",
+              "discription": "fesfadsx",
+              "assigneduser": {
+                "id": 3,
+                "name": "Karva Tarnum"
+              },
+              "todocreater": {
+                "uid": 1,
+                "username": "Hitesh",
+                "sdate": "2024-01-01T07:17:06.833Z",
+                "edate": "2024-01-01T07:17:06.833Z"
+              }
+            }
+          ],
+          "isFavarate": false
+        },
+        {
+          "id": 2,
+          "title": "Board2",
+          "todolists": [
+            {
+              "id": 1,
+              "key": "stwork",
+              "name": "startwork",
+              "isarchive": false,
+              "index": 1
+            },
+            {
+              "id": 2,
+              "key": "ontheway",
+              "name": "OnTheWay",
+              "isarchive": false,
+              "index": 2
+            },
+            {
+              "id": 3,
+              "key": "done",
+              "name": "Done",
+              "isarchive": false,
+              "index": 3
+            }
+          ],
+          "todos": [
+            {
+              "id": 539,
+              "key": "prosess",
+              "title": "bgdfscdaxs",
+              "discription": "kjus",
+              "assigneduser": {
+                "id": 2,
+                "name": "Kukadiya Dipen"
+              },
+              "todocreater": {
+                "uid": 1,
+                "username": "Hitesh",
+                "sdate": "2023-12-05T12:46:41.584Z",
+                "edate": "2023-12-05T12:46:41.584Z"
+              }
+            }
+          ],
+          "isFavarate": true
+        }
+      ]
     },
     {
       "id": 2,
-      "title": "Python Project",
-      "mode": "privete",
-      "boards": []
-    }
-  ],
-  "users": [
-    {
-      "id": "1",
-      "name": "hitesh odedara",
-      "email": "hiteshodedara1010@gmail.com",
-      "password": "hitesh1234@"
-    },
-    {
-      "id": "2",
-      "name": "dipen kukadiya",
-      "email": "dipenkukadiya@gmail.com",
-      "password": "dipen12345"
-    },
-    {
-      "id": 3,
-      "name": "timbasagar",
-      "email": "sagertimba@gmail.com",
-      "password": "sagar12345@"
-    },
-    {
-      "id": 4,
-      "name": "adminuser",
-      "email": "admin@gmail.com",
-      "password": "admin12345@"
-    }
-  ]
-
-
-
-
-,
-	"workspaces":[
-		{
-			"id":1,
-			"title":"workspace 1",
-			"discripetion":"this workspace for my test projects",
-			"creation date":"12-07-2002",
-			"boards":[
-				{
-					"id":1,
-					"title":"board 1",
-					"is_favarate":false,
-					"todolist":[],
-					"todos":[]
-					
-				},
+      "title": "rajkot office",
+      "description": "for office work",
+      "boards": [
         {
-					"id":2,
-					"title":"board 2",
-					"is_favarate":false,
-					"todolist":[],
-					"todos":[]
-					
-				}
-			
-			]
-		
-		},
-    {
-			"id":2,
-			"title":"workspace 2",
-			"discripetion":"this workspace for my test projects2",
-			"creation date":"12-07-2002",
-			"boards":[
-				{
-					"id":1,
-					"title":"board 1",
-					"is_favarate":false,
-					"todolist":[],
-					"todos":[]
-					
-				}
-			
-			]
-		
-		},
-    {
-			"id":3,
-			"title":"workspace 3",
-			"discripetion":"this workspace for my test projects 3",
-			"creation date":"12-07-2002",
-			"boards":[
-				{
-					"id":1,
-					"title":"board 1",
-					"is_favarate":false,
-					"todolist":[
+          "id": 1,
+          "title": "Board1",
+          "todolists": [
             {
-              "id":1,
-              "title":"todo 1",
-              "index":1,
-              "is_archiverd":false,
-              "creation_date":"12-07-2002"
+              "id": 1,
+              "key": "todo",
+              "name": "Todo",
+              "isarchive": false,
+              "index": 1
+            },
+            {
+              "id": 2,
+              "key": "prosess",
+              "name": "Prosess",
+              "isarchive": false,
+              "index": 2
+            },
+            {
+              "id": 3,
+              "key": "complete",
+              "name": "Complete",
+              "isarchive": false,
+              "index": 3
             }
           ],
-					"todos":[]
-					
-				}
-			
-			]
-		
-		}
-	
-	]
+          "todos": [
+            {
+              "id": 539,
+              "key": "prosess",
+              "title": "bgdfscdaxs",
+              "discription": "kjus",
+              "assigneduser": {
+                "id": 2,
+                "name": "Kukadiya Dipen"
+              },
+              "todocreater": {
+                "uid": 1,
+                "username": "Hitesh",
+                "sdate": "2023-12-05T12:46:41.584Z",
+                "edate": "2023-12-05T12:46:41.584Z"
+              }
+            },
+            {
+              "id": 1186,
+              "key": "bug436",
+              "title": "iouikyjhtgrfed",
+              "discription": "ikuyjthrgefdws",
+              "assigneduser": {
+                "id": 3,
+                "name": "Karva Tarnum"
+              },
+              "todocreater": {
+                "uid": 1,
+                "username": "Hitesh",
+                "sdate": "2023-12-12T12:27:17.124Z",
+                "edate": "2023-12-12T12:27:17.124Z"
+              }
+            },
+            {
+              "id": 436,
+              "key": "prosess",
+              "title": "adadada",
+              "discription": "dadad",
+              "assigneduser": {
+                "id": 1,
+                "name": "Odedara Hitesh"
+              },
+              "todocreater": {
+                "uid": 1,
+                "username": "Hitesh",
+                "sdate": "2023-12-26T06:08:25.001Z",
+                "edate": "2023-12-26T06:08:25.001Z"
+              }
+            },
+            {
+              "id": 930,
+              "key": "prosess",
+              "title": "htfd",
+              "discription": "fesfadsx",
+              "assigneduser": {
+                "id": 3,
+                "name": "Karva Tarnum"
+              },
+              "todocreater": {
+                "uid": 1,
+                "username": "Hitesh",
+                "sdate": "2024-01-01T07:17:06.833Z",
+                "edate": "2024-01-01T07:17:06.833Z"
+              }
+            }
+          ],
+          "isFavarate": false
+        },
+        {
+          "id": 2,
+          "title": "Board2",
+          "todolists": [
+            {
+              "id": 1,
+              "key": "stwork",
+              "name": "startwork",
+              "isarchive": false,
+              "index": 1
+            },
+            {
+              "id": 2,
+              "key": "ontheway",
+              "name": "OnTheWay",
+              "isarchive": false,
+              "index": 2
+            },
+            {
+              "id": 3,
+              "key": "done",
+              "name": "Done",
+              "isarchive": false,
+              "index": 3
+            }
+          ],
+          "todos": [
+            {
+              "id": 539,
+              "key": "prosess",
+              "title": "bgdfscdaxs",
+              "discription": "kjus",
+              "assigneduser": {
+                "id": 2,
+                "name": "Kukadiya Dipen"
+              },
+              "todocreater": {
+                "uid": 1,
+                "username": "Hitesh",
+                "sdate": "2023-12-05T12:46:41.584Z",
+                "edate": "2023-12-05T12:46:41.584Z"
+              }
+            }
+          ],
+          "isFavarate": true
+        }
+      ]
+    }
+  ]
 }

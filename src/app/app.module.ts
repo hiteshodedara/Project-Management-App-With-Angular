@@ -12,6 +12,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterModule } from '@angular/router';
+import { WorkspaceEffects } from './ngRxStore/workspaces/workspace.effects';
+import { BoardEffects } from './ngRxStore/boards/board.effects';
+import { TodolistEffects } from './ngRxStore/todolists/todolist.effects';
+import { TodoEffects } from './ngRxStore/todos/todo.effects';
+import { appReducers } from './ngRxStore/app.state';
 
 @NgModule({
   declarations: [
@@ -26,9 +31,9 @@ import { RouterModule } from '@angular/router';
     UnauthorizedModule,
     AuthorizedModule,
     HttpClientModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([WorkspaceEffects, BoardEffects, TodolistEffects, TodoEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -17,10 +17,6 @@ export class AuthuserService {
     return !!currentUser; // Returns true if currentUser is not null or undefined
   }
 
-  getAllUsers(): Observable<Registeruser[]> {
-    return this.http.get<Registeruser[]>(this.userURL);
-  }
-
   getuserinfo(){
     const currentUser = localStorage.getItem('loginuser');
     if(currentUser){
