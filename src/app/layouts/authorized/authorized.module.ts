@@ -11,8 +11,11 @@ import { TodoPopupModelComponent } from '../../modules/todo-popup-model/todo-pop
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-
+import { DialogModule } from 'primeng/dialog';
+import { ToastModule } from 'primeng/toast';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
+    DialogModule,
+    ToastModule,
+    TieredMenuModule,
+    ConfirmPopupModule,
+    AvatarModule
   ]
 })
 export class AuthorizedModule { }

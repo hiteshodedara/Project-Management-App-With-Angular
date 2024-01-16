@@ -6,15 +6,20 @@
     </div>
     <div class="card-body workspacebody d-flex   justify-content-center overflow-y-auto   ">
       <div class="card sub-card p-2  bg-dark-subtle  ">
-        <ul class=" workspaces-ul" *ngFor="let item of workspaces$|async">
+        <ul class=" workspaces-ul" *ngFor="let item of workspaces$|async; index as i">
           <li class="card overflow-hidden ">
-           <div class="workspacemanage  p-1 bg-secondary   ">
-            <div class="workspacetitlebody d-flex  justify-content-between" *ngIf="item">
-              <label id="idofworkspace" class="align-self-center text-light  fs-5">{{item.id}}</label>
-              <button class="btn btn-secondary mx-2  btn-workspace fs-5">{{item.title}}</button>
-              <button class="btn btn-secondary   d-flex align-items-center "><i class="pi pi-cog fs-5 "></i></button>
+            <div class="workspacemanage  p-1 bg-secondary   ">
+              <div class="workspacetitlebody d-flex  justify-content-between" *ngIf="item">
+                <label id="idofworkspace" class="align-self-center text-light  fs-5">{{i+1}}</label>
+                <button class="btn btn-secondary mx-2  btn-workspace fs-5">{{item.title}}</button>
+
+                <!-- btn for workspace setting -->
+                <button (click)="workspce_item_menu.show($event)" (click)="slected_item_data($event,item)"
+                  class="btn btn-secondary   d-flex align-items-center "><i class="pi pi-cog fs-5 "></i></button>
+
+
+              </div>
             </div>
-           </div>
           </li>
         </ul>
         <div class="noitem text-center " *ngIf="!workspaces$">
@@ -23,8 +28,81 @@
       </div>
     </div>
     <div class="addworkspacebtndiv p-2 d-flex justify-content-center ">
-      <button class="btn btn-success  ">Add Workspace</button>
+      <!-- add workspace button -->
+      <button class="btn btn-success  " (click)="show_addWorkspace()">Add Workspace</button>
     </div>
   </div>
+</div>
 
+<!-- toast for a add workspace confirmation -->
+<p-toast></p-toast>
+
+
+<!-- dialog for add workspace button click -->
+<p-dialog header="Add Workspace" [(visible)]="visible_addWorkspace" [style]="{width: '30vw'}">
+  <form [formGroup]="workspaceform" (ngSubmit)="on_addWorkspace()">
+    <div class="mb-3">
+      <label for="w_name" class="form-label">Workspace Name</label>
+      <input type="text" class="form-control" id="w_name" formControlName="workspacetitle" autocomplete="off">
+    </div>
+    <div class="mb-3">
+      <label for="w_desc" class="form-label"> Workspace Description</label>
+      <input type="text" class="form-control" id="w_desc" formControlName="workspacedis" autocomplete="off">
+    </div>
+    <div class="submit-btn d-flex justify-content-end ">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</p-dialog>
+
+
+<!-- tiered menu dialog box -->
+<div class="workspace-menu-warpper">
+  <p-tieredMenu #workspce_item_menu [model]="workspce_item_setting_menu" [popup]="true"></p-tieredMenu>
+</div>
+
+
+<!-- delete workspace menu item dialog  -->
+<p-confirmPopup></p-confirmPopup>
+
+
+<!-- show workspace information dialog box -->
+<div class="show-workspace-info-wrpper" *ngIf="c_selected_item">
+  <p-dialog header="Workspace Information" [(visible)]="show_workspace_info" [modal]="true"
+    [style]="{ width: '30rem' }">
+
+    <div class="card">
+      <div class="card-body">
+        <ul class="fs-5 ">
+          <li>
+            <span class="fw-bold ">Title:</span> {{c_selected_item.title}}
+          </li>
+          <li>
+            <span class="fw-bold ">Discription:</span> {{c_selected_item.description}}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </p-dialog>
+</div>
+
+
+<!-- update workspace menu item dialogbox -->
+<div class="update-workspace-dialog-wrapper" *ngIf="c_selected_item">
+  <p-dialog header="Update Workspace" [(visible)]="visible_updateWorkspace" [style]="{width: '30vw'}">
+    <form [formGroup]="workspaceform" (ngSubmit)="on_updateWorkspace()">
+      <div class="mb-3">
+        <label for="w_name" class="form-label">Workspace Name</label>
+        <input type="text" [value]="c_selected_item.title" class="form-control" id="w_name" formControlName="workspacetitle" autocomplete="off">
+      </div>
+      <div class="mb-3">
+        <label for="w_desc" class="form-label"> Workspace Description</label>
+        <input type="text" [value]="c_selected_item.description" class="form-control" id="w_desc" formControlName="workspacedis" autocomplete="off">
+      </div>
+      <div class="submit-btn d-flex justify-content-end ">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </p-dialog>
 </div>
