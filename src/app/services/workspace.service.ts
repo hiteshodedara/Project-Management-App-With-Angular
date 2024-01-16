@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
+import { Workspace } from '../models/workspace';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable, map, of } from 'rxjs';
 export class WorkspaceService {
 
 
-  private DBurl = "http://localhost:3000/workspaces";
+  private DBurl = "http://localhost:8080/api/v1/workspaces";
 
   constructor(private http: HttpClient) { }
 
@@ -20,14 +21,14 @@ export class WorkspaceService {
     return this.http.get(`${this.DBurl}/${workspaceId}`);
   }
 
-  addWorkspace(newWorkspace: any): Observable<any> {
+  addWorkspace(newWorkspace: Workspace): Observable<any> {
     return this.http.post(this.DBurl, newWorkspace);
   }
   deleteWorkspace(workspaceId: number): Observable<any> {
     return this.http.delete(`${this.DBurl}/${workspaceId}`);
   }
 
-  updateWorkspace(workspaceId: number, updatedWorkspace: any): Observable<any> {
+  updateWorkspace(workspaceId: number, updatedWorkspace: Workspace): Observable<any> {
     return this.http.put(`${this.DBurl}/${workspaceId}`, updatedWorkspace);
   }
 

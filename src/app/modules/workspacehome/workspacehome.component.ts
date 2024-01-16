@@ -16,37 +16,75 @@ import { WorkspaceService } from 'src/app/services/workspace.service';
 })
 export class WorkspacehomeComponent implements OnInit {
 
-  workspaces$ = this.store.select(selectWorkspaces);
+  workspaces$ = this.store.select(selectWorkspaces);//get all workspace data from ngrx store state
+
+  //for is workspace is avaliable or not
+  is_workspaces_avaliable!: boolean;
+
+  //length of workspaces
+  workspace_legth!: number;
 
 
+  //this variable for show dialog box on menu click 
   visible_addWorkspace: boolean = false;
   visible_updateWorkspace: boolean = false;
   show_workspace_info: boolean = false;
+
+  //setting menu variable
   workspce_item_setting_menu: MenuItem[] | undefined;
 
-  
+
+  //this is two form variable for add and update workspace
+  workspaceform!: FormGroup;
+  workspace_updateForm!: FormGroup;
 
 
-  workspaceform: FormGroup = new FormGroup({
-    workspacetitle: new FormControl(''),
-    workspacedis: new FormControl('')
-  });
+
 
   constructor(private store: Store<Workspace>, private workspaceService: WorkspaceService,
-    private authuser: AuthuserService, private messageService: MessageService,
-    private confirmationService: ConfirmationService) { }
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService) {
+    this.addForm_initalize()
+    this.loadWorkspacesOnStore();
+  }
 
 
 
   ngOnInit(): void {
-    this.loadWorkspacesOnStore();
     this.initialize_workspace_item_menu()
+    this.validate_isWorkspaceAvaliable()
   }
 
+  // validating workspce is avaliable or not
+  validate_isWorkspaceAvaliable() {
+    this.workspaces$.subscribe(res => {
+
+      this.workspace_legth=res.length
+
+      if (res.length !== 0) {
+        this.is_workspaces_avaliable = false
+      } else {
+        this.is_workspaces_avaliable = true
+      }
+
+    })
+  }
+
+  //initializing add workspace form data
+  addForm_initalize() {
+    this.workspaceform = new FormGroup({
+      workspacetitle: new FormControl(''),
+      workspacedis: new FormControl(''),
+      isPrivate: new FormControl<boolean>(true)
+    });
+  }
+
+  //loading all workspce form ngrx store
   loadWorkspacesOnStore() {
     this.store.dispatch(loadWorkspaces());
   }
 
+  // initializing menu for setting workspce btn
   initialize_workspace_item_menu() {
     this.workspce_item_setting_menu = [
       {
@@ -60,7 +98,7 @@ export class WorkspacehomeComponent implements OnInit {
       {
         label: 'Update',
         icon: 'pi pi-file-edit',
-        command:()=>{
+        command: () => {
           this.show_workspace_update_dialogbox()
         }
       },
@@ -74,52 +112,80 @@ export class WorkspacehomeComponent implements OnInit {
     ]
   }
 
+  //method for show add workspace dialog box
   show_addWorkspace() {
     this.visible_addWorkspace = true;
   }
 
-  update_title_input!:string|undefined;
-  update_desc_input!:string|undefined;
+
+  //method for show update workspace dialog box
   show_workspace_update_dialogbox() {
-    this.update_title_input=this.c_selected_item?.title
-    this.update_desc_input =this.c_selected_item?.description
+
+    //initializing update_workspaceForm
+    this.workspace_updateForm = new FormGroup({
+      workspace_updated_title: new FormControl(this.c_selected_item?.title),
+      workspace_updated_dis: new FormControl(this.c_selected_item?.description),
+      updated_isPrivate: new FormControl(this.c_selected_item?.isPrivate)
+    });
+
+    // console.log("defultform",this.workspace_updateForm.value);//debug point
+
+
+
     this.visible_updateWorkspace = true;
   }
 
-
+  //method for show workspace information on dialog box
   show_workspace_info_dialogbox() {
     this.show_workspace_info = true;
   }
 
+  //this method use to add workspace in backend
   on_addWorkspace() {
-    if (this.workspaceform.value.workspacetitle != null && this.workspaceform.value.workspacedis != null) {
+    if (this.workspaceform.value.workspacetitle != ''
+      && this.workspaceform.value.workspacedis != '') {
+
       const tempworkspace: Workspace = {
         title: this.workspaceform.value.workspacetitle,
         description: this.workspaceform.value.workspacedis,
-        boards: []
+        isPrivate: this.workspaceform.value.isPrivate
       }
-      this.store.dispatch(addWorkspace({ newWorkspace: tempworkspace }))
+
+      this.store.dispatch(addWorkspace({ newWorkspace: tempworkspace }));//call ngrx add action for add workspace
+
       this.messageService.add({ severity: 'success', summary: 'Success', detail: `${tempworkspace.title} Workspace Added Successfully!` });
       this.visible_addWorkspace = false;
       this.workspaceform.reset()
+      this.addForm_initalize()
 
     } else {
+
       console.warn("enter all filds....");
+
     }
+
+
   }
 
+  //this method use for update workspace data
   on_updateWorkspace() {
-    if (this.c_selected_item&&this.workspaceform.value.workspacetitle != null && this.workspaceform.value.workspacedis != null) {
+
+    if (this.c_selected_item
+      && this.workspace_updateForm.value.workspace_updated_dis != ''
+      && this.workspace_updateForm.value.workspace_updated_dis != '') {
+      // console.log("newForm:",this.workspace_updateForm.value);
+
       const tempworkspace: Workspace = {
-        title: this.workspaceform.value.workspacetitle,
-        description: this.workspaceform.value.workspacedis,
-        boards: this.c_selected_item?.boards
+        title: this.workspace_updateForm.value.workspace_updated_title,
+        description: this.workspace_updateForm.value.workspace_updated_dis,
+        isPrivate: this.workspace_updateForm.value.updated_isPrivate
       }
-      if(this.c_selected_item?.id)
-      this.store.dispatch(updateWorkspace({ updatedWorkspace: tempworkspace,workspaceId:this.c_selected_item.id }))
+
+      if (this.c_selected_item?.id) {
+        this.store.dispatch(updateWorkspace({ updatedWorkspace: tempworkspace, workspaceId: this.c_selected_item.id }))//calling ngrx update action
+      }
       this.messageService.add({ severity: 'success', summary: 'Success', detail: `${tempworkspace.title} Workspace Updated Successfully!` });
       this.visible_updateWorkspace = false;
-      this.workspaceform.reset()
 
     } else {
       console.warn("enter all filds....");
@@ -127,7 +193,7 @@ export class WorkspacehomeComponent implements OnInit {
   }
 
 
-
+  //this method use for delete workspace form backend and also frontend
   delete_workspce_currunt_item() {
     this.confirmationService.confirm({
       target: this.c_selected_event?.target as EventTarget,
@@ -136,7 +202,7 @@ export class WorkspacehomeComponent implements OnInit {
       accept: () => {
         this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `Your ${this.c_selected_item?.title} Workspace Deleted!`, life: 3000 });
         if (this.c_selected_item?.id) {
-          this.store.dispatch(deleteWorkspace({ workspaceId: this.c_selected_item.id }))
+          this.store.dispatch(deleteWorkspace({ workspaceId: this.c_selected_item.id }));//calling ngrx delete action
         }
       },
       reject: () => {
@@ -145,15 +211,19 @@ export class WorkspacehomeComponent implements OnInit {
     });
   }
 
-  c_selected_item?: Workspace;
-  c_selected_event?: Event;
+  //this variable for setting menu 
+  c_selected_item?: Workspace;//this store currunt selected workspce item
+  c_selected_event?: Event;//this store currunt selected event for show dialog box
 
+  //set the value for this variables
   slected_item_data(event: Event, item: Workspace) {
     this.c_selected_item = item
     this.c_selected_event = event
   }
 
-  test_selector(){
+
+  // this for testing anything
+  test_selector() {
 
   }
 

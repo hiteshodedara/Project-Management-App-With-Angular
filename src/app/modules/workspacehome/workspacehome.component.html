@@ -1,8 +1,10 @@
 <div class="maindiv d-flex justify-content-center align-items-center bg-light  ">
 
   <div class="card workspacescard bg-success-subtle">
-    <div class="card-title  m-0  workspacetitle p-3  d-flex justify-content-center overflow-hidden align-items-center ">
-      <h1 class="fw-bolder  ">Workspaces</h1>
+    <div class="card-title  m-0  workspacetitle p-1 mt-2   d-flex flex-column  justify-content-center overflow-hidden align-items-center ">
+      <h1 class="fw-bolder">Workspaces</h1>
+      <h4 class="align-self-end mx-3 mb-0" *ngIf="workspace_legth">Total:{{workspace_legth}}</h4>
+      <h4 class="align-self-end mx-3 mb-0" *ngIf="!workspace_legth">Total:0</h4>
     </div>
     <div class="card-body workspacebody d-flex   justify-content-center overflow-y-auto   ">
       <div class="card sub-card p-2  bg-dark-subtle  ">
@@ -11,18 +13,21 @@
             <div class="workspacemanage  p-1 bg-secondary   ">
               <div class="workspacetitlebody d-flex  justify-content-between" *ngIf="item">
                 <label id="idofworkspace" class="align-self-center text-light  fs-5">{{i+1}}</label>
-                <button class="btn btn-secondary mx-2  btn-workspace fs-5">{{item.title}}</button>
+                <button class="btn btn-secondary mx-2  btn-workspace mb-0  d-flex justify-content-start align-items-center ">
+                  <h3 class="align-self-center mb-0 ">{{item.title}}</h3>
+                </button>
 
                 <!-- btn for workspace setting -->
+                <p-chip [label]="item.isPrivate?'Private':'Public'" [icon]="item.isPrivate?'pi pi-lock':'pi pi-lock-open'" class="align-self-center fs-6 "></p-chip>
                 <button (click)="workspce_item_menu.show($event)" (click)="slected_item_data($event,item)"
-                  class="btn btn-secondary   d-flex align-items-center "><i class="pi pi-cog fs-5 "></i></button>
+                  class="btn btn-secondary p-2    d-flex align-items-center "><i class="pi pi-cog fs-5 "></i></button>
 
 
               </div>
             </div>
           </li>
         </ul>
-        <div class="noitem text-center " *ngIf="!workspaces$">
+        <div class="noitem text-center " *ngIf="is_workspaces_avaliable">
           <h2>Workspace are Not Available.</h2>
         </div>
       </div>
@@ -35,7 +40,7 @@
 </div>
 
 <!-- testing button -->
-<button class="btn btn-primary " (click)="test_selector()">get</button>
+<!-- <button class="btn btn-primary " (click)="test_selector()">get</button> -->
 
 <!-- toast for a add workspace confirmation -->
 <p-toast></p-toast>
@@ -45,12 +50,16 @@
 <p-dialog header="Add Workspace" [(visible)]="visible_addWorkspace" [style]="{width: '30vw'}">
   <form [formGroup]="workspaceform" (ngSubmit)="on_addWorkspace()">
     <div class="mb-3">
-      <label for="w_name" class="form-label">Workspace Name</label>
-      <input type="text" class="form-control" id="w_name" formControlName="workspacetitle" autocomplete="off">
+      <label  name="workspace_title" class="form-label">Workspace Name</label>
+      <input type="text" spellcheck="true" class="form-control" id="w_name2" formControlName="workspacetitle" autocomplete="off">
     </div>
     <div class="mb-3">
-      <label for="w_desc" class="form-label"> Workspace Description</label>
-      <input type="text" class="form-control" id="w_desc" formControlName="workspacedis" autocomplete="off">
+      <label  name="workspace_title" class="form-label"> Workspace Description</label>
+      <input type="text" spellcheck="true" class="form-control" id="w_desc2" formControlName="workspacedis" autocomplete="off">
+    </div>
+    <div class="my-3 d-flex">
+      <label  name="workspace_title" class="form-label">Private:</label>
+      <p-inputSwitch formControlName="isPrivate" class="mx-2  "  id="is_private2"></p-inputSwitch>
     </div>
     <div class="submit-btn d-flex justify-content-end ">
       <button type="submit" class="btn btn-primary">Submit</button>
@@ -73,7 +82,6 @@
 <div class="show-workspace-info-wrpper" *ngIf="c_selected_item">
   <p-dialog header="Workspace Information" [(visible)]="show_workspace_info" [modal]="true"
     [style]="{ width: '30rem' }">
-
     <div class="card">
       <div class="card-body">
         <ul class="fs-5 ">
@@ -83,25 +91,33 @@
           <li>
             <span class="fw-bold ">Discription:</span> {{c_selected_item.description}}
           </li>
+          <li>
+            <span class="fw-bold ">Private:</span> {{c_selected_item.isPrivate}}
+          </li>
         </ul>
       </div>
     </div>
-
   </p-dialog>
 </div>
 
 
 <!-- update workspace menu item dialogbox -->
-<div class="update-workspace-dialog-wrapper" *ngIf="c_selected_item">
+<div class="update-workspace-dialog-wrapper" *ngIf="workspace_updateForm">
   <p-dialog header="Update Workspace" [(visible)]="visible_updateWorkspace" [style]="{width: '30vw'}">
-    <form [formGroup]="workspaceform" (ngSubmit)="on_updateWorkspace()">
+    <form [formGroup]="workspace_updateForm" (ngSubmit)="on_updateWorkspace()">
       <div class="mb-3">
         <label for="w_name" class="form-label">Workspace Name</label>
-        <input type="text" [value]="update_title_input" class="form-control" id="w_name" formControlName="workspacetitle" autocomplete="off">
+        <input type="text" spellcheck="true" class="form-control" id="w_name" formControlName="workspace_updated_title"
+          autocomplete="off">
       </div>
       <div class="mb-3">
         <label for="w_desc" class="form-label"> Workspace Description</label>
-        <input type="text" [value]="update_desc_input" class="form-control" id="w_desc" formControlName="workspacedis" autocomplete="off">
+        <input type="text" spellcheck="true" class="form-control" id="w_desc" formControlName="workspace_updated_dis" autocomplete="off">
+      </div>
+      <div class="my-3 d-flex">
+        <label for="is_private" class="form-label">Private:</label>
+        <p-inputSwitch formControlName="updated_isPrivate" class="mx-2  "
+          id="is_private"></p-inputSwitch>
       </div>
       <div class="submit-btn d-flex justify-content-end ">
         <button type="submit" class="btn btn-primary">Submit</button>

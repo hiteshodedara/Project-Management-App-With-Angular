@@ -16,6 +16,8 @@ import { ToastModule } from 'primeng/toast';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { AvatarModule } from 'primeng/avatar';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { ChipModule } from 'primeng/chip';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { AvatarModule } from 'primeng/avatar';
     ToastModule,
     TieredMenuModule,
     ConfirmPopupModule,
-    AvatarModule
+    AvatarModule,
+    InputSwitchModule,
+    ChipModule
   ]
 })
 export class AuthorizedModule { }
