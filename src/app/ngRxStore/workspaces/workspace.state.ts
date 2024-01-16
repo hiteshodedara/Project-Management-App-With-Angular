@@ -1,6 +1,12 @@
-import { WorkspaceState } from './workspace.reducer';
+import { Workspace } from "src/app/models/workspace";
 
-export interface AppState {
-  workspaces: WorkspaceState;
-  // Add other feature states if needed
+
+export interface WorkspaceState {
+  workspaces: Workspace[];
+  // Add other state properties if needed
 }
+
+export const initialWorkspaceState: WorkspaceState = {
+  workspaces: [],
+  // Initialize other state properties if needed
+};

@@ -17,6 +17,8 @@ import { WorkspaceService } from 'src/app/services/workspace.service';
 export class WorkspacehomeComponent implements OnInit {
 
   workspaces$ = this.store.select(selectWorkspaces);
+
+
   visible_addWorkspace: boolean = false;
   visible_updateWorkspace: boolean = false;
   show_workspace_info: boolean = false;
@@ -76,13 +78,12 @@ export class WorkspacehomeComponent implements OnInit {
     this.visible_addWorkspace = true;
   }
 
+  update_title_input!:string|undefined;
+  update_desc_input!:string|undefined;
   show_workspace_update_dialogbox() {
-    this.workspaceform.value.workspacetitle=this.c_selected_item.title
-    this.workspaceform.value.workspacedis=this.c_selected_item.description
-
-    setTimeout(() => {
-      this.visible_updateWorkspace = true;
-    }, 800);
+    this.update_title_input=this.c_selected_item?.title
+    this.update_desc_input =this.c_selected_item?.description
+    this.visible_updateWorkspace = true;
   }
 
 
@@ -108,13 +109,13 @@ export class WorkspacehomeComponent implements OnInit {
   }
 
   on_updateWorkspace() {
-    if (this.workspaceform.value.workspacetitle != null && this.workspaceform.value.workspacedis != null) {
+    if (this.c_selected_item&&this.workspaceform.value.workspacetitle != null && this.workspaceform.value.workspacedis != null) {
       const tempworkspace: Workspace = {
         title: this.workspaceform.value.workspacetitle,
         description: this.workspaceform.value.workspacedis,
-        boards: this.c_selected_item.boards
+        boards: this.c_selected_item?.boards
       }
-      if(this.c_selected_item.id)
+      if(this.c_selected_item?.id)
       this.store.dispatch(updateWorkspace({ updatedWorkspace: tempworkspace,workspaceId:this.c_selected_item.id }))
       this.messageService.add({ severity: 'success', summary: 'Success', detail: `${tempworkspace.title} Workspace Updated Successfully!` });
       this.visible_updateWorkspace = false;
@@ -133,8 +134,8 @@ export class WorkspacehomeComponent implements OnInit {
       message: 'Are you sure you want to Delete Workspace?',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `Your ${this.c_selected_item.title} Workspace Deleted!`, life: 3000 });
-        if (this.c_selected_item.id) {
+        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `Your ${this.c_selected_item?.title} Workspace Deleted!`, life: 3000 });
+        if (this.c_selected_item?.id) {
           this.store.dispatch(deleteWorkspace({ workspaceId: this.c_selected_item.id }))
         }
       },
@@ -144,12 +145,16 @@ export class WorkspacehomeComponent implements OnInit {
     });
   }
 
-  c_selected_item!: Workspace;
-  c_selected_event!: Event;
+  c_selected_item?: Workspace;
+  c_selected_event?: Event;
 
   slected_item_data(event: Event, item: Workspace) {
-    this.c_selected_event = event
     this.c_selected_item = item
+    this.c_selected_event = event
+  }
+
+  test_selector(){
+
   }
 
 }

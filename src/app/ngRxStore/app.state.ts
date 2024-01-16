@@ -1,7 +1,9 @@
-import { BoardState, boardReducer } from "./boards/board.reducer";
-import { TodolistState, todolistReducer } from "./todolists/todolist.reducer";
-import { TodoState, todoReducer } from "./todos/todo.reducer";
-import { WorkspaceState, workspaceReducer } from "./workspaces/workspace.reducer";
+import { ActionReducerMap } from '@ngrx/store';
+import { BoardState, boardReducer } from './boards/board.reducer';
+import { TodolistState, todolistReducer } from './todolists/todolist.reducer';
+import { TodoState, todoReducer } from './todos/todo.reducer';
+import { workspaceReducer } from './workspaces/workspace.reducer';
+import { WorkspaceState } from './workspaces/workspace.state';
 
 export interface AppState {
   workspaces: WorkspaceState;
@@ -11,7 +13,7 @@ export interface AppState {
   // Add other feature states if needed
 }
 
-export const appReducers = {
+export const appReducers: ActionReducerMap<AppState> = {
   workspaces: workspaceReducer,
   boards: boardReducer,
   todolists: todolistReducer,

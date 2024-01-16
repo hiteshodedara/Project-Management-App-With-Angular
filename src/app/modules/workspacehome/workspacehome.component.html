@@ -34,6 +34,9 @@
   </div>
 </div>
 
+<!-- testing button -->
+<button class="btn btn-primary " (click)="test_selector()">get</button>
+
 <!-- toast for a add workspace confirmation -->
 <p-toast></p-toast>
 
@@ -94,11 +97,11 @@
     <form [formGroup]="workspaceform" (ngSubmit)="on_updateWorkspace()">
       <div class="mb-3">
         <label for="w_name" class="form-label">Workspace Name</label>
-        <input type="text" [value]="c_selected_item.title" class="form-control" id="w_name" formControlName="workspacetitle" autocomplete="off">
+        <input type="text" [value]="update_title_input" class="form-control" id="w_name" formControlName="workspacetitle" autocomplete="off">
       </div>
       <div class="mb-3">
         <label for="w_desc" class="form-label"> Workspace Description</label>
-        <input type="text" [value]="c_selected_item.description" class="form-control" id="w_desc" formControlName="workspacedis" autocomplete="off">
+        <input type="text" [value]="update_desc_input" class="form-control" id="w_desc" formControlName="workspacedis" autocomplete="off">
       </div>
       <div class="submit-btn d-flex justify-content-end ">
         <button type="submit" class="btn btn-primary">Submit</button>

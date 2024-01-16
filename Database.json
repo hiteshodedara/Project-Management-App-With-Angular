@@ -1,21 +1,16 @@
 {
   "workspaces": [
     {
-      "title": "hitesh work2",
-      "description": "for my office work2",
-      "boards": [
-        {
-          "name": "one",
-          "dis": "ok"
-        }
-      ],
-      "id": "2ef4"
+      "id": "9aad",
+      "title": "My  Office Work",
+      "description": "This workspace use for my office work.",
+      "boards": []
     },
     {
-      "title": "222disk2",
-      "description": "test222",
-      "boards": [],
-      "id": "68ec"
+      "id": "f782",
+      "title": "this for my work",
+      "description": "this for some privete stuf",
+      "boards": []
     }
   ]
 }
