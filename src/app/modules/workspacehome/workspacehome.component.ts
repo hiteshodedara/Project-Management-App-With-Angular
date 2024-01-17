@@ -17,7 +17,7 @@ import { WorkspaceService } from 'src/app/services/workspace.service';
 export class WorkspacehomeComponent implements OnInit {
 
   workspaces$ = this.store.select(selectWorkspaces);//get all workspace data from ngrx store state
-
+  Workspaces!:Workspace[];
   //for is workspace is avaliable or not
   is_workspaces_avaliable!: boolean;
 
@@ -45,14 +45,22 @@ export class WorkspacehomeComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
     this.addForm_initalize()
-    this.loadWorkspacesOnStore();
   }
-
-
-
+  
+  
+  
   ngOnInit(): void {
-    this.initialize_workspace_item_menu()
-    this.validate_isWorkspaceAvaliable()
+    this.initialize_workspace_item_menu();
+    this.validate_isWorkspaceAvaliable();
+    this.loadWorkspacesOnStore();
+
+    // Subscribe to changes in the store
+    this.workspaces$.subscribe(res => {
+      this.Workspaces = res;
+
+      // Notify the service about the changes
+      this.workspaceService.updateWorkspaces(res);
+    });
   }
 
   // validating workspce is avaliable or not

@@ -1,6 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
 import { TieredMenu } from 'primeng/tieredmenu';
+import { map } from 'rxjs';
+import { Workspace } from 'src/app/models/workspace';
+import { AppState } from 'src/app/ngRxStore/app.state';
+import { loadWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.actions';
+import { selectWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.selectors';
 
 @Component({
   selector: 'app-topmenubar',
@@ -14,42 +20,49 @@ export class TopmenubarComponent implements OnInit {
 
   // TieredMenus variables
   profilemenuItems: MenuItem[] | undefined;
-  workspacemenuItems: MenuItem[] | undefined;
-  recentmenuItems: MenuItem[] | undefined;
-  starredmenuItems: MenuItem[] | undefined;
+  
+  topMenu_workspace_items:MenuItem[]=[];
+  workspaces$ = this.store.select(selectWorkspaces)
+  workspaces!:Workspace[];
 
-
-  // get html elements property
-  @ViewChild('workspacemenu') workspacemenu!: TieredMenu;
-  @ViewChild('recentmenu') recentmenu!: TieredMenu;
-  @ViewChild('starredmenu') starredmenu!: TieredMenu;
-
-
+  constructor(private store:Store<AppState>){
+  }
+  
   ngOnInit() {
+    this.topMenu_workspace_items = [];
+    this.store.dispatch(loadWorkspaces());
+    this.make_workspaces_menu()
+    
+  }
+
+
+  menuBar_Initialize() {
     // topmenubar menu item details
     this.topmenuItems = [
       {
         label: 'Workspaces',
-        icon: 'pi pi-chevron-down',
-        command: () => {
-          this.toggleWorkspacemenu(this.workspacemenu)
-        }
-
+        items: [
+          {
+            label: 'Workspaces',
+            icon: 'pi pi-align-left',
+            routerLink: '/a/workspacehome'
+          },
+          {
+            label: 'workspaces',
+            icon: 'pi pi-clone',
+            items: this.topMenu_workspace_items
+          }],
+          command:()=>{
+            this.ngOnInit()
+          }
       },
       {
         label: 'Recent',
-        icon: 'pi pi-chevron-down',
-        command: () => {
-          this.toggleRecentmenu(this.recentmenu)
-        }
-
+        items: [{ label: 'no any recent menus' }]
       },
       {
         label: 'Starred',
-        icon: 'pi pi-chevron-down',
-        command: () => {
-          this.toggleStarredmenu(this.starredmenu)
-        }
+        items: [{ label: 'no any Starred menus' }]
       }
     ];
 
@@ -68,56 +81,31 @@ export class TopmenubarComponent implements OnInit {
         icon: 'pi pi-sign-out',
       }
     ];
-
-    // workspace menuitem decleration
-    this.workspacemenuItems = [
-      {
-        label: 'New Workspace',
-        icon: 'pi pi-plus',
-        routerLink: '/a/workspacehome'
-      },
-      {
-        label: 'workspaces',
-        icon:'pi pi-clone',
-        items: [
-          {
-            label: 'workspace 1',
-          },
-          {
-            label: 'workspace 2',
-          }
-        ]
-      }
-    ];
-
-     // resent menuitem decleration
-     this.recentmenuItems = [
-      {
-        label:'no any recent menus'
-      }
-    ];
-
-    // resent menuitem decleration
-    this.starredmenuItems = [
-      {
-        label:'no any Starred menus'
-      }
-    ];
   }
 
-  // for workspce menu
-  toggleWorkspacemenu(workspacemenu: TieredMenu) {
-    workspacemenu.toggle(event);
+   make_workspaces_menu(){
+     this.workspaces$.subscribe(res => {
+       this.workspaces = res
+     })
+     setTimeout(() => {
+       console.log(this.workspaces);
+      this.workspaces.forEach(item=>{
+        const menu_item:MenuItem={
+          label:item.title
+        }
+
+        this.topMenu_workspace_items.push(menu_item)
+      })
+      console.log(this.topMenu_workspace_items);
+
+
+
+       this.menuBar_Initialize()
+     }, 500);
   }
 
-  // for workspce menu
-  toggleRecentmenu(recentmenu: TieredMenu) {
-    recentmenu.toggle(event);
-  }
 
-  // for workspce menu
-  toggleStarredmenu(starredmenu: TieredMenu) {
-    starredmenu.toggle(event);
-  }
+
+
 
 }

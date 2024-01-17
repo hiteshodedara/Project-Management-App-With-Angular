@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { Workspace } from '../models/workspace';
 
 @Injectable({
@@ -32,6 +32,12 @@ export class WorkspaceService {
     return this.http.put(`${this.DBurl}/${workspaceId}`, updatedWorkspace);
   }
 
+  private workspacesSubject = new BehaviorSubject<Workspace[]>([]);
+  workspaces$ = this.workspacesSubject.asObservable();
+
+  updateWorkspaces(workspaces: Workspace[]) {
+    this.workspacesSubject.next(workspaces);
+  }
   
 
   

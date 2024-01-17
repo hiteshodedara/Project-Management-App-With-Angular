@@ -25,9 +25,9 @@ import { appReducers } from './ngRxStore/app.state';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     RouterModule,
-    BrowserAnimationsModule,
     UnauthorizedModule,
     AuthorizedModule,
     HttpClientModule,

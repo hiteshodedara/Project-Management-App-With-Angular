@@ -1,1 +1,49 @@
-<p>boardhome works!</p>
+<div class="maindiv d-flex justify-content-center align-items-center bg-light flex-column  gap-1 ">
+
+
+    <div class="card d-flex justify-content-center align-items-center   " style="height: 70px;width: 40vw;">
+        <div class="card-title m-0 d-flex flex-row gap-3 select-workspace-wrapper"> 
+            <h2 class="m-0 ">Select Workspace:</h2>
+            <p-dropdown [options]="Workspaces" [(ngModel)]="selected_workspce" optionLabel="title" 
+                placeholder="Select a City"></p-dropdown>
+        </div>
+    </div>
+
+
+    <div class="card boardCard bg-success-subtle">
+        <div
+            class="card-title  m-0  boardTitle p-1 mt-2   d-flex flex-column  justify-content-center overflow-hidden align-items-center ">
+            <h1 class="fw-bolder">Boards</h1>
+            <h4 class="align-self-end mx-3 mb-0">Total:0</h4>
+        </div>
+        <div class="card-body boardBody d-flex   justify-content-center overflow-y-auto   ">
+            <div class="card sub-card p-2  bg-dark-subtle  ">
+                <ul class=" boards-ul">
+                    <li class="card overflow-hidden p-1 bg-secondary d-flex flex-row justify-content-between align-items-center ">
+                        <div class="boardTitle d-flex  justify-content-between">
+                            <label id="idofworkspace" class="align-self-center mx-1  text-light  fs-5">1</label>
+                            <button
+                                class="btn btn-secondary mx-2  btn-board mb-0  d-flex justify-content-start align-items-center ">
+                                <h3 class="align-self-center mb-0 ">board 1</h3>
+                            </button>
+                        </div>
+
+                        <div class="boardMainBody ">
+                            <!-- btn for workspace setting -->
+                            <button class="btn btn-secondary p-2    d-flex align-items-center ">
+                                <i class="pi pi-cog fs-5 "></i>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+                <div class="noitem text-center " style="display: none;">
+                    <h2>Workspace are Not Available.</h2>
+                </div>
+            </div>
+        </div>
+        <div class="addworkspacebtndiv p-2 d-flex justify-content-center ">
+            <!-- add workspace button -->
+            <button class="btn btn-success  ">Add Board</button>
+        </div>
+    </div>
+</div>

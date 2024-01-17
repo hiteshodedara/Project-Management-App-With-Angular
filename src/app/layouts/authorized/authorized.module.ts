@@ -18,6 +18,9 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { AvatarModule } from 'primeng/avatar';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ChipModule } from 'primeng/chip';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,8 @@ import { ChipModule } from 'primeng/chip';
     TodoPopupModelComponent
   ],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     SharedModule,
     RouterModule,
@@ -42,7 +47,8 @@ import { ChipModule } from 'primeng/chip';
     ConfirmPopupModule,
     AvatarModule,
     InputSwitchModule,
-    ChipModule
+    ChipModule,
+    DropdownModule
   ]
 })
 export class AuthorizedModule { }
