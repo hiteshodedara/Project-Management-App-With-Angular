@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import * as BoardActions from './board.actions';
 import { BoardService } from 'src/app/services/board.service';
 
@@ -22,9 +22,9 @@ export class BoardEffects {
   addBoard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BoardActions.addBoard),
-      switchMap(({ workspaceId, newBoard }) =>
+      mergeMap(({ workspaceId, newBoard }) =>
         this.boardservice.addBoard(workspaceId, newBoard).pipe(
-          map(() => BoardActions.loadBoards({ workspaceId })), // Load boards after adding a new one
+          map(() => BoardActions.loadBoards({ workspaceId })),
           catchError(error => of(BoardActions.loadBoardsFailure({ error })))
         )
       )
@@ -34,9 +34,9 @@ export class BoardEffects {
   updateBoard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BoardActions.updateBoard),
-      switchMap(({ workspaceId, boardId, updatedBoard }) =>
+      mergeMap(({ workspaceId, boardId, updatedBoard }) =>
         this.boardservice.updateBoard(workspaceId, boardId, updatedBoard).pipe(
-          map(() => BoardActions.loadBoards({ workspaceId })), // Load boards after updating
+          map(() => BoardActions.loadBoards({ workspaceId })),
           catchError(error => of(BoardActions.loadBoardsFailure({ error })))
         )
       )
@@ -48,5 +48,5 @@ export class BoardEffects {
   constructor(
     private actions$: Actions,
     private boardservice: BoardService
-  ) {}
+  ) { }
 }

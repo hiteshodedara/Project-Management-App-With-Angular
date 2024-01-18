@@ -13,20 +13,32 @@ export class BoardService {
   constructor(private http: HttpClient,private workspaceservice:WorkspaceService) { }
 
   getAllBoards(workspaceId: number): Observable<Board[]> {
-    return this.http.get<Board[]>(this.DBurl)
+    
+    return this.http.get<Board[]>(this.DBurl).pipe(
+      map((boards: Board[]) => boards.filter(board => board.workspaceId === workspaceId))
+    );
   }
 
-  // getBoardById(workspaceId: number, boardId: number): Observable<any> {
-  //   return this.getAllBoards(workspaceId).pipe(
-  //     map((boards: any[]) => boards.find(board => board.id === boardId))
-  //   );
-  // }
+  getBoardById(workspaceId: number, boardId: number): Observable<Board | undefined> {
+    return this.getAllBoards(workspaceId).pipe(
+      map((boards: Board[]) => boards.find(board => board.id === boardId))
+    );
+  }
 
-  // addBoard(workspaceId: number, newBoard: any): Observable<any> {
-  //   return this.http.post(`${this.DBurl}/${workspaceId}/boards`, newBoard);
-  // }
+  addBoard(workspaceId: number, newBoard: Board): Observable<Board> {
 
-  // updateBoard(workspaceId: number, boardId: number, updatedBoard: any): Observable<any> {
-  //   return this.http.put(`${this.DBurl}/${workspaceId}/boards/${boardId}`, updatedBoard);
-  // }
+    const tempBoard:Board={
+      title:newBoard.title,
+      description:newBoard.description,
+      isArchive:newBoard.isArchive,
+      isFavorite:newBoard.isFavorite,
+      workspaceId:workspaceId
+    }
+
+    return this.http.post<Board>(`${this.DBurl}`, tempBoard);
+  }
+
+  updateBoard(workspaceId: number, boardId: number, updatedBoard: any): Observable<any> {
+    return this.http.put(`${this.DBurl}/${workspaceId}/boards/${boardId}`, updatedBoard);
+  }
 }

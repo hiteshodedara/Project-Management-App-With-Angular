@@ -2,11 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TopmenubarComponent } from './components/topmenubar/topmenubar.component';
 import { SidemenubarComponent } from './components/sidemenubar/sidemenubar.component';
-import { MenubarModule } from 'primeng/menubar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TieredMenuModule } from 'primeng/tieredmenu';
-import { TooltipModule } from 'primeng/tooltip';
-import { MenuModule } from 'primeng/menu';
+import { PrimengModule } from '../primeng/primeng.module';
 
 
 
@@ -17,13 +14,9 @@ import { MenuModule } from 'primeng/menu';
   ],
   imports: [
     CommonModule,
-    MenubarModule,
     FormsModule,
     ReactiveFormsModule,
-    TieredMenuModule,
-    TooltipModule,
-    MenuModule
-
+    PrimengModule
   ],
   exports: [
     TopmenubarComponent,

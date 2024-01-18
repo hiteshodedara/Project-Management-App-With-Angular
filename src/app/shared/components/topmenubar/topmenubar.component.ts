@@ -43,7 +43,7 @@ export class TopmenubarComponent implements OnInit {
         label: 'Workspaces',
         items: [
           {
-            label: 'Workspaces',
+            label: 'Dashboard',
             icon: 'pi pi-align-left',
             routerLink: '/a/workspacehome'
           },
@@ -63,6 +63,10 @@ export class TopmenubarComponent implements OnInit {
       {
         label: 'Starred',
         items: [{ label: 'no any Starred menus' }]
+      },
+      {
+        label:"Create",
+        styleClass:"createbtn"
       }
     ];
 
@@ -88,7 +92,7 @@ export class TopmenubarComponent implements OnInit {
        this.workspaces = res
      })
      setTimeout(() => {
-       console.log(this.workspaces);
+      //  console.log(this.workspaces);
       this.workspaces.forEach(item=>{
         const menu_item:MenuItem={
           label:item.title
@@ -96,7 +100,7 @@ export class TopmenubarComponent implements OnInit {
 
         this.topMenu_workspace_items.push(menu_item)
       })
-      console.log(this.topMenu_workspace_items);
+      // console.log(this.topMenu_workspace_items);
 
 
 

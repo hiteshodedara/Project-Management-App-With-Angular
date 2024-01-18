@@ -4,7 +4,5 @@ export interface Board {
     description:string,
     isFavorite:boolean,
     isArchive:boolean,
-    todolists:any[],
-    todos:any[],
-    workspaceId:number
+    workspaceId?:number
 }

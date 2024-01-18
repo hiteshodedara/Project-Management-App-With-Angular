@@ -8,7 +8,6 @@ import { UnauthorizedModule } from './layouts/unauthorized/unauthorized.module';
 import { AuthorizedModule } from './layouts/authorized/authorized.module';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
-
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterModule } from '@angular/router';

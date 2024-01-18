@@ -11,16 +11,9 @@ import { TodoPopupModelComponent } from '../../modules/todo-popup-model/todo-pop
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DialogModule } from 'primeng/dialog';
-import { ToastModule } from 'primeng/toast';
-import { TieredMenuModule } from 'primeng/tieredmenu';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { AvatarModule } from 'primeng/avatar';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { ChipModule } from 'primeng/chip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DropdownModule } from 'primeng/dropdown';
+import { PrimengModule } from 'src/app/primeng/primeng.module';
 
 @NgModule({
   declarations: [
@@ -41,14 +34,7 @@ import { DropdownModule } from 'primeng/dropdown';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-    DialogModule,
-    ToastModule,
-    TieredMenuModule,
-    ConfirmPopupModule,
-    AvatarModule,
-    InputSwitchModule,
-    ChipModule,
-    DropdownModule
+    PrimengModule
   ]
 })
 export class AuthorizedModule { }

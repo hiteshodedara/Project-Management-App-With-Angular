@@ -1,23 +1,60 @@
 {
-  "workspaces": [
+  "boards": [
     {
-      "id": "9aad",
-      "title": "My  Office Work",
-      "description": "This workspace use for my office work.",
-      "boards": []
+      "id": "dbae",
+      "title": "this is first board",
+      "description": "this is first board",
+      "isArchive": false,
+      "isFavorite": true,
+      "workspaceId": 12
     },
     {
-      "id": "f782",
-      "title": "this for my work",
-      "description": "this for some privete stuf",
-      "boards": []
-    }
-  ]
-
-  ,
-  "boards":[
+      "id": "09a2",
+      "title": "dadad",
+      "description": "dadad",
+      "isArchive": true,
+      "isFavorite": true,
+      "workspaceId": 12
+    },
     {
-      
+      "id": "83ec",
+      "title": "dadad",
+      "description": "dadad",
+      "isArchive": false,
+      "isFavorite": false,
+      "workspaceId": 12
+    },
+    {
+      "id": "d074",
+      "title": "dad",
+      "description": "dad",
+      "isArchive": false,
+      "isFavorite": true,
+      "workspaceId": 1
+    },
+    {
+      "id": "53c2",
+      "title": "87u6y5",
+      "description": "87u6y5",
+      "isArchive": false,
+      "isFavorite": false,
+      "workspaceId": 4
+    },
+    {
+      "id": "625e",
+      "title": "this ok",
+      "description": "this ok",
+      "isArchive": false,
+      "isFavorite": true,
+      "workspaceId": 13
+    },
+    {
+      "id": "9efd",
+      "title": "hitesh",
+      "description": "hitesh",
+      "isArchive": false,
+      "isFavorite": true,
+      "workspaceId": 1
     }
   ]
 }

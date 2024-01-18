@@ -31,11 +31,7 @@ const routes: Routes = [
   ,children:[
   {path:'',redirectTo:'workspacehome',pathMatch:'full'},
   {path:"workspacehome",component:WorkspacehomeComponent},
-  {path:"workspacemembers",component:WorkspacemembersComponent},
-  {path:"boardhome",component:BoardhomeComponent},
-  {path:"boardshow",component:BoardShowComponent},
 ]},
-{path:"**",component:PageNotFoundComponent}
 ];
 
 @NgModule({

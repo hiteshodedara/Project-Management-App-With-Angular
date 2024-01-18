@@ -9,7 +9,7 @@
     <div class="card-body workspacebody d-flex   justify-content-center overflow-y-auto   ">
       <div class="card sub-card p-2  bg-dark-subtle  ">
         <ul class=" workspaces-ul" *ngFor="let item of workspaces$|async; index as i">
-          <li class="card overflow-hidden ">
+          <li class="card overflow-hidden li-workspace-item" >
             <div class="workspacemanage  p-1 bg-secondary   ">
               <div class="workspacetitlebody d-flex  justify-content-between" *ngIf="item">
                 <label id="idofworkspace" class="align-self-center text-light  fs-5">{{i+1}}</label>
