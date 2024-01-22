@@ -41,4 +41,8 @@ export class BoardService {
   updateBoard(workspaceId: number, boardId: number, updatedBoard: any): Observable<any> {
     return this.http.put(`${this.DBurl}/${workspaceId}/boards/${boardId}`, updatedBoard);
   }
+  
+  deleteBoard(boardId:number):Observable<any>{
+    return this.http.delete(`${this.DBurl}/${boardId}`)
+  }
 }

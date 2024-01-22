@@ -17,5 +17,9 @@ export const boardReducer = createReducer(
       board.workspaceId === workspaceId && board.id === boardId ? { ...board, ...updatedBoard } : board
     ),
   })),
+  on(BoardActions.deleteBoard, (state, { workspaceId, boardId }) => ({
+    ...state,
+    boards: state.boards.filter(board => !(board.workspaceId === workspaceId && board.id === boardId)),
+  })),
   // Add other reducer cases for CRUD operations if needed
 );

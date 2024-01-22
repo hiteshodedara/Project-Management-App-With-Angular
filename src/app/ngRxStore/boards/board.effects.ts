@@ -43,6 +43,18 @@ export class BoardEffects {
     )
   );
 
+  deleteBoard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BoardActions.deleteBoard),
+      mergeMap(({workspaceId,boardId }) =>
+        this.boardservice.deleteBoard( boardId).pipe(
+          map(() => BoardActions.loadBoards({ workspaceId })),
+          catchError(error => of(BoardActions.loadBoardsFailure({ error })))
+        )
+      )
+    )
+  );
+
   // Add other effects for CRUD operations if needed
 
   constructor(
