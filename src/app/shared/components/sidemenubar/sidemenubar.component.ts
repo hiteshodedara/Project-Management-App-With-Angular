@@ -33,7 +33,7 @@ export class SidemenubarComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.loadAndMakeBoards();
     
-    console.log("workspace_id in sidebar:", this.c_workspace_id);
+    // console.log("workspace_id in sidebar:", this.c_workspace_id);
     
   }
 
@@ -43,7 +43,7 @@ export class SidemenubarComponent implements OnInit, OnChanges {
       
       this.loadAndMakeBoards();
      
-      console.log("workspace_id in sidebar:", this.c_workspace_id);
+      // console.log("workspace_id in sidebar:", this.c_workspace_id);
     }
   }
 
@@ -56,7 +56,7 @@ export class SidemenubarComponent implements OnInit, OnChanges {
     if(isNaN(this.c_workspace_id)){
       const wId=localStorage.getItem("workspace_id")
       if(wId){
-        this.c_workspace_id=parseInt(wId);
+        this.c_workspace_id = parseInt(atob(wId));
         this.loadBoards()
       }
 
@@ -79,7 +79,7 @@ export class SidemenubarComponent implements OnInit, OnChanges {
         this.boardsItems = menuItems;
         this.onSidebarMenuInitialize();
       });
-      console.log("boards item:", this.boardsItems);
+      // console.log("boards item:", this.boardsItems);
       
     }, 20);
   }
@@ -114,9 +114,13 @@ export class SidemenubarComponent implements OnInit, OnChanges {
       const val = location.pathname
       const ans = val.split('/')
       this.c_workspace_id = parseInt(ans[3])
+
       if(ans[1]=='w'){
-        if (ans[2] =='boardhome'){          
-          localStorage.setItem("workspace_id", this.c_workspace_id.toString())
+
+        if (ans[2] =='boardhome'){    
+          const encriptid:string = btoa(this.c_workspace_id.toString()) 
+          
+          localStorage.setItem("workspace_id", encriptid)
         }
       }
     }

@@ -8,6 +8,7 @@ import { selectWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.selecto
 import { AuthuserService } from 'src/app/services/authuser.service';
 import { WorkspaceService } from 'src/app/services/workspace.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-workspacehome',
@@ -43,7 +44,8 @@ export class WorkspacehomeComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<Workspace>, private workspaceService: WorkspaceService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,
+    private router:Router) {
     this.initializeAddWorkspaceForm()
   }
 
@@ -231,11 +233,17 @@ export class WorkspacehomeComponent implements OnInit, OnDestroy {
     this.c_selected_event = event
   }
 
-
-  // this for testing anything
-  test_selector() {
-
+  send_To_Route(id?:number){
+    if(id){
+      console.log("ok");
+      
+      this.router.navigate([`w/boardhome/${id}`])
+    }else{
+      console.warn('not workng');
+      
+    }
   }
+
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());

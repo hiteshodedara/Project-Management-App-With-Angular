@@ -40,21 +40,22 @@ export class LoginpageComponent implements OnInit {
       
       this.loginuserservice.validateLoginCredentials(loginuser)
         .subscribe((result:any) => {
-          console.log(result);
+          console.log(result.header);
           
-          if (result) {
             // Login successful logic
             this.messageService.add({ severity: 'success', summary: 'Login successful!', detail: 'valid credentials!' });
             console.log('Login successful!',result);
+
             localStorage.setItem('loginuser', JSON.stringify(result));
             setTimeout(() => {
               this.router.navigate(['/a']);
             }, 1000);
-          } else {
+
+        },error=>{
             // Invalid credentials logic
-            this.messageService.add({ severity: 'error', summary: 'Invalid credentials!', detail: 'Enter valid credentials!' });
+            this.messageService.add({ severity: 'error', summary: `Invalid credentials Error:${error.status}!`, detail: 'Enter valid credentials!' });
             console.log('Invalid credentials!');
-          }
+            
         });
     }
   }

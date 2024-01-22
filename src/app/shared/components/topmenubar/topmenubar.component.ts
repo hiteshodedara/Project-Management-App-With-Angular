@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { map } from 'rxjs/operators';
 import { AppState } from 'src/app/ngRxStore/app.state';
 import { loadWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.actions';
@@ -9,7 +9,8 @@ import { selectWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.selecto
 @Component({
   selector: 'app-topmenubar',
   templateUrl: './topmenubar.component.html',
-  styleUrls: ['./topmenubar.component.sass']
+  styleUrls: ['./topmenubar.component.sass'],
+  providers: [MessageService]
 })
 export class TopmenubarComponent implements OnInit {
   topmenuItems: MenuItem[] = [];
@@ -18,7 +19,7 @@ export class TopmenubarComponent implements OnInit {
 
   @Output() on_currunt_workspaceChange = new EventEmitter<number>();
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private messageService:MessageService) { }
 
   ngOnInit() {
     this.store.dispatch(loadWorkspaces());
@@ -51,7 +52,10 @@ export class TopmenubarComponent implements OnInit {
       { label: 'Settings', icon: 'pi pi-cog' },
       { label: 'Sign Out', icon: 'pi pi-sign-out',command:()=>{
         localStorage.removeItem('loginuser')
-        location.reload()
+        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `You Now Logged out!`, life: 3000 });
+        setTimeout(() => {
+          location.reload()
+        }, 1000);
       } }
     ];
   }
