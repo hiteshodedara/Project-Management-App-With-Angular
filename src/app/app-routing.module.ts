@@ -12,6 +12,8 @@ import { BoardShowComponent } from './modules/board-show/board-show.component';
 import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
 import { loginaccessGuard } from './guards/loginaccess.guard';
 import { secureloginpageGuard } from './guards/secureloginpage.guard';
+import { WorkspaceComponent } from './layouts/workspace/workspace.component';
+import { BoardComponent } from './layouts/board/board.component';
 
 const routes: Routes = [
 {path:'',redirectTo:'u',pathMatch:'full'},
@@ -32,6 +34,25 @@ const routes: Routes = [
   {path:'',redirectTo:'workspacehome',pathMatch:'full'},
   {path:"workspacehome",component:WorkspacehomeComponent},
 ]},
+{
+  path:'w'
+  ,component:WorkspaceComponent
+  ,canActivate:[loginaccessGuard]
+  ,children:[
+    { path: '', redirectTo: 'boardhome', pathMatch: 'full' },
+    { path: "boardhome/:w_id", component: BoardhomeComponent },
+    { path: "members", component: WorkspacemembersComponent },
+    { path: "settings", component: WorkspacemembersComponent },
+  ]
+},
+  {
+    path: 'b'
+    , component: BoardComponent
+    , canActivate: [loginaccessGuard]
+    , children: [
+      { path: "board/:id", component: BoardShowComponent },
+    ]
+  }
 ];
 
 @NgModule({

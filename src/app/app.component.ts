@@ -2,8 +2,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  template: `
+  <router-outlet></router-outlet>
+  `,
+  styles: []
 })
 export class AppComponent {
   title = 'Project-Management-App-With-Angular';

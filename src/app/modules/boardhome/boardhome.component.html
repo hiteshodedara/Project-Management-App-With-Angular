@@ -1,13 +1,7 @@
 <div class="maindiv d-flex justify-content-center align-items-center bg-light flex-column  gap-1 ">
 
 
-    <div class="card d-flex justify-content-center align-items-center   " style="height: 70px;width: 40vw;">
-        <div class="card-title m-0 d-flex flex-row flex-nowrap gap-3 select-workspace-wrapper  ">
-            <h2 class="m-0 ">Select Workspace:</h2>
-            <p-dropdown (onChange)="on_select_workspace()" [options]="Workspaces" [(ngModel)]="selected_workspce" optionLabel="title"
-                placeholder="Select a City"></p-dropdown>
-        </div>
-    </div>
+   
 
 
     <div class="card boardCard bg-success-subtle">
@@ -30,7 +24,8 @@
                             </button>
                         </div>
     
-                        <div class="boardMainBody">
+                        <div class="boardMainBody d-flex ">
+                            <button disabled class=" btn btn-secondary p-2 m-0 "><i    [className]="item.isFavorite?'pi pi-star-fill fs-5':'pi pi-star fs-5'"></i></button>
                             <!-- btn for workspace setting -->
                             <button class="btn btn-secondary p-2 d-flex align-items-center">
                                 <i class="pi pi-cog fs-5"></i>
@@ -59,7 +54,7 @@
     <form [formGroup]="boardform" (ngSubmit)="on_addBoard()">
         <div class="mb-3">
             <label name="workspace_title" class="form-label">Board Name</label>
-            <input type="text" spellcheck="true" required class="form-control" id="w_name2" formControlName="boardTitle"
+            <input type="text" spellcheck="true" autofocus required class="form-control" id="w_name2" formControlName="boardTitle"
                 autocomplete="off">
         </div>
         <div class="mb-3">
@@ -71,10 +66,10 @@
             <label name="workspace_favorite" class="form-label">Favorite:</label>
             <p-inputSwitch formControlName="isFavorite" class="mx-2  " id="is_private2"></p-inputSwitch>
         </div>
-        <div class="my-3 d-flex">
+        <!-- <div class="my-3 d-flex">
             <label name="workspace_archive" class="form-label">Archive:</label>
             <p-inputSwitch formControlName="isArchive" class="mx-2  " id="is_private2"></p-inputSwitch>
-        </div>
+        </div> -->
         <div class="submit-btn d-flex justify-content-end ">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>

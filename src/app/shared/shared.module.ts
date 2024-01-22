@@ -4,6 +4,7 @@ import { TopmenubarComponent } from './components/topmenubar/topmenubar.componen
 import { SidemenubarComponent } from './components/sidemenubar/sidemenubar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimengModule } from '../primeng/primeng.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -16,7 +17,8 @@ import { PrimengModule } from '../primeng/primeng.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    PrimengModule
+    PrimengModule,
+    RouterModule
   ],
   exports: [
     TopmenubarComponent,

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Workspace } from 'src/app/models/workspace';
@@ -7,6 +7,7 @@ import { addWorkspace, deleteWorkspace, loadWorkspaces, updateWorkspace } from '
 import { selectWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.selectors';
 import { AuthuserService } from 'src/app/services/authuser.service';
 import { WorkspaceService } from 'src/app/services/workspace.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-workspacehome',
@@ -14,10 +15,10 @@ import { WorkspaceService } from 'src/app/services/workspace.service';
   styleUrls: ['./workspacehome.component.sass'],
   providers: [MessageService, ConfirmationService]
 })
-export class WorkspacehomeComponent implements OnInit {
+export class WorkspacehomeComponent implements OnInit, OnDestroy {
 
   workspaces$ = this.store.select(selectWorkspaces);//get all workspace data from ngrx store state
-  Workspaces!:Workspace[];
+  Workspaces!: Workspace[];
   //for is workspace is avaliable or not
   is_workspaces_avaliable!: boolean;
 
@@ -38,51 +39,54 @@ export class WorkspacehomeComponent implements OnInit {
   workspaceform!: FormGroup;
   workspace_updateForm!: FormGroup;
 
-
-
+  private subscriptions: Subscription[] = [];
 
   constructor(private store: Store<Workspace>, private workspaceService: WorkspaceService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService) {
-    this.addForm_initalize()
+    this.initializeAddWorkspaceForm()
   }
-  
-  
-  
+
+
+
   ngOnInit(): void {
     this.initialize_workspace_item_menu();
     this.validate_isWorkspaceAvaliable();
     this.loadWorkspacesOnStore();
 
     // Subscribe to changes in the store
-    this.workspaces$.subscribe(res => {
-      this.Workspaces = res;
+    this.subscriptions.push(
+      this.workspaces$.subscribe(res => {
+        this.Workspaces = res;
 
-      // Notify the service about the changes
-      this.workspaceService.updateWorkspaces(res);
-    });
+        // Notify the service about the changes
+        this.workspaceService.updateWorkspaces(res);
+      })
+    );
   }
 
   // validating workspce is avaliable or not
   validate_isWorkspaceAvaliable() {
-    this.workspaces$.subscribe(res => {
+    this.subscriptions.push(
+      this.workspaces$.subscribe(res => {
 
-      this.workspace_legth=res.length
+        this.workspace_legth = res.length
 
-      if (res.length !== 0) {
-        this.is_workspaces_avaliable = false
-      } else {
-        this.is_workspaces_avaliable = true
-      }
+        if (res.length !== 0) {
+          this.is_workspaces_avaliable = false
+        } else {
+          this.is_workspaces_avaliable = true
+        }
 
-    })
+      })
+    );
   }
 
   //initializing add workspace form data
-  addForm_initalize() {
+  initializeAddWorkspaceForm() {
     this.workspaceform = new FormGroup({
-      workspacetitle: new FormControl(''),
-      workspacedis: new FormControl(''),
+      workspacetitle: new FormControl('', Validators.required),
+      workspacedis: new FormControl('', Validators.required),
       isPrivate: new FormControl<boolean>(true)
     });
   }
@@ -150,8 +154,7 @@ export class WorkspacehomeComponent implements OnInit {
 
   //this method use to add workspace in backend
   on_addWorkspace() {
-    if (this.workspaceform.value.workspacetitle != ''
-      && this.workspaceform.value.workspacedis != '') {
+    if (this.workspaceform.valid) {
 
       const tempworkspace: Workspace = {
         title: this.workspaceform.value.workspacetitle,
@@ -164,7 +167,7 @@ export class WorkspacehomeComponent implements OnInit {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: `${tempworkspace.title} Workspace Added Successfully!` });
       this.visible_addWorkspace = false;
       this.workspaceform.reset()
-      this.addForm_initalize()
+      this.initializeAddWorkspaceForm()
 
     } else {
 
@@ -179,8 +182,7 @@ export class WorkspacehomeComponent implements OnInit {
   on_updateWorkspace() {
 
     if (this.c_selected_item
-      && this.workspace_updateForm.value.workspace_updated_dis != ''
-      && this.workspace_updateForm.value.workspace_updated_dis != '') {
+      && this.workspace_updateForm.valid) {
       // console.log("newForm:",this.workspace_updateForm.value);
 
       const tempworkspace: Workspace = {
@@ -233,6 +235,10 @@ export class WorkspacehomeComponent implements OnInit {
   // this for testing anything
   test_selector() {
 
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
 }

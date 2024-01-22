@@ -1,9 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
-import { TieredMenu } from 'primeng/tieredmenu';
-import { map } from 'rxjs';
-import { Workspace } from 'src/app/models/workspace';
+import { map } from 'rxjs/operators';
 import { AppState } from 'src/app/ngRxStore/app.state';
 import { loadWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.actions';
 import { selectWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.selectors';
@@ -14,102 +12,78 @@ import { selectWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.selecto
   styleUrls: ['./topmenubar.component.sass']
 })
 export class TopmenubarComponent implements OnInit {
+  topmenuItems: MenuItem[] = [];
+  profilemenuItems: MenuItem[] = [];
+  topMenu_workspace_items: MenuItem[] = [];
 
-  // main manu variable
-  topmenuItems: MenuItem[] | undefined;
+  @Output() on_currunt_workspaceChange = new EventEmitter<number>();
 
-  // TieredMenus variables
-  profilemenuItems: MenuItem[] | undefined;
-  
-  topMenu_workspace_items:MenuItem[]=[];
-  workspaces$ = this.store.select(selectWorkspaces)
-  workspaces!:Workspace[];
+  constructor(private store: Store<AppState>) { }
 
-  constructor(private store:Store<AppState>){
-  }
-  
   ngOnInit() {
-    this.topMenu_workspace_items = [];
     this.store.dispatch(loadWorkspaces());
-    this.make_workspaces_menu()
-    
+    this.makeWorkspacesMenu();
   }
 
-
-  menuBar_Initialize() {
-    // topmenubar menu item details
+  menuBarInitialize() {
     this.topmenuItems = [
       {
         label: 'Workspaces',
-        items: [
-          {
-            label: 'Dashboard',
-            icon: 'pi pi-align-left',
-            routerLink: '/a/workspacehome'
-          },
-          {
-            label: 'workspaces',
-            icon: 'pi pi-clone',
-            items: this.topMenu_workspace_items
-          }],
-          command:()=>{
-            this.ngOnInit()
-          }
+        items: this.topMenu_workspace_items,
+        command: () => this.makeWorkspacesMenu()
       },
       {
         label: 'Recent',
-        items: [{ label: 'no any recent menus' }]
+        items: [{ label: 'No recent menus' }]
       },
       {
         label: 'Starred',
-        items: [{ label: 'no any Starred menus' }]
+        items: [{ label: 'No starred menus' }]
       },
       {
-        label:"Create",
-        styleClass:"createbtn"
+        label: 'Create',
+        styleClass: 'createbtn'
       }
     ];
 
-    // profile menu item details
     this.profilemenuItems = [
-      {
-        label: 'Profile',
-        icon: 'pi pi-id-card',
-      },
-      {
-        label: 'Settings',
-        icon: 'pi pi-cog',
-      },
-      {
-        label: 'Sign Out',
-        icon: 'pi pi-sign-out',
-      }
+      { label: 'Profile', icon: 'pi pi-id-card' },
+      { label: 'Settings', icon: 'pi pi-cog' },
+      { label: 'Sign Out', icon: 'pi pi-sign-out',command:()=>{
+        localStorage.removeItem('loginuser')
+        location.reload()
+      } }
     ];
   }
 
-   make_workspaces_menu(){
-     this.workspaces$.subscribe(res => {
-       this.workspaces = res
-     })
-     setTimeout(() => {
-      //  console.log(this.workspaces);
-      this.workspaces.forEach(item=>{
-        const menu_item:MenuItem={
-          label:item.title
-        }
+  makeWorkspacesMenu() {
+    this.topMenu_workspace_items = [];
 
-        this.topMenu_workspace_items.push(menu_item)
-      })
+    this.store
+      .select(selectWorkspaces)
+      .pipe(
+        map(workspaces =>
+          workspaces.map(workspace => (
+            
+            {
+            label: workspace.title,
+            routerLink: `/w/boardhome/${workspace.id}`,
+            command: () => this.emitTheData(workspace.id)
+          }))
+        )
+      )
+      .subscribe(menuItems => {
+        this.topMenu_workspace_items = menuItems;
+      });
       // console.log(this.topMenu_workspace_items);
 
-
-
-       this.menuBar_Initialize()
-     }, 500);
+    // Delay the menuBarInitialize to make sure the topMenu_workspace_items is updated.
+    setTimeout(() => {
+      this.menuBarInitialize();
+    }, 1);
   }
 
-
-
-
-
+  emitTheData(id?: number) {
+    this.on_currunt_workspaceChange.emit(id);
+  }
 }
