@@ -48,8 +48,8 @@ export class WorkspaceService {
   updateWorkspaces(workspaces: Workspace[]) {
     this.workspacesSubject.next(workspaces);
   }
-  
 
-  
-  
+
+
+
 }

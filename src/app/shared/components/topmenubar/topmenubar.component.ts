@@ -19,7 +19,7 @@ export class TopmenubarComponent implements OnInit {
 
   @Output() on_currunt_workspaceChange = new EventEmitter<number>();
 
-  constructor(private store: Store<AppState>, private messageService:MessageService) { }
+  constructor(private store: Store<AppState>, private messageService: MessageService) { }
 
   ngOnInit() {
     this.store.dispatch(loadWorkspaces());
@@ -50,13 +50,15 @@ export class TopmenubarComponent implements OnInit {
     this.profilemenuItems = [
       { label: 'Profile', icon: 'pi pi-id-card' },
       { label: 'Settings', icon: 'pi pi-cog' },
-      { label: 'Sign Out', icon: 'pi pi-sign-out',command:()=>{
-        localStorage.removeItem('loginuser')
-        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `You Now Logged out!`, life: 3000 });
-        setTimeout(() => {
-          location.reload()
-        }, 1000);
-      } }
+      {
+        label: 'Sign Out', icon: 'pi pi-sign-out', command: () => {
+          localStorage.removeItem('loginuser')
+          this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `You Now Logged out!`, life: 3000 });
+          setTimeout(() => {
+            location.reload()
+          }, 1000);
+        }
+      }
     ];
   }
 
@@ -68,18 +70,18 @@ export class TopmenubarComponent implements OnInit {
       .pipe(
         map(workspaces =>
           workspaces.map(workspace => (
-            
+
             {
-            label: workspace.title,
-            routerLink: `/w/boardhome/${workspace.id}`,
-            command: () => this.emitTheData(workspace.id)
-          }))
+              label: workspace.title,
+              routerLink: `/w/boardhome/${workspace.id}`,
+              command: () => this.emitTheData(workspace.id)
+            }))
         )
       )
       .subscribe(menuItems => {
         this.topMenu_workspace_items = menuItems;
       });
-      // console.log(this.topMenu_workspace_items);
+    // console.log(this.topMenu_workspace_items);
 
     // Delay the menuBarInitialize to make sure the topMenu_workspace_items is updated.
     setTimeout(() => {

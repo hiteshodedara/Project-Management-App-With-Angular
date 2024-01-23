@@ -1,7 +1,6 @@
 .maindiv
     height: 94vh
 
-
 :host ::ng-deep
     .workspace-menu-warpper
         .p-tieredmenu
@@ -10,9 +9,11 @@
         .p-tieredmenu-root-list
             padding: 0
             margin: 0
-        
+
         .p-menuitem-link
             text-decoration: none
+
+        
 
 
 .workspacescard
@@ -30,7 +31,7 @@
     padding: 0
 
 .btn-workspace
-    width:25vw
+    width: 25vw
 
 #idofworkspace
     margin-left: 10px
@@ -39,4 +40,41 @@
 
     position: absolute
 
+.workspace-card
+    min-width: 60vw
+    max-width: 50vw
+    border: 1px solid #ccc
+    border-radius: 8px
+    padding: 16px
+    
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    align-items: center
+    &:hover
+        background: #d1d1d1 !important
 
+    .title
+        &:hover
+            cursor: pointer
+
+.settings-button
+    border: none
+    padding: 3px
+    &:hover
+        cursor: pointer
+        background: #848484 !important
+        &::focus
+            
+            background: #848484 !important
+          
+
+.main-workspaceshow-div
+    min-width: 70vw
+    padding: 10px
+
+.btn-addworkspace
+    overflow-wrap: break-word
+    min-width: 60vw
+    max-width: 50vw
+    min-height:4vh 

@@ -11,12 +11,12 @@ import { Component } from '@angular/core';
             </div>
         </div>
         <div class="row mainbody"> 
-            <div class="col dashboard">
+            <div class="col dashboard  ">
                 <router-outlet></router-outlet>
             </div>
         </div>
   `
-  
+
   , styles: []
 })
 export class AuthorizedComponent {

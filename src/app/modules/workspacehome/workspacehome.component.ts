@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -20,8 +20,6 @@ export class WorkspacehomeComponent implements OnInit, OnDestroy {
 
   workspaces$ = this.store.select(selectWorkspaces);//get all workspace data from ngrx store state
   Workspaces!: Workspace[];
-  //for is workspace is avaliable or not
-  is_workspaces_avaliable!: boolean;
 
   //length of workspaces
   workspace_legth!: number;
@@ -45,7 +43,7 @@ export class WorkspacehomeComponent implements OnInit, OnDestroy {
   constructor(private store: Store<Workspace>, private workspaceService: WorkspaceService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private router:Router) {
+    private router: Router) {
     this.initializeAddWorkspaceForm()
   }
 
@@ -60,6 +58,8 @@ export class WorkspacehomeComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.workspaces$.subscribe(res => {
         this.Workspaces = res;
+        console.log(res);
+
 
         // Notify the service about the changes
         this.workspaceService.updateWorkspaces(res);
@@ -73,13 +73,6 @@ export class WorkspacehomeComponent implements OnInit, OnDestroy {
       this.workspaces$.subscribe(res => {
 
         this.workspace_legth = res.length
-
-        if (res.length !== 0) {
-          this.is_workspaces_avaliable = false
-        } else {
-          this.is_workspaces_avaliable = true
-        }
-
       })
     );
   }
@@ -233,20 +226,47 @@ export class WorkspacehomeComponent implements OnInit, OnDestroy {
     this.c_selected_event = event
   }
 
-  send_To_Route(id?:number){
-    if(id){
+  send_To_Route(id?: number) {
+    if (id) {
       console.log("ok");
-      
+
       this.router.navigate([`w/boardhome/${id}`])
-    }else{
+    } else {
       console.warn('not workng');
-      
+
     }
   }
 
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  screenWidth!: number;
+
+  // Define breakpoints for different screen sizes
+  smallScreen = 576;
+  mediumScreen = 768;
+  largeScreen = 992;
+
+  // HostListener to detect window resize events
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    // Update the screenWidth variable with the current window width
+    this.screenWidth = window.innerWidth;
+  }
+
+  // Function to check the current screen size
+  getCurrentScreenSize() {
+    if (this.screenWidth < this.smallScreen) {
+      return 'Small';
+    } else if (this.screenWidth < this.mediumScreen) {
+      return 'Medium';
+    } else if (this.screenWidth < this.largeScreen) {
+      return 'Large';
+    } else {
+      return 'Extra Large';
+    }
   }
 
 }

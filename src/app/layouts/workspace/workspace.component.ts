@@ -11,14 +11,14 @@ export class WorkspaceComponent {
     this.sidebar_show = false;
   }
 
-  cWorkspaceURLid!:number;
+  cWorkspaceURLid!: number;
 
   for_openSidebar() {
     this.sidebar_show = true;
   }
 
-  on_workspaceChange(event:any){
-    this.cWorkspaceURLid=event;
-    
+  on_workspaceChange(event: any) {
+    this.cWorkspaceURLid = event;
+
   }
 }

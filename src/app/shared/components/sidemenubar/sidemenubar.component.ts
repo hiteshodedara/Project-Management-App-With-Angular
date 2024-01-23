@@ -32,17 +32,17 @@ export class SidemenubarComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loadAndMakeBoards();
-    
+
     // console.log("workspace_id in sidebar:", this.c_workspace_id);
-    
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['c_workspace_id']) {
       console.log("Workspace Id Changed");
-      
+
       this.loadAndMakeBoards();
-     
+
       // console.log("workspace_id in sidebar:", this.c_workspace_id);
     }
   }
@@ -53,14 +53,14 @@ export class SidemenubarComponent implements OnInit, OnChanges {
   }
 
   loadBoards() {
-    if(isNaN(this.c_workspace_id)){
-      const wId=localStorage.getItem("workspace_id")
-      if(wId){
+    if (isNaN(this.c_workspace_id)) {
+      const wId = localStorage.getItem("workspace_id")
+      if (wId) {
         this.c_workspace_id = parseInt(atob(wId));
         this.loadBoards()
       }
 
-    }else{
+    } else {
       this.store.dispatch(loadBoards({ workspaceId: this.c_workspace_id }));
       this.makeBoardsMenuItems();
     }
@@ -80,7 +80,7 @@ export class SidemenubarComponent implements OnInit, OnChanges {
         this.onSidebarMenuInitialize();
       });
       // console.log("boards item:", this.boardsItems);
-      
+
     }, 20);
   }
 
@@ -99,7 +99,7 @@ export class SidemenubarComponent implements OnInit, OnChanges {
         items: this.boardsItems
       }
     ];
-    
+
   }
 
   onSidebarClose() {
@@ -108,18 +108,18 @@ export class SidemenubarComponent implements OnInit, OnChanges {
 
   setWorkspaceId() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
-    if(id){
-      this.c_workspace_id =parseInt(id, 10)
-    }else{
+    if (id) {
+      this.c_workspace_id = parseInt(id, 10)
+    } else {
       const val = location.pathname
       const ans = val.split('/')
       this.c_workspace_id = parseInt(ans[3])
 
-      if(ans[1]=='w'){
+      if (ans[1] == 'w') {
 
-        if (ans[2] =='boardhome'){    
-          const encriptid:string = btoa(this.c_workspace_id.toString()) 
-          
+        if (ans[2] == 'boardhome') {
+          const encriptid: string = btoa(this.c_workspace_id.toString())
+
           localStorage.setItem("workspace_id", encriptid)
         }
       }
