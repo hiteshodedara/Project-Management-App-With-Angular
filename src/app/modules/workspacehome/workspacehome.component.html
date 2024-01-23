@@ -1,10 +1,8 @@
-<div class=" container  main-workspaces-show-div d-flex flex-column  justify-content-center align-items-center">
-  <div class="header ">
-    <label class="fw-bolder fs-1 ">Workspaces</label>
+<div class=" container-fluid   main-workspaces-show-div d-flex flex-column  justify-content-center align-items-center">
+  <div class="header my-5 ">
+    <label class="Header-title ">Workspaces</label>
   </div>
-  <div class="header workspaces-length mx-5 align-self-end ">
-    <h4 class=" mb-0 ">Total:{{workspace_legth? workspace_legth:0}}</h4>
-  </div>
+  
   <div class="container   d-flex flex-column  justify-content-center align-items-center mt-3 "
     *ngFor="let item of workspaces$|async; index as i">
 
@@ -27,7 +25,10 @@
   <div class="noitem text-center " *ngIf="!workspace_legth">
     <h2>Workspace are Not Available.</h2>
   </div>
-  <div class="addWorkspacebtn mt-5 ">
+  <div class="workspaces-length my-4 d-flex justify-content-end  ">
+    <h4 class="align-self-start  m-0 ">Total:{{workspace_legth? workspace_legth:0}}</h4>
+  </div>
+  <div class="addWorkspacebtn mt-2 ">
     <button class="btn btn-outline-success btn-addworkspace  " (click)="show_addWorkspace()">Add Workspace</button>
   </div>
 </div>
