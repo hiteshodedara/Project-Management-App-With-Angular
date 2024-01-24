@@ -22,26 +22,9 @@ export class AuthuserService {
     return this.http.get<any[]>(`${this.userURL}/user-roles/`)
   }
 
-  getuserinfo(){
-    const currentUser = localStorage.getItem('loginuser');
-    if(currentUser){
-      const data:string= JSON.parse(currentUser);
-      const newdata=data.trim();
-      
-
-      const base64EncodedString = newdata // Your Base64-encoded string
-      console.log('Encoded String:', base64EncodedString.trim());
-
-      try {
-        const decodedString = atob(base64EncodedString);
-        console.log('Decoded String:', decodedString);
-      } catch  {
-        console.error('Error decoding string:');
-      }
-
-      
-    }
-  }
+ getUserInfoByToken(token:any){
+   return this.http.get(`${this.userURL}/get-by-token?token=${token}`)
+ }
 
   // check login user 
   validateLoginCredentials(credentials: Loginuser): Observable<string> {

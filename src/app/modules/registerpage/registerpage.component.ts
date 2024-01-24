@@ -65,7 +65,7 @@ export class RegisterpageComponent implements OnInit {
           username: this.userRegistrationForm.get('userName')?.value,
           email: this.userRegistrationForm.get('email')?.value,
           password: this.userRegistrationForm.get('password')?.value,
-          role: userrole.roleKey
+          role: userrole.roleName
         };
         console.log(user);
         

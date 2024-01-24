@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { AppState } from 'src/app/ngRxStore/app.state';
 import { loadWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.actions';
 import { selectWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.selectors';
+import { AuthuserService } from 'src/app/services/authuser.service';
 import { BoardService } from 'src/app/services/board.service';
 
 @Component({
@@ -20,22 +21,26 @@ export class TopmenubarComponent implements OnInit {
   createButtonItems: MenuItem[] = [];
   topMenu_workspace_items: MenuItem[] = [];
   currunt_workspace_id!: number;
+  currunt_user:any;
+
+
+  userlogoname!:string;
 
   @ViewChild('createButtonMenu') createbuttonmenu!: TieredMenu;
 
   @Output() on_currunt_workspaceChange = new EventEmitter<number>();
 
   constructor(private store: Store<AppState>, private messageService: MessageService,
-    private boardService: BoardService) { }
+    private boardService: BoardService,private authService:AuthuserService) { }
 
   ngOnInit() {
     this.getworkspaceId();
-    //tommorow thing
-    console.log("menu_w_id:", this.currunt_workspace_id);
-    this.boardService.getAllBoards(this.currunt_workspace_id).subscribe(res => {
-      console.log("topmenu", res);
+    this.getcurruntUserData()
+    
+    setTimeout(() => {
+      this.makeUserLogoName()
+    }, 200);
 
-    })
     this.store.dispatch(loadWorkspaces());
     this.makeWorkspacesMenu();
   }
@@ -128,5 +133,22 @@ export class TopmenubarComponent implements OnInit {
     if (ls_id) {
       this.currunt_workspace_id = parseInt(atob(ls_id))
     }
+  }
+
+  getcurruntUserData(){
+    const ls_token=localStorage.getItem('loginuser')
+    if(ls_token){
+      const token=JSON.parse(ls_token)
+      this.authService.getUserInfoByToken(token).subscribe(res=>{
+        this.currunt_user=res
+      })
+    }
+  }
+  makeUserLogoName(){
+    const name=[this.currunt_user.username]
+    const newName = name.slice()
+    console.log(newName[0]);
+    
+    
   }
 }

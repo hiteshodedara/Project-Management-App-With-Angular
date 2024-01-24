@@ -1,6 +1,6 @@
 <div class="container-fluid d-flex justify-content-center align-items-center bg-primary-subtle mainbody"
     style="min-height: 100vh; background-image: url('../../../assets/images/blob-haikei.png'); background-size: cover;">
-    <div class="card p-5 w-50 overflow-hidden maincard" style="background-color: rgba(255, 255, 255, 0.8);">
+    <div class="card p-5 maincarddiv     overflow-hidden maincard" style="background-color: rgba(255, 255, 255, 0.8);">
         <div class="card-title d-flex justify-content-center">
             <label class="loginpagetitle">Register Page</label>
         </div>
@@ -47,8 +47,8 @@
                     Passwords do not match.
                 </div>
             </div>
-            <div class="mb-3 d-flex justify-content-center align-items-center ">
-                <label for="userRoles" class="form-label fw-bolder mx-3">Select Role </label>
+            <div class="mb-3 d-flex  align-items-center ">
+                <label for="userRoles" class="form-label fw-bolder mx-2 align-self-center ">Select Role </label>
                 <div class="dropdowmWrapper">
                 <p-dropdown formControlName="selectedRole" [autoOptionFocus]="true" appendTo="body" [options]="userRoles" optionLabel="roleName"
                     placeholder="Select a City"></p-dropdown>
