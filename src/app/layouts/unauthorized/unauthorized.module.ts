@@ -7,7 +7,7 @@ import { ForgotPasswordComponent } from '../../modules/forgot-password/forgot-pa
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
-
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import { ToastModule } from 'primeng/toast';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-    ToastModule
+    ToastModule,
+    DropdownModule
   ]
 })
 export class UnauthorizedModule { }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Registeruser } from '../models/registeruser';
 import { Loginuser } from '../models/loginuser';
+import { UserRole } from '../models/userrole';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,10 @@ export class AuthuserService {
   isUserLogin(): boolean {
     const currentUser = localStorage.getItem('loginuser');
     return !!currentUser; // Returns true if currentUser is not null or undefined
+  }
+
+  getallUserRole():Observable<any[]>{
+    return this.http.get<any[]>(`${this.userURL}/user-roles/`)
   }
 
   getuserinfo(){

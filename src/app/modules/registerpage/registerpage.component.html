@@ -47,11 +47,20 @@
                     Passwords do not match.
                 </div>
             </div>
+            <div class="mb-3 d-flex justify-content-center align-items-center ">
+                <label for="userRoles" class="form-label fw-bolder mx-3">Select Role </label>
+                <div class="dropdowmWrapper">
+                <p-dropdown formControlName="selectedRole" [autoOptionFocus]="true" appendTo="body" [options]="userRoles" optionLabel="roleName"
+                    placeholder="Select a City"></p-dropdown>
+                    </div>
+            </div>
+                
             <div class="button d-flex justify-content-end">
                 <a type="submit" class="btn btn-outline-success btn-lg mx-2" routerLink="/u/loginpage">Go Login</a>
                 <button type="submit" class="btn btn-outline-success btn-lg">Register</button>
             </div>
         </form>
+        
     </div>
 </div>
 
