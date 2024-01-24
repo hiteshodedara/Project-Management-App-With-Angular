@@ -1,11 +1,44 @@
-<div class="mainsidebardiv">
-  <p-menu [model]="sidebar_menu_item"></p-menu>
+<div class="mainsidebarddiv">
+  <div class="mainsidebardiv">
+    <p-menu [model]="sidebar_menu_item"></p-menu>
 
+    <!-- addBoard Button -->
+    <div class="addBoardbtn ">
+      <button class="addBtn rounded-2 " (click)="addboardformpanel.toggle($event)">
+        <i class="pi pi-plus  "></i>
+      </button>
+    </div>
 
-  <!-- Sidebar close button -->
-  <div class="sidebarclosebtn sticky-bottom top-100 d-flex justify-content-end ">
-    <button class="btn btn-primary" (click)="onSidebarClose()">
-      <i class="pi pi-arrow-left"></i>
-    </button>
+    <!-- Sidebar close button -->
+    <div class="sidebarclosebtn sticky-bottom top-100 d-flex justify-content-end ">
+      <button class="btn btn-primary" (click)="onSidebarClose()">
+        <i class="pi pi-arrow-left"></i>
+      </button>
+    </div>
   </div>
+
+
+  <p-overlayPanel #addboardformpanel>
+    <form [formGroup]="addBoardForm" (ngSubmit)="on_addBoard()">
+      <div class="mb-3">
+        <label name="workspace_title" class="form-label">Board Name</label>
+        <input type="text" spellcheck="true" autofocus required class="form-control" id="w_name2"
+          formControlName="boardTitle" autocomplete="off">
+      </div>
+      <div class="mb-3">
+        <label name="workspace_desc" class="form-label"> Board Description</label>
+        <input type="text" spellcheck="true" required class="form-control" id="w_desc2" formControlName="boardDesc"
+          autocomplete="off">
+      </div>
+      <div class="my-3 d-flex">
+        <label name="workspace_favorite" class="form-label">Favorite:</label>
+        <p-inputSwitch formControlName="isFavorite" class="mx-2  " id="is_private2"></p-inputSwitch>
+      </div>
+
+      <div class="submit-btn d-flex justify-content-end ">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </p-overlayPanel>
+
 </div>

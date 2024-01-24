@@ -1,1 +1,36 @@
-<p>board-show works!</p>
+<div class="container-fluid p-0 ">
+    <p-menubar class="">
+        <ng-template pTemplate="start" class="">
+            <div class="boardtitle">
+                <label>Todos Project</label>
+            </div>
+    
+            <!-- <button class="Favorite  " (click)="onclickfavorite()">
+                <i [class]="isfavorite?'pi pi-star':'pi pi-star-fill'"></i>
+            </button>
+    
+            <div class="WorkSpace">
+                <button class="m-1 p-1 " (click)="on_workspace_dialog_show()"><i class="pi pi-fw pi-user"></i>
+                    Workspace</button>
+            </div>
+     -->
+        </ng-template>
+        <ng-template pTemplate="end">
+            <button class=" p-1  align-self-center d-flex board_friendlist ">
+                <label id="boardusers" class="boardmembers">HO</label>
+            </button>
+    
+            <!-- board setting button -->
+            <div class="board_settingmenuwrapper">
+                <!-- <button class=" mx-2 p-2  align-self-center d-flex boardsetting" (click)="board_menu.toggle($event)">
+                    <i class="pi pi-ellipsis-h"></i>
+                </button>
+     -->
+                <!-- setting button menu-dialogbox -->
+                <!-- <p-tieredMenu #board_menu [model]="b_setting_menu_item" [popup]="true"></p-tieredMenu> -->
+            </div>
+    
+        </ng-template>
+    </p-menubar>
+    <h1>Board Show</h1>
+</div>

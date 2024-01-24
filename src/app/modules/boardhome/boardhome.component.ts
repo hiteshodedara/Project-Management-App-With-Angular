@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { Board } from 'src/app/models/board';
 import { AppState } from 'src/app/ngRxStore/app.state';
-import { addBoard, deleteBoard, loadBoards, updateBoard } from 'src/app/ngRxStore/boards/board.actions';
+import { addBoard, deleteBoard, favoriteToggle, loadBoards, updateBoard } from 'src/app/ngRxStore/boards/board.actions';
 import { selectBoards } from 'src/app/ngRxStore/boards/board.selectors';
 
 @Component({
@@ -26,9 +26,12 @@ export class BoardhomeComponent implements OnInit {
   currunt_boards$!: Observable<Board[]>;
   board_length!: number;
 
-  constructor(private store: Store<AppState>, private activetedRoute: ActivatedRoute,
+  constructor(private store: Store<AppState>,
+    private activetedRoute: ActivatedRoute,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService,) {
+    private confirmationService: ConfirmationService,
+    private router:Router
+    ) {
   }
 
   ngOnInit() {
@@ -124,7 +127,7 @@ export class BoardhomeComponent implements OnInit {
         }
 
         const w_id = this.selected_workspce
-        console.log("w_id", w_id);
+        // console.log("w_id", w_id);
         if (w_id) {
           this.store.dispatch(addBoard({ workspaceId: w_id, newBoard: tempBoard }))
         }
@@ -202,5 +205,20 @@ export class BoardhomeComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'Your Board Not Deleted', life: 3000 });
       }
     });
+  }
+
+  on_click_FavoriteToggle(boardId?:number){
+    if(boardId){
+      this.store.dispatch(favoriteToggle({workspaceId:this.selected_workspce,boardId}))
+      console.log("favorite toggled");
+      
+    }
+  }
+
+  on_router_send(board_id?:number){
+    if(board_id){
+      console.log(board_id);
+      this.router.navigate([`b/board/${board_id}`])
+    }
   }
 }

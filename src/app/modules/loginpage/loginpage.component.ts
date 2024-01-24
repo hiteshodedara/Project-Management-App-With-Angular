@@ -40,11 +40,11 @@ export class LoginpageComponent implements OnInit {
       
       this.loginuserservice.validateLoginCredentials(loginuser)
         .subscribe((result:any) => {
-          console.log(result.header);
+          // console.log(result.header);
           
             // Login successful logic
             this.messageService.add({ severity: 'success', summary: 'Login successful!', detail: 'valid credentials!' });
-            console.log('Login successful!',result);
+            // console.log('Login successful!',result);
 
             localStorage.setItem('loginuser', JSON.stringify(result));
             setTimeout(() => {

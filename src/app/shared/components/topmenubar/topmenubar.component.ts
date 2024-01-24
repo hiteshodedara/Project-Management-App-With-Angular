@@ -21,10 +21,11 @@ export class TopmenubarComponent implements OnInit {
   createButtonItems: MenuItem[] = [];
   topMenu_workspace_items: MenuItem[] = [];
   currunt_workspace_id!: number;
-  currunt_user:any;
+  currunt_user_object:any;
 
 
   userlogoname!:string;
+  curruntUserName!:string;
 
   @ViewChild('createButtonMenu') createbuttonmenu!: TieredMenu;
 
@@ -39,6 +40,7 @@ export class TopmenubarComponent implements OnInit {
     
     setTimeout(() => {
       this.makeUserLogoName()
+      this.setUserName()
     }, 200);
 
     this.store.dispatch(loadWorkspaces());
@@ -140,15 +142,21 @@ export class TopmenubarComponent implements OnInit {
     if(ls_token){
       const token=JSON.parse(ls_token)
       this.authService.getUserInfoByToken(token).subscribe(res=>{
-        this.currunt_user=res
+        this.currunt_user_object =res
       })
     }
   }
   makeUserLogoName(){
-    const name=[this.currunt_user.username]
-    const newName = name.slice()
-    console.log(newName[0]);
-    
-    
+    const name: string = this.currunt_user_object.username
+    this.userlogoname = name.split(' ').map(w => w.charAt(0)).join('').toUpperCase()
+    // console.log(this.userlogoname);
   }
+
+  setUserName() {
+    const name: string = this.currunt_user_object.username;
+    this.curruntUserName = name.split(' ').map(word =>
+      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    ).join(' ');
+  }
+
 }

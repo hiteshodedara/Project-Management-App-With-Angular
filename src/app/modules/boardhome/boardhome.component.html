@@ -8,7 +8,7 @@
         *ngFor="let item of currunt_boards$|async; index as i">
 
         <div class="boards-card bg-dark-subtle " *ngIf=" board_length">
-            <div class="title d-flex gap-2 flex-wrap overflow-auto flex-fill   ">
+            <div class="title d-flex gap-2 flex-wrap overflow-auto flex-fill  " (click)="on_router_send(item.id)">
                 <div class="indexdiv">
                     <h3 class="align-self-center mb-0  ">{{i+1}}</h3>
                 </div>
@@ -17,11 +17,11 @@
                 </div>
             </div>
             <div class="allicons d-flex gap-3 ">
-                <button  class=" btn  btn-secondary p-1 m-0 bg-transparent border-0 text-dark favoriteBtn d-flex justify-content-center align-items-center  ">
+                <button (click)="on_click_FavoriteToggle(item.id)"  class=" btn  btn-secondary p-1 m-0 bg-transparent border-0 text-dark favoriteBtn d-flex justify-content-center align-items-center  ">
                     <i [className]="item.isFavorite?'pi pi-star-fill fs-4':'pi pi-star fs-4'" ></i>
                 </button>
                 <button class="settings-button d-flex align-items-center justify-content-center  bg-transparent border-0 "
-                (click)="board_item_menu.show($event)" (click)="slected_item_data($event,item)">
+                (click)="board_item_menu.show($event)" (click)="slected_item_data($event,item)" pTooltip="Settings">
                     <i class="pi pi-cog  fs-4 "></i>
                 </button>
             </div>
@@ -35,7 +35,7 @@
     <div class="board-length my-4 d-flex justify-content-end  ">
         <h4 class="align-self-start  m-0 ">Total:{{board_length? board_length:0}}</h4>
     </div>
-    <div class="addboardbtn mt-2 ">
+    <div class=" mt-2 ">
         <button class="btn btn-outline-success btn-addboard  " (click)="on_addBoard_show()">Add Board</button>
     </div>
 </div>
@@ -80,7 +80,7 @@
 
 
 <!-- dialog for add workspace button click -->
-<p-dialog header="Add Board" [(visible)]="visible_addBoard" [style]="{width: '30vw'}"
+<p-dialog header="Add Board" [(visible)]="visible_addBoard" styleClass="updateBoardDialogs"
 [draggable]="false" [modal]="true" [dismissableMask]="true">
     <form [formGroup]="boardform" (ngSubmit)="on_addBoard()">
         <div class="mb-3">
@@ -97,17 +97,14 @@
             <label name="workspace_favorite" class="form-label">Favorite:</label>
             <p-inputSwitch formControlName="isFavorite" class="mx-2  " id="is_private2"></p-inputSwitch>
         </div>
-        <!-- <div class="my-3 d-flex">
-            <label name="workspace_archive" class="form-label">Archive:</label>
-            <p-inputSwitch formControlName="isArchive" class="mx-2  " id="is_private2"></p-inputSwitch>
-        </div> -->
+  
         <div class="submit-btn d-flex justify-content-end ">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 </p-dialog>
 
-<p-dialog header="Update Board" [(visible)]="visible_updateBoard" [style]="{width: '30vw'}"
+<p-dialog header="Update Board" [(visible)]="visible_updateBoard" styleClass="updateBoardDialogs"
 [draggable]="false" [modal]="true" [dismissableMask]="true">
     <form [formGroup]="boardform" (ngSubmit)="on_updateBoard()">
         <div class="mb-3">

@@ -58,7 +58,7 @@ export class WorkspacehomeComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.workspaces$.subscribe(res => {
         this.Workspaces = res;
-        console.log(res);
+        // console.log(res);
 
 
         // Notify the service about the changes

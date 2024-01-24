@@ -21,5 +21,13 @@ export const boardReducer = createReducer(
     ...state,
     boards: state.boards.filter(board => !(board.workspaceId === workspaceId && board.id === boardId)),
   })),
+  on(BoardActions.favoriteToggle, (state, { workspaceId, boardId }) => ({
+    ...state,
+    boards: state.boards.map(board =>
+      board.workspaceId === workspaceId && board.id === boardId
+        ? { ...board, isFavorite: !board.isFavorite } // Toggle the isFavorite property
+        : board
+    ),
+  })),
   // Add other reducer cases for CRUD operations if needed
 );

@@ -1,14 +1,16 @@
 // sidemenubar.component.ts
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
+import { OverlayPanel } from 'primeng/overlaypanel';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Board } from 'src/app/models/board';
 import { AppState } from 'src/app/ngRxStore/app.state';
-import { loadBoards } from 'src/app/ngRxStore/boards/board.actions';
+import { addBoard, loadBoards } from 'src/app/ngRxStore/boards/board.actions';
 import { selectBoards } from 'src/app/ngRxStore/boards/board.selectors';
 
 @Component({
@@ -20,9 +22,13 @@ export class SidemenubarComponent implements OnInit, OnChanges {
   @Output() sidebar_close = new EventEmitter();
   @Input() c_workspace_id!: number;
 
+  @ViewChild('addboardformpanel') addBoardFormPanel!: OverlayPanel;
+
   sidebar_menu_item: MenuItem[] | undefined;
   boardsItems: MenuItem[] = [];
   currunt_boards$: Observable<Board[]> = this.store.select(selectBoards);
+
+  addBoardForm!:FormGroup;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -32,14 +38,26 @@ export class SidemenubarComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loadAndMakeBoards();
-
+    this.addboardform_Initialize()
     // console.log("workspace_id in sidebar:", this.c_workspace_id);
-
   }
+
+
+  isSmallScreen: boolean = window.innerWidth > 960;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.isSmallScreen = window.innerWidth > 960;
+    if(!this.isSmallScreen){
+      this.onSidebarClose()
+    }
+  }
+
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['c_workspace_id']) {
-      console.log("Workspace Id Changed");
+      // console.log("Workspace Id Changed");
       // console.log("workspace_id in sidebar:", this.c_workspace_id);
 
       this.setWorkspaceId()
@@ -52,6 +70,14 @@ export class SidemenubarComponent implements OnInit, OnChanges {
   loadAndMakeBoards() {
     this.setWorkspaceId();
     this.loadBoards();
+  }
+
+  addboardform_Initialize() {
+    this.addBoardForm = new FormGroup({
+      boardTitle: new FormControl(''),
+      boardDesc: new FormControl(''),
+      isFavorite: new FormControl(false),
+    })
   }
 
   loadBoards() {
@@ -79,6 +105,7 @@ export class SidemenubarComponent implements OnInit, OnChanges {
       this.currunt_boards$.pipe(
         map(boards => boards.map(board => ({
           label: board.title,
+          tooltipPosition:'right',
           routerLink: `/b/board/${board.id}`
         })))
       ).subscribe(menuItems => {
@@ -136,5 +163,37 @@ export class SidemenubarComponent implements OnInit, OnChanges {
         }
       }
     }
+  }
+
+  on_addBoard(){
+
+
+
+
+
+
+    const board_val = this.addBoardForm.value;
+    if (this.c_workspace_id) {
+      if (board_val.boardTitle != '' && board_val.boardDesc != '') {
+
+        const tempBoard: Board = {
+          title: board_val.boardTitle,
+          description: board_val.boardTitle,
+          isFavorite: board_val.isFavorite,
+        }
+
+        const w_id = this.c_workspace_id
+        // console.log("w_id", w_id);
+        if (w_id) {
+          this.store.dispatch(addBoard({ workspaceId: w_id, newBoard: tempBoard }))
+        }
+        // console.log(tempBoard);
+        this.addBoardFormPanel.hide()
+        this.addboardform_Initialize()
+
+      } else {
+        console.warn("enter all fields");
+      }
+    }    
   }
 }

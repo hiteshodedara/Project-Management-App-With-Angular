@@ -15,6 +15,10 @@
           <h3 class="align-self-center mb-0     ">{{item.title}}</h3>
         </div>
       </div>
+      <div class="title-textdiv d-flex align-items-center justify-content-center bg-secondary-subtle  rounded-5 px-2 py-1   mx-3">
+        <i class='isprivateicon mx-1 ' [class]="item.isPrivate?'pi pi-lock':'pi pi-unlock'"></i>
+        <h5 class="m-0  isprivateText">{{item.isPrivate?'Private':'Public'}}</h5>
+      </div>
       <button class="settings-button d-flex align-items-center justify-content-center  bg-transparent "
         (click)="workspce_item_menu.show($event)" (click)="slected_item_data($event,item)">
         <i class="pi pi-cog  fs-4 "></i>
@@ -38,7 +42,7 @@
 
 
 <!-- dialog for add workspace button click -->
-<p-dialog header="Add Workspace" [(visible)]="visible_addWorkspace" [style]="{width: '30vw'}"
+<p-dialog header="Add Workspace" [(visible)]="visible_addWorkspace" styleClass="updateWorkspaceDialogs"
 [draggable]="false" [modal]="true" [dismissableMask]="true">
   <form [formGroup]="workspaceform" (ngSubmit)="on_addWorkspace()">
     <div class="mb-3">
@@ -95,7 +99,7 @@
 
 <!-- update workspace menu item dialogbox -->
 <div class="update-workspace-dialog-wrapper" *ngIf="workspace_updateForm">
-  <p-dialog header="Update Workspace" [(visible)]="visible_updateWorkspace" [style]="{width: '30vw'}"
+  <p-dialog header="Update Workspace" [(visible)]="visible_updateWorkspace" styleClass="updateWorkspaceDialogs"
   [draggable]="false" [modal]="true" [dismissableMask]="true">
     <form [formGroup]="workspace_updateForm" (ngSubmit)="on_updateWorkspace()">
       <div class="mb-3">

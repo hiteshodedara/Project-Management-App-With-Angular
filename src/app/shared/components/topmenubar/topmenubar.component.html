@@ -15,17 +15,17 @@
             </div>
         </ng-template>
         <ng-template pTemplate="end">
-            <div class=" p-2  d-flex align-items-center justify-content-center ">
+            <div class=" py-1   d-flex align-items-center justify-content-center ">
                 <div class="searchbox">
-                    <input type="text" placeholder="Search" class="form-control" />
+                    <input type="text" placeholder="Search" class="form-control" pTooltip="Search Boards" tooltipPosition="bottom"  />
                 </div>
                 <div class="serchicon">
-                    <button class="bg-transparent border-0 ">
+                    <button class="bg-transparent border-0 " pTooltip="Search Boards" tooltipPosition="bottom">
                         <i class="pi pi-search text-light fs-5 "></i>
                     </button>
                 </div>
-                <div class="userprofile mx-2 " pTooltip="User Profile" tooltipPosition="bottom">
-                    <button class="userProfilename btn" (click)="profilemenu.toggle($event)">HO</button>
+                <div class="userprofile mx-2 " [pTooltip]="curruntUserName" tooltipPosition="left" >
+                    <button class="userProfilename btn" (click)="profilemenu.toggle($event)">{{userlogoname}}</button>
                 </div>
             </div>
         </ng-template>

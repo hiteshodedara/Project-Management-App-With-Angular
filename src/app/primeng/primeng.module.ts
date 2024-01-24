@@ -11,7 +11,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
-
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 @NgModule({
   
   exports:[
@@ -26,7 +26,8 @@ import { MenubarModule } from 'primeng/menubar';
     DropdownModule,
     TooltipModule,
     MenuModule,
-    MenubarModule
+    MenubarModule,
+    OverlayPanelModule
   ]
 })
 export class PrimengModule { }
