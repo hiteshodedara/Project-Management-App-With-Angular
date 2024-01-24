@@ -40,10 +40,12 @@ export class SidemenubarComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['c_workspace_id']) {
       console.log("Workspace Id Changed");
-
-      this.loadAndMakeBoards();
-
       // console.log("workspace_id in sidebar:", this.c_workspace_id);
+
+      this.setWorkspaceId()
+
+      this.loadBoards();
+
     }
   }
 
@@ -57,12 +59,16 @@ export class SidemenubarComponent implements OnInit, OnChanges {
       const wId = localStorage.getItem("workspace_id")
       if (wId) {
         this.c_workspace_id = parseInt(atob(wId));
+        // console.log("id:",this.c_workspace_id);
+        
         this.loadBoards()
       }
 
     } else {
       this.store.dispatch(loadBoards({ workspaceId: this.c_workspace_id }));
-      this.makeBoardsMenuItems();
+      setTimeout(() => {
+        this.makeBoardsMenuItems();
+      }, 100);
     }
   }
 
@@ -77,7 +83,8 @@ export class SidemenubarComponent implements OnInit, OnChanges {
         })))
       ).subscribe(menuItems => {
         this.boardsItems = menuItems;
-        this.onSidebarMenuInitialize();
+        this.onSidebarMenuInitialize()
+
       });
       // console.log("boards item:", this.boardsItems);
 
@@ -96,7 +103,7 @@ export class SidemenubarComponent implements OnInit, OnChanges {
       },
       {
         label: `Your Boards`,
-        items: this.boardsItems
+        items: this.boardsItems &&this.boardsItems.length > 0 ? this.boardsItems : [{label:'no boards available'}]
       }
     ];
 
@@ -113,13 +120,18 @@ export class SidemenubarComponent implements OnInit, OnChanges {
     } else {
       const val = location.pathname
       const ans = val.split('/')
-      this.c_workspace_id = parseInt(ans[3])
+      
+      // console.log(ans);
+      
+      if (ans[1] != 'w') return
+      else{
 
-      if (ans[1] == 'w') {
-
-        if (ans[2] == 'boardhome') {
+        if (ans[2] != 'boardhome') return
+        else{
+          this.c_workspace_id = parseInt(ans[3])
           const encriptid: string = btoa(this.c_workspace_id.toString())
-
+          // console.log("storeage updated");
+          
           localStorage.setItem("workspace_id", encriptid)
         }
       }

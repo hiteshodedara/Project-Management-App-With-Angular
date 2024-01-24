@@ -242,31 +242,5 @@ export class WorkspacehomeComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
-  screenWidth!: number;
-
-  // Define breakpoints for different screen sizes
-  smallScreen = 576;
-  mediumScreen = 768;
-  largeScreen = 992;
-
-  // HostListener to detect window resize events
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    // Update the screenWidth variable with the current window width
-    this.screenWidth = window.innerWidth;
-  }
-
-  // Function to check the current screen size
-  getCurrentScreenSize() {
-    if (this.screenWidth < this.smallScreen) {
-      return 'Small';
-    } else if (this.screenWidth < this.mediumScreen) {
-      return 'Medium';
-    } else if (this.screenWidth < this.largeScreen) {
-      return 'Large';
-    } else {
-      return 'Extra Large';
-    }
-  }
-
+  
 }

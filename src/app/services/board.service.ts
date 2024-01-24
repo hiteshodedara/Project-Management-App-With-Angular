@@ -10,19 +10,17 @@ import { Board } from '../models/board';
 export class BoardService {
   private DBurl = "http://localhost:3000/boards";
 
+  private newurl ="http://localhost:8080/api/v1/workspaces"
+
   constructor(private http: HttpClient,private workspaceservice:WorkspaceService) { }
 
   getAllBoards(workspaceId: number): Observable<Board[]> {
     
-    return this.http.get<Board[]>(this.DBurl).pipe(
-      map((boards: Board[]) => boards.filter(board => board.workspaceId === workspaceId))
-    );
+    return this.http.get<Board[]>(`${this.newurl}/${workspaceId}/boards`)
   }
 
-  getBoardById(workspaceId: number, boardId: number): Observable<Board | undefined> {
-    return this.getAllBoards(workspaceId).pipe(
-      map((boards: Board[]) => boards.find(board => board.id === boardId))
-    );
+  getBoardById(workspaceId: number, boardId: number): Observable<Board> {
+    return this.http.get<Board>(`${this.newurl}/${workspaceId}/boards/${boardId}`)
   }
 
   addBoard(workspaceId: number, newBoard: Board): Observable<Board> {
@@ -30,19 +28,23 @@ export class BoardService {
     const tempBoard:Board={
       title:newBoard.title,
       description:newBoard.description,
-      isArchive:newBoard.isArchive,
       isFavorite:newBoard.isFavorite,
       workspaceId:workspaceId
     }
 
-    return this.http.post<Board>(`${this.DBurl}`, tempBoard);
+    return this.http.post<Board>(`${this.newurl}/${workspaceId}/boards`, tempBoard);
   }
 
   updateBoard(workspaceId: number, boardId: number, updatedBoard: any): Observable<any> {
-    return this.http.put(`${this.DBurl}/${workspaceId}/boards/${boardId}`, updatedBoard);
+    return this.http.put(`${this.newurl}/${workspaceId}/boards/${boardId}`, updatedBoard);
   }
   
-  deleteBoard(boardId:number):Observable<any>{
-    return this.http.delete(`${this.DBurl}/${boardId}`)
+  deleteBoard(boardId:number,workspaceId:number):Observable<any>{
+    return this.http.delete(`${this.newurl}/${workspaceId}/boards/${boardId}`)
+  }
+
+  favoriteToggle(boardId: number, workspaceId: number): Observable<any>{
+    const favorite="true";
+    return this.http.patch(`${this.newurl}/${workspaceId}/boards/${boardId}/toggleFavorite`,favorite)
   }
 }

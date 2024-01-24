@@ -1,61 +1,92 @@
-<div class="maindiv d-flex justify-content-center align-items-center bg-light flex-column  gap-1 ">
 
-
-   
-
-
-    <div class="card boardCard bg-success-subtle">
-        <div
-            class="card-title  m-0  boardTitle p-1 mt-2   d-flex flex-column  justify-content-center overflow-hidden align-items-center ">
-            <h1 class="fw-bolder">Boards</h1>
-            <h4 class="align-self-end mx-3 mb-0">Total:{{board_length}}</h4>
-        </div>
-    <div class="card-body boardBody d-flex justify-content-center overflow-y-auto">
-        <div class="card sub-card p-2 bg-dark-subtle">
-            <ng-container *ngIf="((currunt_boards$ | async)?? []).length > 0; else noBoards">
-                <ul class="boards-ul" *ngFor="let item of currunt_boards$ | async; index as i">
-                    <li
-                        class="card overflow-hidden p-1 bg-secondary d-flex flex-row justify-content-between align-items-center">
-                        <div class="boardTitle d-flex justify-content-between">
-                            <label id="idofworkspace" class="align-self-center mx-1 text-light fs-5">{{i + 1}}</label>
-                            <button
-                                class="btn btn-secondary mx-2 btn-board mb-0 d-flex justify-content-start align-items-center">
-                                <h3 class="align-self-center mb-0">{{item.title}}</h3>
-                            </button>
-                        </div>
-    
-                        <div class="boardMainBody d-flex ">
-                            <button disabled class=" btn btn-secondary p-2 m-0 "><i    [className]="item.isFavorite?'pi pi-star-fill fs-5':'pi pi-star fs-5'"></i></button>
-                            <!-- btn for workspace setting -->
-                            <button class="btn btn-secondary p-2 d-flex align-items-center">
-                                <i class="pi pi-cog fs-5"></i>
-                            </button>
-                        </div>
-                    </li>
-                </ul>
-            </ng-container>
-            <ng-template #noBoards>
-                <h2>No boards available</h2>
-            </ng-template>
-        </div>
+<div class=" container-fluid  p-0  main-board-show-div d-flex flex-column  justify-content-center align-items-center">
+    <div class="header my-5 ">
+        <label class="Header-title ">Boards</label>
     </div>
 
-        <div class="addworkspacebtndiv p-2 d-flex justify-content-center ">
-            <!-- add workspace button -->
-            <button class="btn btn-success  " (click)="on_addBoard_show()">Add Board</button>
+    <div class="container   d-flex flex-column  justify-content-center align-items-center mt-3 "
+        *ngFor="let item of currunt_boards$|async; index as i">
+
+        <div class="boards-card bg-dark-subtle " *ngIf=" board_length">
+            <div class="title d-flex gap-2 flex-wrap overflow-auto flex-fill   ">
+                <div class="indexdiv">
+                    <h3 class="align-self-center mb-0  ">{{i+1}}</h3>
+                </div>
+                <div class="title-textdiv">
+                    <h3 class="align-self-center mb-0 ">{{item.title}}</h3>
+                </div>
+            </div>
+            <div class="allicons d-flex gap-3 ">
+                <button  class=" btn  btn-secondary p-1 m-0 bg-transparent border-0 text-dark favoriteBtn d-flex justify-content-center align-items-center  ">
+                    <i [className]="item.isFavorite?'pi pi-star-fill fs-4':'pi pi-star fs-4'" ></i>
+                </button>
+                <button class="settings-button d-flex align-items-center justify-content-center  bg-transparent border-0 "
+                (click)="board_item_menu.show($event)" (click)="slected_item_data($event,item)">
+                    <i class="pi pi-cog  fs-4 "></i>
+                </button>
+            </div>
+
         </div>
+
+    </div>
+    <div class="noitem text-center " *ngIf="!board_length">
+        <h2>Boards are Not Available.</h2>
+    </div>
+    <div class="board-length my-4 d-flex justify-content-end  ">
+        <h4 class="align-self-start  m-0 ">Total:{{board_length? board_length:0}}</h4>
+    </div>
+    <div class="addboardbtn mt-2 ">
+        <button class="btn btn-outline-success btn-addboard  " (click)="on_addBoard_show()">Add Board</button>
     </div>
 </div>
 
 
 
+
+
+<!-- board item setting tried menu_show -->
+<div class="workspace-menu-warpper">
+    <p-tieredMenu #board_item_menu [model]="board_item_setting_menu" [popup]="true"></p-tieredMenu>
+</div>
+
+
+<!-- delete workspace menu item dialog  -->
+<p-confirmPopup></p-confirmPopup>
+
+<p-toast></p-toast>
+
+
+<!-- show board information dialog box -->
+<div class="show-workspace-info-wrpper" *ngIf="c_selected_item">
+    <p-dialog header="Workspace Information" [(visible)]="show_board_item_info" [modal]="true"
+        [style]="{ width: '30rem' }" [draggable]="false" [modal]="true" [dismissableMask]="true">
+
+        <ul class="fs-4 ">
+            <li>
+                <span class="fw-bold ">Title:</span> {{c_selected_item.title}}
+            </li>
+            <li>
+                <span class="fw-bold ">Discription:</span> {{c_selected_item.description}}
+            </li>
+            <li>
+                <span class="fw-bold ">Private:</span> {{c_selected_item.isFavorite}}
+            </li>
+        </ul>
+
+    </p-dialog>
+</div>
+
+
+
+
 <!-- dialog for add workspace button click -->
-<p-dialog header="Add Workspace" [(visible)]="visible_addBoard" [style]="{width: '30vw'}">
+<p-dialog header="Add Board" [(visible)]="visible_addBoard" [style]="{width: '30vw'}"
+[draggable]="false" [modal]="true" [dismissableMask]="true">
     <form [formGroup]="boardform" (ngSubmit)="on_addBoard()">
         <div class="mb-3">
             <label name="workspace_title" class="form-label">Board Name</label>
-            <input type="text" spellcheck="true" autofocus required class="form-control" id="w_name2" formControlName="boardTitle"
-                autocomplete="off">
+            <input type="text" spellcheck="true" autofocus required class="form-control" id="w_name2"
+                formControlName="boardTitle" autocomplete="off">
         </div>
         <div class="mb-3">
             <label name="workspace_desc" class="form-label"> Board Description</label>
@@ -70,6 +101,30 @@
             <label name="workspace_archive" class="form-label">Archive:</label>
             <p-inputSwitch formControlName="isArchive" class="mx-2  " id="is_private2"></p-inputSwitch>
         </div> -->
+        <div class="submit-btn d-flex justify-content-end ">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</p-dialog>
+
+<p-dialog header="Update Board" [(visible)]="visible_updateBoard" [style]="{width: '30vw'}"
+[draggable]="false" [modal]="true" [dismissableMask]="true">
+    <form [formGroup]="boardform" (ngSubmit)="on_updateBoard()">
+        <div class="mb-3">
+            <label name="workspace_title" class="form-label">Board Name</label>
+            <input type="text" spellcheck="true" autofocus required class="form-control" id="w_name2"
+                formControlName="boardTitle" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label name="workspace_desc" class="form-label"> Board Description</label>
+            <input type="text" spellcheck="true" required class="form-control" id="w_desc2" formControlName="boardDesc"
+                autocomplete="off">
+        </div>
+        <div class="my-3 d-flex">
+            <label name="workspace_favorite" class="form-label">Favorite:</label>
+            <p-inputSwitch formControlName="isFavorite" class="mx-2  " id="is_private2"></p-inputSwitch>
+        </div>
+      
         <div class="submit-btn d-flex justify-content-end ">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>

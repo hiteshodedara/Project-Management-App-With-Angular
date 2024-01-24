@@ -2,7 +2,7 @@
 
     <p-menubar [model]="topmenuItems" [autoDisplay]="false">
         <ng-template pTemplate="start">
-            <div class="topmenus d-flex  ">
+            <div class="topmenus d-flex  mx-2 ">
                 <div class="logo-img px-2 " routerLink="/a/workspacehome">
                     <img src="../../../../assets/images/logo-no-background.svg" height="40" class="mr-2" />
                 </div>
@@ -38,5 +38,8 @@
 
     <!-- for userProfile menu  -->
     <p-tieredMenu #profilemenu [model]="profilemenuItems" [popup]="true"></p-tieredMenu>
+
+    <!-- for create button menu  -->
+    <p-tieredMenu #createButtonMenu [model]="createButtonItems" [popup]="true"></p-tieredMenu>
 
 </div>

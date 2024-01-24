@@ -1,15 +1,14 @@
 :host ::ng-deep
-    .select-workspace-wrapper
-        .p-dropdown
-            height: 40px
-            width: 15vw
+    .p-tieredmenu
+        padding: 0
 
-        .p-dropdown-label
-            padding: 6px
+    .p-tieredmenu-root-list
+        padding: 0
+        margin: 0
 
-        .p-dropdown-items
-            padding: 0
-            margin: 0
+    .p-menuitem-link
+        text-decoration: none
+
 
     
     
@@ -35,3 +34,59 @@
 
 h2
     font-size: calc( small ) !important
+
+.boards-card
+    min-width: 60vw
+    max-width: 50vw
+    border: 1px solid #ccc
+    border-radius: 8px
+    padding: 16px
+    
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    align-items: center
+    &:hover
+        background: #d1d1d1 !important
+
+    .title
+        &:hover
+            cursor: pointer
+
+.settings-button
+    padding: 3px
+    &:hover
+        cursor: pointer
+        background: #848484 !important
+        
+          
+
+.favoriteBtn
+    &:hover
+        cursor: pointer
+        background: #848484 !important
+
+.main-boardshow-div
+    min-width: 70vw
+    padding: 10px
+
+.btn-addboard
+    min-width: 60vw
+    max-width: 50vw
+    min-height:4vh 
+
+
+
+.Header-title
+    font-size: 4rem
+    font-weight: 600
+
+
+
+.board-length
+    min-width: 60vw
+    max-width: 50vw
+
+@media  ( max-width:390px)
+    .Header-title
+        font-size: 2.5rem
