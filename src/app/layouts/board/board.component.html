@@ -5,13 +5,14 @@
 </div>
 <div class="row mainbody">
     <div *ngIf="sidebar_show" class="col sidebarmenu">
-        <app-sidemenubar (sidebar_close)="close_sidebar()" [c_workspace_id]="cWorkspaceURLid"></app-sidemenubar>
+        <app-sidemenubar (sidebar_close)="close_sidebar()" 
+         [c_workspace_id]="cWorkspaceURLid"  ></app-sidemenubar>
     </div>
     <span class="sidebaropenbtn   col" *ngIf="!sidebar_show" (click)="for_openSidebar()">
         <button class="btn btn-primary " (click)="for_openSidebar()"><i class="pi pi-arrow-right"></i></button>
     </span>
 
     <div class="col dashboard">
-        <router-outlet></router-outlet>
+        <router-outlet ></router-outlet>
     </div>
 </div>

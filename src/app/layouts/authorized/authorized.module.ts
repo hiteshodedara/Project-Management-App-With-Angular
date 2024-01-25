@@ -18,13 +18,7 @@ import { PrimengModule } from 'src/app/primeng/primeng.module';
 @NgModule({
   declarations: [
     AuthorizedComponent,
-    WorkspacehomeComponent,
-    WorkspacemembersComponent,
-    BoardhomeComponent,
-    BoardtodolistComponent,
-    BoardtodolistitemComponent,
-    BoardShowComponent,
-    TodoPopupModelComponent
+    WorkspacehomeComponent, 
   ],
   imports: [
     BrowserModule,

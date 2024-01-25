@@ -5,12 +5,15 @@ import { TodoState, todoReducer } from './todos/todo.reducer';
 import { workspaceReducer } from './workspaces/workspace.reducer';
 import { WorkspaceState } from './workspaces/workspace.state';
 import { BoardState } from './boards/board.state';
+import { BoardidState } from './boardID/boardID.state';
+import { boardidReducer } from './boardID/boardID.reducers';
 
 export interface AppState {
   workspaces: WorkspaceState;
   boards: BoardState;
   todolists: TodolistState;
   todos: TodoState;
+  boardid:BoardidState
   // Add other feature states if needed
 }
 
@@ -19,5 +22,6 @@ export const appReducers: ActionReducerMap<AppState> = {
   boards: boardReducer,
   todolists: todolistReducer,
   todos: todoReducer,
+  boardid:boardidReducer
   // Add other reducers for additional features
 };

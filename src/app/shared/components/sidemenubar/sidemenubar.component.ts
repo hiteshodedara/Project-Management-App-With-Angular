@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Board } from 'src/app/models/board';
 import { AppState } from 'src/app/ngRxStore/app.state';
+import { setCurrentBoardId } from 'src/app/ngRxStore/boardID/boardID.actions';
 import { addBoard, loadBoards } from 'src/app/ngRxStore/boards/board.actions';
 import { selectBoards } from 'src/app/ngRxStore/boards/board.selectors';
 
@@ -21,6 +22,7 @@ import { selectBoards } from 'src/app/ngRxStore/boards/board.selectors';
 export class SidemenubarComponent implements OnInit, OnChanges {
   @Output() sidebar_close = new EventEmitter();
   @Input() c_workspace_id!: number;
+
 
   @ViewChild('addboardformpanel') addBoardFormPanel!: OverlayPanel;
 
@@ -105,11 +107,27 @@ export class SidemenubarComponent implements OnInit, OnChanges {
       this.currunt_boards$.pipe(
         map(boards => boards.map(board => ({
           label: board.title,
-          tooltipPosition:'right',
-          routerLink: `/b/board/${board.id}`
+          id:board.id,
+          routerLink: `/b/board/${board.id}`,
+
         })))
       ).subscribe(menuItems => {
-        this.boardsItems = menuItems;
+        const b_menuitems =[menuItems];
+        this.boardsItems = [];
+       b_menuitems.map(item=>{
+          item.forEach(item=>{
+           const temomenuitem:MenuItem={
+            label:item.label,
+            routerLink:item.routerLink,
+            command:()=>{
+              this.Emite_event_boardChange(item.id)      
+            }}
+
+            this.boardsItems.push(temomenuitem)
+          })
+        })
+
+        
         this.onSidebarMenuInitialize()
 
       });
@@ -195,5 +213,11 @@ export class SidemenubarComponent implements OnInit, OnChanges {
         console.warn("enter all fields");
       }
     }    
+  }
+
+  Emite_event_boardChange(boardID?:number){
+    if(boardID){
+      this.store.dispatch(setCurrentBoardId({boardId:boardID}))
+    }
   }
 }

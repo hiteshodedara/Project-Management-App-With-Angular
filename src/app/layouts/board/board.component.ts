@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class BoardComponent {
   sidebar_show: boolean = true;
+  currunt_boardID!: any;
+
   close_sidebar() {
     this.sidebar_show = false;
   }
@@ -19,5 +21,10 @@ export class BoardComponent {
 
   on_workspaceChange(event: any) {
     this.cWorkspaceURLid = event;
+  }
+
+  on_boardId_change(event: any) {
+    this.currunt_boardID = event
+
   }
 }

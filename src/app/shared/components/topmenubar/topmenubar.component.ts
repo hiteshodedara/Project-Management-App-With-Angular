@@ -35,14 +35,6 @@ export class TopmenubarComponent implements OnInit {
     private boardService: BoardService,private authService:AuthuserService) { }
 
   ngOnInit() {
-    this.getworkspaceId();
-    this.getcurruntUserData()
-    
-    setTimeout(() => {
-      this.makeUserLogoName()
-      this.setUserName()
-    }, 200);
-
     this.store.dispatch(loadWorkspaces());
     this.makeWorkspacesMenu();
   }
@@ -97,6 +89,7 @@ export class TopmenubarComponent implements OnInit {
       { label: 'Create Workspace' },
       { label: 'Create Board' },
     ]
+
   }
 
   makeWorkspacesMenu() {
@@ -118,12 +111,16 @@ export class TopmenubarComponent implements OnInit {
       .subscribe(menuItems => {
         this.topMenu_workspace_items = menuItems;
       });
-    // console.log(this.topMenu_workspace_items);
 
     // Delay the menuBarInitialize to make sure the topMenu_workspace_items is updated.
     setTimeout(() => {
       this.menuBarInitialize();
     }, 1);
+
+    this.getworkspaceId();
+    this.getcurruntUserData();
+
+   
   }
 
   emitTheData(id?: number) {
@@ -143,14 +140,13 @@ export class TopmenubarComponent implements OnInit {
       const token=JSON.parse(ls_token)
       this.authService.getUserInfoByToken(token).subscribe(res=>{
         this.currunt_user_object =res
+        const currunt_username: string = this.currunt_user_object.username  
+        this.userlogoname = currunt_username.split(' ').map(w => w.charAt(0)).join('').toUpperCase()
+        this.setUserName() 
       })
     }
   }
-  makeUserLogoName(){
-    const name: string = this.currunt_user_object.username
-    this.userlogoname = name.split(' ').map(w => w.charAt(0)).join('').toUpperCase()
-    // console.log(this.userlogoname);
-  }
+ 
 
   setUserName() {
     const name: string = this.currunt_user_object.username;
