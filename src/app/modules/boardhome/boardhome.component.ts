@@ -187,6 +187,7 @@ export class BoardhomeComponent implements OnInit {
   }
 
   delete_board_currunt_item() {
+    this.getWorkspaceId()
     this.confirmationService.confirm({
       target: this.c_selected_event?.target as EventTarget,
       message: 'Are you sure you want to Delete Board?',

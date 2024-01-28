@@ -31,6 +31,7 @@ export class TopmenubarComponent implements OnInit {
 
   currunt_createt_button_event!: Event | null;
   resent_BoardsItems: MenuItem[] = [];
+  stared_BoardsItems: MenuItem[] = [];
 
   userlogoname!: string;
   curruntUserName!: string;
@@ -69,14 +70,19 @@ export class TopmenubarComponent implements OnInit {
         label: 'Recent',
         items: this.resent_BoardsItems &&
           this.resent_BoardsItems.length > 0 ? this.resent_BoardsItems :
-          [{ label: 'No workspace available' }],
+          [{ label: 'No Recent workspace available' }],
         command: () => {
           this.Creating_recent_menuItems();
         }
       },
       {
         label: 'Starred',
-        items: [{ label: 'No Starred menus' }]
+        items:  this.stared_BoardsItems &&
+          this.stared_BoardsItems.length > 0 ? this.stared_BoardsItems :
+          [{ label: 'No Starred workspace available' }],
+        command: () => {
+          this.Creating_Stard_BoardItems();
+        }
       },
       {
         label: 'Create',
@@ -129,6 +135,7 @@ export class TopmenubarComponent implements OnInit {
   makeWorkspacesMenu() {
     this.topMenu_workspace_items = [];
     this.Creating_recent_menuItems();
+    this.Creating_Stard_BoardItems()
     this.store
       .select(selectWorkspaces)
       .pipe(
@@ -144,6 +151,7 @@ export class TopmenubarComponent implements OnInit {
       .subscribe(menuItems => {
         this.topMenu_workspace_items = menuItems;
         this.Creating_recent_menuItems();
+        this.Creating_Stard_BoardItems()
       });
 
     // Delay the menuBarInitialize to make sure the topMenu_workspace_items is updated.
@@ -198,11 +206,30 @@ export class TopmenubarComponent implements OnInit {
     )
     ).subscribe(res => {
       this.resent_BoardsItems = res.reverse();
+
+
       // console.log("res:", res);
 
       this.menuBarInitialize();
     });
 
+    setTimeout(() => {
+      this.menuBarInitialize();
+    }, 500);
+  }
+
+  Creating_Stard_BoardItems() {
+    this.boardService.getalldatabaseBoards().pipe(map(boards =>
+      boards.filter(item =>
+        item.isFavorite == true).map(item =>
+        ({
+          label: item.title,
+          routerLink: `/b/board/${item.workspaceId}/${item.id}`,
+          command: () => this.Emite_event_boardChange(item.id)
+        })))).subscribe(res => {
+          this.stared_BoardsItems = res
+          this.menuBarInitialize();
+        });
     setTimeout(() => {
       this.menuBarInitialize();
     }, 500);
@@ -283,15 +310,15 @@ export class TopmenubarComponent implements OnInit {
   on_addBoardForm_Submite() {
     const b_item = this.boardform.value
     if (b_item.boardTitle != '' && b_item.boarddesc != '') {
-      const tempboard:Board = {
+      const tempboard: Board = {
         title: b_item.boardTitle,
         description: b_item.boardDesc,
         isFavorite: b_item.isFavorite,
       }
       this.store.dispatch(addBoard({ workspaceId: this.currunt_workspace_id, newBoard: tempboard }))
       this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `Board Added Successfully`, life: 3000 });
-      this.addBoard_DialogShow=false;
-      
+      this.addBoard_DialogShow = false;
+
     } else {
       console.error("enter the filds!");
 
@@ -299,8 +326,8 @@ export class TopmenubarComponent implements OnInit {
   }
 
   on_addWorkspaceForm_Submite() {
-    const w_item=this.workspaceform.value
-    if(w_item.workspacetitle != '' && w_item.workspacedis != ''){
+    const w_item = this.workspaceform.value
+    if (w_item.workspacetitle != '' && w_item.workspacedis != '') {
       const tempworkspace: Workspace = {
         title: w_item.workspacetitle,
         description: w_item.workspacedis,
@@ -308,15 +335,17 @@ export class TopmenubarComponent implements OnInit {
       }
 
       this.store.dispatch(addWorkspace({ newWorkspace: tempworkspace }));//call ngrx add action for add workspace
-      
-      this.messageService.add({ severity: 'success', summary: 'Success', 
-      detail: `${tempworkspace.title} Workspace Added Successfully!` });
-      this.addWorkspace_DialogShow=false;
-    }else{
+
+      this.messageService.add({
+        severity: 'success', summary: 'Success',
+        detail: `${tempworkspace.title} Workspace Added Successfully!`
+      });
+      this.addWorkspace_DialogShow = false;
+    } else {
       console.error("enter filds!");
-      
+
     }
-    
+
 
 
   }

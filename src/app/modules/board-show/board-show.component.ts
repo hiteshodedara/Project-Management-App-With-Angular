@@ -6,6 +6,7 @@ import { Board } from 'src/app/models/board';
 import { Workspace } from 'src/app/models/workspace';
 import { AppState } from 'src/app/ngRxStore/app.state';
 import { setCurrentBoardId } from 'src/app/ngRxStore/boardID/boardID.actions';
+import { favoriteToggle } from 'src/app/ngRxStore/boards/board.actions';
 import { BoardService } from 'src/app/services/board.service';
 import { WorkspaceService } from 'src/app/services/workspace.service';
 
@@ -65,6 +66,15 @@ export class BoardShowComponent implements OnInit {
     if (b_id) {
       this.currunt_boardId = parseInt(b_id);
       this.store.dispatch(setCurrentBoardId({ boardId: this.currunt_boardId }));
+    }
+  }
+
+  on_click_FavoriteToggle(boardId?: number) {
+    this.getWorkspaceId()
+    if (boardId) {
+      this.store.dispatch(favoriteToggle({ workspaceId: this.currunt_workspaceId, boardId }))
+      console.log("favorite toggled");
+      this.ngOnInit()
     }
   }
 }
