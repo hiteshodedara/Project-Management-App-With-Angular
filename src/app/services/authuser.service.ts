@@ -19,7 +19,7 @@ export class AuthuserService {
   }
 
   getallUserRole():Observable<any[]>{
-    return this.http.get<any[]>(`${this.userURL}/user-roles/`)
+    return this.http.get<any[]>(`${this.userURL}/user-roles`)
   }
 
  getUserInfoByToken(token:any){
