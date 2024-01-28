@@ -18,7 +18,7 @@ import { PrimengModule } from 'src/app/primeng/primeng.module';
 @NgModule({
   declarations: [
     AuthorizedComponent,
-    WorkspacehomeComponent, 
+    WorkspacehomeComponent,
   ],
   imports: [
     BrowserModule,

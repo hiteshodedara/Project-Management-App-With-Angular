@@ -1,9 +1,12 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { MenuItem, MessageService } from 'primeng/api';
+import { OverlayPanel } from 'primeng/overlaypanel';
 import { TieredMenu } from 'primeng/tieredmenu';
 import { map } from 'rxjs/operators';
 import { AppState } from 'src/app/ngRxStore/app.state';
+import { setCurrentBoardId } from 'src/app/ngRxStore/boardID/boardID.actions';
 import { loadWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.actions';
 import { selectWorkspaces } from 'src/app/ngRxStore/workspaces/workspace.selectors';
 import { AuthuserService } from 'src/app/services/authuser.service';
@@ -21,22 +24,32 @@ export class TopmenubarComponent implements OnInit {
   createButtonItems: MenuItem[] = [];
   topMenu_workspace_items: MenuItem[] = [];
   currunt_workspace_id!: number;
-  currunt_user_object:any;
+  currunt_user_object: any;
 
+  currunt_createt_button_event!: Event;
+  resent_BoardsItems: MenuItem[] = [];
 
-  userlogoname!:string;
-  curruntUserName!:string;
+  userlogoname!: string;
+  curruntUserName!: string;
+
+  User_infoSetting_form!:FormGroup;
+
+  user_profile_dialogbox_show:boolean=false;
+  user_profile_setting_dialogbox_show: boolean = false;
 
   @ViewChild('createButtonMenu') createbuttonmenu!: TieredMenu;
 
   @Output() on_currunt_workspaceChange = new EventEmitter<number>();
 
-  constructor(private store: Store<AppState>, private messageService: MessageService,
-    private boardService: BoardService,private authService:AuthuserService) { }
+  constructor(private store: Store<AppState>,
+    private messageService: MessageService,
+    private boardService: BoardService,
+    private authService: AuthuserService) { }
 
   ngOnInit() {
     this.store.dispatch(loadWorkspaces());
     this.makeWorkspacesMenu();
+
   }
 
   menuBarInitialize() {
@@ -54,53 +67,72 @@ export class TopmenubarComponent implements OnInit {
       },
       {
         label: 'Recent',
-        items: [{ label: 'No recent menus' }]
+        items: this.resent_BoardsItems &&
+          this.resent_BoardsItems.length > 0 ? this.resent_BoardsItems :
+          [{ label: 'No workspace available' }],
+        command: () => {
+          this.Creating_recent_menuItems()
+        }
+
       },
       {
         label: 'Starred',
-        items: [{ label: 'No starred menus' }]
+        items: [{ label: 'No Starred menus' }]
       },
       {
         label: 'Create',
         styleClass: 'createbtn',
         command: () => {
-          if (this.createbuttonmenu) {
-            this.createbuttonmenu.toggle(event);
-          }
+            
+            if (event)
+            this.make_createBtn_tierdMenu(event as Event)
+            
         }
       }
     ];
 
     this.profilemenuItems = [
-      { label: 'Profile', icon: 'pi pi-id-card' },
-      { label: 'Settings', icon: 'pi pi-cog' },
+      { label: 'Profile', icon: 'pi pi-id-card', command: () => { this.show_ProfileDialogBox() }},
+      { label: 'Settings', icon: 'pi pi-cog', command: () => { this.show_ProfileSettingDialogBox() } },
       {
         label: 'Sign Out', icon: 'pi pi-sign-out', command: () => {
           localStorage.removeItem('loginuser')
           this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `You Now Logged out!`, life: 3000 });
           setTimeout(() => {
+
             location.reload()
           }, 1000);
         }
       }
     ];
 
-    this.createButtonItems = [
-      { label: 'Create Workspace' },
-      { label: 'Create Board' },
-    ]
+    
 
+  }
+
+  make_createBtn_tierdMenu(btne:Event){
+    this.createbuttonmenu.toggle(btne)
+    this.createButtonItems = [
+      {
+        label: 'Create Workspace',
+        
+      },
+
+      {
+        label: 'Create Board',
+        
+      },
+    ]
   }
 
   makeWorkspacesMenu() {
     this.topMenu_workspace_items = [];
-
+    this.Creating_recent_menuItems()
     this.store
       .select(selectWorkspaces)
       .pipe(
         map(workspaces =>
           workspaces.map(workspace => (
-
             {
               label: workspace.title,
               routerLink: `/w/boardhome/${workspace.id}`,
@@ -110,17 +142,19 @@ export class TopmenubarComponent implements OnInit {
       )
       .subscribe(menuItems => {
         this.topMenu_workspace_items = menuItems;
+        this.Creating_recent_menuItems();
       });
 
     // Delay the menuBarInitialize to make sure the topMenu_workspace_items is updated.
+
     setTimeout(() => {
-      this.menuBarInitialize();
-    }, 1);
+      this.menuBarInitialize()
+    }, 500);
 
     this.getworkspaceId();
     this.getcurruntUserData();
 
-   
+
   }
 
   emitTheData(id?: number) {
@@ -134,19 +168,19 @@ export class TopmenubarComponent implements OnInit {
     }
   }
 
-  getcurruntUserData(){
-    const ls_token=localStorage.getItem('loginuser')
-    if(ls_token){
-      const token=JSON.parse(ls_token)
-      this.authService.getUserInfoByToken(token).subscribe(res=>{
-        this.currunt_user_object =res
-        const currunt_username: string = this.currunt_user_object.username  
+  getcurruntUserData() {
+    const ls_token = localStorage.getItem('loginuser')
+    if (ls_token) {
+      const token = JSON.parse(ls_token)
+      this.authService.getUserInfoByToken(token).subscribe(res => {
+        this.currunt_user_object = res
+        const currunt_username: string = this.currunt_user_object.username
         this.userlogoname = currunt_username.split(' ').map(w => w.charAt(0)).join('').toUpperCase()
-        this.setUserName() 
+        this.setUserName()
       })
     }
   }
- 
+
 
   setUserName() {
     const name: string = this.currunt_user_object.username;
@@ -155,4 +189,66 @@ export class TopmenubarComponent implements OnInit {
     ).join(' ');
   }
 
+  Creating_recent_menuItems() {
+    this.boardService.getalldatabaseBoards().pipe(map(boards =>
+      boards.map(item =>
+      ({
+        label: item.title,
+        routerLink: `/b/board/${item.id}`,
+        command: () => this.Emite_event_boardChange(item.id)
+      })
+      )
+    )
+    ).subscribe(res => {
+      this.resent_BoardsItems = res.reverse()
+      console.log("b", this.resent_BoardsItems);
+      this.menuBarInitialize()
+
+    })
+
+    setTimeout(() => {
+      this.menuBarInitialize()
+    }, 500);
+  }
+
+  Emite_event_boardChange(boardID?: number) {
+    if (boardID) {
+      this.store.dispatch(setCurrentBoardId({ boardId: boardID }))
+    }
+  }
+
+
+  show_ProfileDialogBox(){
+    this.user_profile_dialogbox_show=true
+  }
+
+  show_ProfileSettingDialogBox() {
+    this.user_profile_setting_dialogbox_show = true
+    this.Initailize_UserInfo_Form()
+  }
+
+  Initailize_UserInfo_Form(){
+    this.User_infoSetting_form=new FormGroup({
+      username: new FormControl(this.currunt_user_object.username),
+      email: new FormControl(this.currunt_user_object.email),
+      password: new FormControl(this.currunt_user_object.password),
+    })
+  }
+
+  on_Update_UserInfo_Submite(){
+    if(this.User_infoSetting_form.dirty){
+      this.authService.updateUser(this.User_infoSetting_form.value,this.currunt_user_object.role,this.currunt_user_object.id).subscribe(res=>{
+        this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `User Updated Successfuly`, life: 3000 });
+        
+      },(error)=>{
+        this.messageService.add({ severity: 'error', summary: 'Server Error', detail: `User Not Updated!`, life: 3000 });
+
+      })
+      this.user_profile_setting_dialogbox_show = false
+    }else{
+      console.error("enter fileds!");
+      
+    }
+    
+  }
 }

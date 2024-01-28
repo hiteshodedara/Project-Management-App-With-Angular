@@ -66,6 +66,7 @@ export class BoardEffects {
       )
     )
   );
+  
 
   // Add other effects for CRUD operations if needed
 

@@ -35,4 +35,17 @@ export class AuthuserService {
     
     return this.http.post(`${this.userURL}/register`, user);
   }
+
+  updateUser(user:any,rolename:string,uid:number):Observable<any>{
+
+    const tempuser={
+      username:user.username,
+      email:user.email,
+      password:user.password,
+      role: rolename,
+      descreption:"comming soon"
+    }
+
+    return this.http.put(`${this.userURL}/user/${uid}`, tempuser);
+  }
 }

@@ -26,6 +26,7 @@ export class BoardhomeComponent implements OnInit {
   currunt_boards$!: Observable<Board[]>;
   board_length!: number;
 
+
   constructor(private store: Store<AppState>,
     private activetedRoute: ActivatedRoute,
     private messageService: MessageService,

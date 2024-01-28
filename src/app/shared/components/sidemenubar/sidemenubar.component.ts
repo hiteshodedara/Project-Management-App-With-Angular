@@ -45,15 +45,7 @@ export class SidemenubarComponent implements OnInit, OnChanges {
   }
 
 
-  isSmallScreen: boolean = window.innerWidth > 960;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event): void {
-    this.isSmallScreen = window.innerWidth > 960;
-    if(!this.isSmallScreen){
-      this.onSidebarClose()
-    }
-  }
 
 
 

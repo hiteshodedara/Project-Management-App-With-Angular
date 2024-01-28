@@ -14,6 +14,10 @@ export class BoardService {
 
   constructor(private http: HttpClient,private workspaceservice:WorkspaceService) { }
 
+  getalldatabaseBoards(): Observable<Board[]>{
+    return this.http.get<Board[]>(`${this.newurl}/boards`)
+  }
+
   getAllBoards(workspaceId: number): Observable<Board[]> {
     
     return this.http.get<Board[]>(`${this.newurl}/${workspaceId}/boards`)

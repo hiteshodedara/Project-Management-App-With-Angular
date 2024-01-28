@@ -17,15 +17,18 @@
         <ng-template pTemplate="end">
             <div class=" py-1   d-flex align-items-center justify-content-center ">
                 <div class="searchbox">
-                    <input type="text" placeholder="Search" class="form-control" pTooltip="Search Boards" tooltipPosition="bottom"  />
+                    <input type="text" placeholder="Search" class="form-control" pTooltip="Search Boards"
+                        tooltipPosition="bottom" />
                 </div>
                 <div class="serchicon">
                     <button class="bg-transparent border-0 " pTooltip="Search Boards" tooltipPosition="bottom">
                         <i class="pi pi-search text-light fs-5 "></i>
                     </button>
                 </div>
-                <div class="userprofile mx-2 " [pTooltip]="curruntUserName" tooltipPosition="left" >
-                    <button class="userProfilename btn" (click)="profilemenu.toggle($event)">{{userlogoname}}</button>
+                <div class="userprofile mx-2 d-flex justify-content-center align-items-center "
+                    [pTooltip]="curruntUserName" tooltipPosition="left">
+                    <button class="userProfilename btn align-self-center "
+                        (click)="profilemenu.toggle($event)">{{userlogoname}}</button>
                 </div>
             </div>
         </ng-template>
@@ -43,3 +46,61 @@
     <p-tieredMenu #createButtonMenu [model]="createButtonItems" [popup]="true"></p-tieredMenu>
 
 </div>
+
+<p-overlayPanel #addboardformpanel>
+   
+</p-overlayPanel>
+
+<p-overlayPanel #addWorkspaceFormPannel>
+
+    
+</p-overlayPanel>
+
+<p-dialog header="User Profile" [(visible)]="user_profile_dialogbox_show" [style]="{width: '50vw'}">
+    <div class="card p-4 ">
+        <div class="userprofileheader">
+            <div class="usernamediv d-flex ">
+                <label class="fw-bold mx-2 " for="username"> Name: </label>
+                <p>{{currunt_user_object?.username}}</p>
+            </div>
+            <div class="useremaildiv d-flex ">
+                <label class="fw-bold mx-2" for="useremail"> Email: </label>
+                <p>{{currunt_user_object?.email}}</p>
+            </div>
+            <div class="userrolediv d-flex ">
+                <label class="fw-bold mx-2" for="userrole"> Role: </label>
+                <p>{{currunt_user_object?.role}}</p>
+            </div>
+            <div class="lastlogintimediv d-flex ">
+                <label class="fw-bold mx-2" for="lastlogintime"> Last Login: </label>
+                <p>{{currunt_user_object?.updatedDate | date:'medium'}}</p>
+            </div>
+            <div class="logoutbtn d-flex justify-content-end my-2 ">
+                <button class="btn btn-danger mx-2 ">Log Out</button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="User Profile Setting" [(visible)]="user_profile_setting_dialogbox_show" [style]="{width: '50vw'}">
+        <form *ngIf="User_infoSetting_form" [formGroup]="User_infoSetting_form" (ngSubmit)="on_Update_UserInfo_Submite()">
+        <div class="userprofileheader">
+            <div class="usernamediv my-4 ">
+                <label class="fw-bold mx-2 " for="username"> Name </label>
+                <input class="form-control " type="text" formControlName="username">
+            </div>
+            <div class="useremaildiv  my-4">
+                <label class="fw-bold mx-2" for="useremail"> Email </label>
+                <input class="form-control " type="text" formControlName="email">
+            </div>
+            <div class="userrolediv  my-4">
+                <label class="fw-bold mx-2" for="userrole">Password </label>
+            <input class="form-control " type="text" formControlName="password">
+            </div>
+            
+            <div class="logoutbtn d-flex justify-content-end my-2 ">
+                <button type="submit" class="btn btn-success  mx-2 ">Update</button>
+            </div>
+        </div>
+        </form>
+</p-dialog>

@@ -23,25 +23,25 @@ export class BoardShowComponent implements OnInit {
   constructor(
     private activetedRoute: ActivatedRoute,
     private boardService: BoardService,
-    private workspaceService:WorkspaceService,
+    private workspaceService: WorkspaceService,
     private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
     this.getWorkspaceId();
     this.getBoardId();
-    
+
     setTimeout(() => {
       this.store.select('boardid').subscribe((boardidstate) => {
         this.currunt_boardId = boardidstate.currentBoardId;
-        
+
         // Fetch board details based on the updated boardId
         this.getWorkspaceId();
         this.boardService.getBoardById(this.currunt_workspaceId, this.currunt_boardId).subscribe(res => {
           this.currunt_boardObject = res;
         });
       });
-    }, 500);
+    }, 800);
   }
 
   getWorkspaceId() {
@@ -52,9 +52,9 @@ export class BoardShowComponent implements OnInit {
     }
   }
 
-  getworkspaceObject(workspaceID:number){
-    this.workspaceService.getWorkspaceById(workspaceID).subscribe(res=>{
-      this.currunt_workspaceObject=res
+  getworkspaceObject(workspaceID: number) {
+    this.workspaceService.getWorkspaceById(workspaceID).subscribe(res => {
+      this.currunt_workspaceObject = res
     })
   }
 
