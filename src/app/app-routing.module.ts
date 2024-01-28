@@ -51,7 +51,7 @@ const routes: Routes = [
     , component: BoardComponent
     , canActivate: [loginaccessGuard]
     , children: [
-      { path: "board/:id", component: BoardShowComponent },
+      { path: "board/:wid/:bid", component: BoardShowComponent },
     ]
   }
 ];

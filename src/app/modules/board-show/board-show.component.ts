@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MenuItem } from 'primeng/api';
 import { Board } from 'src/app/models/board';
@@ -19,11 +19,13 @@ export class BoardShowComponent implements OnInit {
   currunt_workspaceId!: number;
   currunt_boardObject?: Board;
   currunt_workspaceObject?: Workspace;
+
   items: MenuItem[] | undefined;
   constructor(
     private activetedRoute: ActivatedRoute,
     private boardService: BoardService,
     private workspaceService: WorkspaceService,
+    private activatedrouter: ActivatedRoute,
     private store: Store<AppState>
   ) { }
 
@@ -41,15 +43,15 @@ export class BoardShowComponent implements OnInit {
           this.currunt_boardObject = res;
         });
       });
-    }, 800);
+    }, 500);
   }
 
   getWorkspaceId() {
-    const ls_id = localStorage.getItem('workspace_id');
-    if (ls_id) {
-      this.currunt_workspaceId = parseInt(atob(ls_id));
-      this.getworkspaceObject(this.currunt_workspaceId)
-    }
+    this.activatedrouter.params.subscribe(res=>{
+      this.currunt_workspaceId=res['wid']
+      // console.log("w id:",this.currunt_workspaceId);
+      
+    })
   }
 
   getworkspaceObject(workspaceID: number) {
@@ -59,7 +61,7 @@ export class BoardShowComponent implements OnInit {
   }
 
   getBoardId() {
-    const b_id = this.activetedRoute.snapshot.paramMap.get('id');
+    const b_id = this.activetedRoute.snapshot.paramMap.get('bid');
     if (b_id) {
       this.currunt_boardId = parseInt(b_id);
       this.store.dispatch(setCurrentBoardId({ boardId: this.currunt_boardId }));

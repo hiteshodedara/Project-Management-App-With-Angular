@@ -35,7 +35,11 @@
     </p-menubar>
 </div>
 
+
+
 <p-toast></p-toast>
+
+
 
 <div class="profilemenuwrapper">
 
@@ -47,16 +51,65 @@
 
 </div>
 
-<p-overlayPanel #addboardformpanel>
-   
-</p-overlayPanel>
 
-<p-overlayPanel #addWorkspaceFormPannel>
 
+<p-dialog header="Add Workspace" [(visible)]="addWorkspace_DialogShow" [style]="{width: '30vw'}"
+    [dismissableMask]="true" [modal]="true" [draggable]="false">
+
+    <form *ngIf="workspaceform" [formGroup]="workspaceform" (ngSubmit)="on_addWorkspaceForm_Submite()">
+        <div class="mb-3">
+            <label name="workspace_title" class="form-label">Workspace Name</label>
+            <input type="text" spellcheck="true" class="form-control" id="w_name2" formControlName="workspacetitle"
+                autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label name="workspace_title" class="form-label"> Workspace Description</label>
+            <input type="text" spellcheck="true" class="form-control" id="w_desc2" formControlName="workspacedis"
+                autocomplete="off">
+        </div>
+        <div class="my-3 d-flex">
+            <label name="workspace_title" class="form-label">Private:</label>
+            <p-inputSwitch formControlName="isPrivate" class="mx-2  " id="is_private2"></p-inputSwitch>
+        </div>
+        <div class="submit-btn d-flex justify-content-end ">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+
+</p-dialog>
+
+
+
+
+<p-dialog header="Add Board" [(visible)]="addBoard_DialogShow" [style]="{width: '30vw'}" [dismissableMask]="true"
+    [modal]="true" [draggable]="false">
+
+    <form *ngIf="boardform" [formGroup]="boardform" (ngSubmit)="on_addBoardForm_Submite()">
+        <div class="mb-3">
+            <label name="workspace_title" class="form-label">Board Name</label>
+            <input type="text" spellcheck="true" autofocus required class="form-control" id="w_name2"
+                formControlName="boardTitle" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label name="workspace_desc" class="form-label"> Board Description</label>
+            <input type="text" spellcheck="true" required class="form-control" id="w_desc2" formControlName="boardDesc"
+                autocomplete="off">
+        </div>
+        <div class="my-3 d-flex">
+            <label name="workspace_favorite" class="form-label">Favorite:</label>
+            <p-inputSwitch formControlName="isFavorite" class="mx-2  " id="is_private2"></p-inputSwitch>
+        </div>
     
-</p-overlayPanel>
+        <div class="submit-btn d-flex justify-content-end ">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</p-dialog>
 
-<p-dialog header="User Profile" [(visible)]="user_profile_dialogbox_show" [style]="{width: '50vw'}">
+
+
+<p-dialog header="User Profile" [(visible)]="user_profile_dialogbox_show" [style]="{width: '50vw'}"
+    [dismissableMask]="true" [modal]="true" [draggable]="false">
     <div class="card p-4 ">
         <div class="userprofileheader">
             <div class="usernamediv d-flex ">
@@ -82,8 +135,9 @@
     </div>
 </p-dialog>
 
-<p-dialog header="User Profile Setting" [(visible)]="user_profile_setting_dialogbox_show" [style]="{width: '50vw'}">
-        <form *ngIf="User_infoSetting_form" [formGroup]="User_infoSetting_form" (ngSubmit)="on_Update_UserInfo_Submite()">
+<p-dialog header="User Profile Setting" [(visible)]="user_profile_setting_dialogbox_show" [style]="{width: '50vw'}"
+    [dismissableMask]="true" [modal]="true" [draggable]="false">
+    <form *ngIf="User_infoSetting_form" [formGroup]="User_infoSetting_form" (ngSubmit)="on_Update_UserInfo_Submite()">
         <div class="userprofileheader">
             <div class="usernamediv my-4 ">
                 <label class="fw-bold mx-2 " for="username"> Name </label>
@@ -95,12 +149,12 @@
             </div>
             <div class="userrolediv  my-4">
                 <label class="fw-bold mx-2" for="userrole">Password </label>
-            <input class="form-control " type="text" formControlName="password">
+                <input class="form-control " type="text" formControlName="password">
             </div>
-            
+
             <div class="logoutbtn d-flex justify-content-end my-2 ">
                 <button type="submit" class="btn btn-success  mx-2 ">Update</button>
             </div>
         </div>
-        </form>
+    </form>
 </p-dialog>

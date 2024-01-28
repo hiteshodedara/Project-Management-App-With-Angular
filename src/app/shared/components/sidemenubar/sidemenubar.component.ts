@@ -100,12 +100,13 @@ export class SidemenubarComponent implements OnInit, OnChanges {
         map(boards => boards.map(board => ({
           label: board.title,
           id:board.id,
-          routerLink: `/b/board/${board.id}`,
+          routerLink: `/b/board/${this.c_workspace_id}/${board.id}`,
 
         })))
       ).subscribe(menuItems => {
         const b_menuitems =[menuItems];
         this.boardsItems = [];
+        
        b_menuitems.map(item=>{
           item.forEach(item=>{
            const temomenuitem:MenuItem={

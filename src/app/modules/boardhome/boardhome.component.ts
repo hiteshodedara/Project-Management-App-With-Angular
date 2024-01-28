@@ -123,7 +123,7 @@ export class BoardhomeComponent implements OnInit {
 
         const tempBoard: Board = {
           title: board_val.boardTitle,
-          description: board_val.boardTitle,
+          description: board_val.boardDesc,
           isFavorite: board_val.isFavorite,
         }
 
@@ -209,6 +209,7 @@ export class BoardhomeComponent implements OnInit {
   }
 
   on_click_FavoriteToggle(boardId?:number){
+    this.getWorkspaceId()
     if(boardId){
       this.store.dispatch(favoriteToggle({workspaceId:this.selected_workspce,boardId}))
       console.log("favorite toggled");
@@ -219,7 +220,7 @@ export class BoardhomeComponent implements OnInit {
   on_router_send(board_id?:number){
     if(board_id){
       console.log(board_id);
-      this.router.navigate([`b/board/${board_id}`])
+      this.router.navigate([`b/board/${this.selected_workspce}/${board_id}`])
     }
   }
 }
