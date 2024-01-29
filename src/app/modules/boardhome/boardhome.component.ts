@@ -131,6 +131,7 @@ export class BoardhomeComponent implements OnInit {
         // console.log("w_id", w_id);
         if (w_id) {
           this.store.dispatch(addBoard({ workspaceId: w_id, newBoard: tempBoard }))
+          this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `Your ${tempBoard.title} Board Added!`, life: 3000 });
         }
         console.log(tempBoard);
 
@@ -152,7 +153,7 @@ export class BoardhomeComponent implements OnInit {
       boardDesc: new FormControl(this.c_selected_item?.description),
       isFavorite: new FormControl(this.c_selected_item?.isFavorite),
     })
-
+    
     // console.log("updateform:",this.boardform.value);
     
     this.visible_updateBoard = true
@@ -161,7 +162,7 @@ export class BoardhomeComponent implements OnInit {
   on_updateBoard() {
     this.getWorkspaceId()
     const board_val = this.boardform.value;
-    if (board_val.boardTitle != '' && board_val.boardDesc != '') {
+    if (board_val.boardTitle != '' && board_val.boardDesc != '' && this.boardform.dirty) {
 
       const tempBoard: Board = {
         title: board_val.boardTitle,
@@ -178,6 +179,7 @@ export class BoardhomeComponent implements OnInit {
           workspaceId: w_id, updatedBoard: tempBoard,
           boardId: this.c_selected_item?.id
         }))
+        this.messageService.add({ severity: 'warn', summary: 'Confirmed', detail: `Your ${tempBoard.title} Board Updated!`, life: 3000 });
       }
       // console.log(tempBoard);
 

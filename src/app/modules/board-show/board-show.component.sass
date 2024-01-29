@@ -8,7 +8,7 @@ $color-6: #afdf0a
 $color-7: #a7b61a
 $color-8: #f3e562
 $color-9: #ff9800
-    
+   
     
     
 :host ::ng-deep    
@@ -66,3 +66,51 @@ $color-9: #ff9800
     button
         &:focus
             border: 1px solid #000000        
+
+.boardshowmaindiv
+
+    background-image: url('../../../assets/images/todosbg.png')
+    background-size: cover
+    background-repeat: no-repeat
+
+.boardshowbody
+    height: 89vh
+
+.workspaceusersicon
+    display: block
+
+.boardtitle
+    p
+        font-size: 30px
+        font-weight: 500
+        word-break: keep-all
+
+.boardmembersicon
+    display: none
+    
+@media( max-width: 530px )
+    .boardtitle
+        p
+            font-size: 15px 
+            font-weight: 500
+    .workspaceusersicon
+        display: none
+    
+    .boardmembersicon
+        display: block
+    
+    .boardmembers
+        display: none
+
+
+@media( max-width: 380px )
+    .workspacevisiablediv
+        display: none
+
+
+@media( max-width: 180px )
+    .favoritebtndiv
+        display: none
+
+
+    

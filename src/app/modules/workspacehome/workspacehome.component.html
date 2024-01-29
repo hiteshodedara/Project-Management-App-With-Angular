@@ -3,7 +3,7 @@
     <label class="Header-title ">Workspaces</label>
   </div>
   
-  <div class="container   d-flex flex-column  justify-content-center align-items-center mt-3 "
+  <div  class="container   d-flex flex-column  justify-content-center align-items-center mt-3 "
     *ngFor="let item of workspaces$|async; index as i">
 
     <div class="workspace-card bg-dark-subtle " *ngIf=" workspace_legth">
@@ -19,7 +19,7 @@
         <i class='isprivateicon mx-1 ' [class]="item.isPrivate?'pi pi-lock':'pi pi-unlock'"></i>
         <h5 class="m-0  isprivateText">{{item.isPrivate?'Private':'Public'}}</h5>
       </div>
-      <button class="settings-button d-flex align-items-center justify-content-center  bg-transparent "
+      <button  class="settings-button d-flex align-items-center justify-content-center  bg-transparent "
         (click)="workspce_item_menu.show($event)" (click)="slected_item_data($event,item)">
         <i class="pi pi-cog  fs-4 "></i>
       </button>
@@ -32,8 +32,8 @@
   <div class="workspaces-length my-4 d-flex justify-content-end  ">
     <h4 class="align-self-start  m-0 ">Total:{{workspace_legth? workspace_legth:0}}</h4>
   </div>
-  <div class="addWorkspacebtn mt-2 ">
-    <button class="btn btn-outline-success btn-addworkspace  " (click)="show_addWorkspace()">Add Workspace</button>
+  <div class="addWorkspacebtn mt-2 " >
+    <button class="btn btn-outline-success  btn-addworkspace  "  (click)="show_addWorkspace()">Add Workspace</button>
   </div>
 </div>
 

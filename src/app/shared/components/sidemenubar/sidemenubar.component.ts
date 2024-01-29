@@ -44,7 +44,15 @@ export class SidemenubarComponent implements OnInit, OnChanges {
     // console.log("workspace_id in sidebar:", this.c_workspace_id);
   }
 
+  isSmallScreen: boolean = window.innerWidth > 960;
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.isSmallScreen = window.innerWidth > 960;
+    if (!this.isSmallScreen) {
+      this.onSidebarClose()
+    }
+  }
 
 
 

@@ -1,9 +1,11 @@
+<div class="boardshowmaindiv">
+
 <div class="container-fluid p-0 boardtopmenuwrapper">
     <p-menubar class="">
         <ng-template pTemplate="start" class="">
             <div class="mx-2  d-flex justify-content-center align-items-center gap-2 ">
                 <div class="boardtitle">
-                    <h3 class="m-0 ">{{currunt_boardObject?.title}}</h3>
+                    <p class="m-0 ">{{currunt_boardObject?.title}}</p>
                 </div>
 
                 <div class="favoritebtndiv   ">
@@ -13,9 +15,9 @@
                     </button>
                 </div>
 
-                <div class="workspacevisiablediv">
-                    <button class="workspace_isprivatebtn btn rounded-0 ">
-                        <i class="pi pi-users mx-1 "></i>workspace visible
+                <div class="workspacevisiablediv  ">
+                    <button class="workspace_isprivatebtn btn rounded-0 d-flex justify-content-center align-items-center ">
+                        <i class="pi pi-users mx-1 workspaceusersicon"></i>workspace visible
                     </button>
                 </div>
             </div>
@@ -26,6 +28,7 @@
 
             <div class=" mx-2 d-flex  justify-content-center align-items-center  board_friendlist">
                 <button class=" p-1 btn    ">
+                    <i class="pi pi-users boardmembersicon"></i>
                     <label id="boardusers" class="boardmembers">Memebers</label>
                 </button>
             </div>
@@ -38,6 +41,7 @@
         </ng-template>
     </p-menubar>
 </div>
-<div class="boardshowdiv">
+<div class="boardshowbody">
 
+</div>
 </div>
