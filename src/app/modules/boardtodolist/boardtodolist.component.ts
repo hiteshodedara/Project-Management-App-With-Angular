@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Todolist } from 'src/app/models/todolist';
 
 @Component({
   selector: 'app-boardtodolist',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./boardtodolist.component.sass']
 })
 export class BoardtodolistComponent {
-
+  @Input() todolist!:Todolist;
 }
