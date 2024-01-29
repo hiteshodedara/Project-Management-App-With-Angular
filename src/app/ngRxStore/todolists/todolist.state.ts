@@ -1,6 +1,11 @@
-import { TodolistState } from './todolist.reducer';
+import { Todolist } from "src/app/models/todolist";
 
-export interface AppState {
-  todolists: TodolistState;
-  // Add other feature states if needed
+export interface TodolistState {
+  todolists: Todolist[];
+  // Add other state properties if needed
 }
+
+export const initialTodolistState: TodolistState = {
+  todolists: [],
+  // Initialize other state properties if needed
+};

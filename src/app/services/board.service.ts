@@ -8,7 +8,6 @@ import { Board } from '../models/board';
   providedIn: 'root'
 })
 export class BoardService {
-  private DBurl = "http://localhost:3000/boards";
 
   private newurl ="http://localhost:8080/api/v1/workspaces"
 

@@ -1,12 +1,13 @@
 import { ActionReducerMap } from '@ngrx/store';
 import {  boardReducer } from './boards/board.reducer';
-import { TodolistState, todolistReducer } from './todolists/todolist.reducer';
+import {  todolistReducer } from './todolists/todolist.reducer';
 import { TodoState, todoReducer } from './todos/todo.reducer';
 import { workspaceReducer } from './workspaces/workspace.reducer';
 import { WorkspaceState } from './workspaces/workspace.state';
 import { BoardState } from './boards/board.state';
 import { BoardidState } from './boardID/boardID.state';
 import { boardidReducer } from './boardID/boardID.reducers';
+import { TodolistState } from './todolists/todolist.state';
 
 export interface AppState {
   workspaces: WorkspaceState;

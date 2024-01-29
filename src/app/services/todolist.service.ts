@@ -8,15 +8,13 @@ import { BoardService } from './board.service';
 })
 export class TodolistService {
 
-  private DBurl = "http://localhost:3000/workspaces";
+  private DBurl = "http://localhost:8080/api/v1/workspaces";
 
   constructor(private http: HttpClient,private boardservice:BoardService) { }
 
 
   getAllTodoLists(workspaceId: number, boardId: number): Observable<any> {
-    return this.boardservice.getBoardById(workspaceId, boardId).pipe(
-      map((board: any) => board.todolists)
-    );
+    return this.http.get(`${this.DBurl}/${workspaceId}/boards/${boardId}/todolists`)
   }
 
   getTodoListById(workspaceId: number, boardId: number, todoListId: number): Observable<any> {
@@ -31,6 +29,9 @@ export class TodolistService {
 
   updateTodoList(workspaceId: number, boardId: number, todoListId: number, updatedTodoList: any): Observable<any> {
     return this.http.put(`${this.DBurl}/${workspaceId}/boards/${boardId}/todolists/${todoListId}`, updatedTodoList);
+  }
+  toggleArchiveStatus(workspaceId: number, boardId: number, todoListId: number): Observable<any>{
+    return this.http.patch(`${this.DBurl}/${workspaceId}/boards/${boardId}/todolists/${todoListId}/toggleArchive`,'')
   }
 
 }
