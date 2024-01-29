@@ -14,7 +14,6 @@ import { AuthuserService } from 'src/app/services/authuser.service';
 })
 export class RegisterpageComponent implements OnInit {
   userRegistrationForm!: FormGroup;
-  showPassword: boolean = false;
   userRoles!:UserRole[];
 
   constructor(private formBuilder: FormBuilder, private authuser: AuthuserService,private router:Router,
@@ -46,9 +45,7 @@ export class RegisterpageComponent implements OnInit {
   })
   }
 
-  OnShowPassword() {
-    this.showPassword = !this.showPassword;
-  }
+  
 
   passwordMatchValidator(group: FormGroup) {
     const password = group.get('password')?.value;

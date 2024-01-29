@@ -12,6 +12,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { PasswordModule } from 'primeng/password';
+import { InputTextModule } from 'primeng/inputtext';
 @NgModule({
   
   exports:[
@@ -27,7 +29,9 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     TooltipModule,
     MenuModule,
     MenubarModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    PasswordModule,
+    InputTextModule
   ]
 })
 export class PrimengModule { }

@@ -1,68 +1,82 @@
 <div class="container-fluid d-flex justify-content-center align-items-center bg-primary-subtle mainbody"
     style="min-height: 100vh; background-image: url('../../../assets/images/blob-haikei.png'); background-size: cover;">
-    <div class="card p-5 maincarddiv     overflow-hidden maincard" style="background-color: rgba(255, 255, 255, 0.8);">
+    <div class="card p-4 maincarddiv   overflow-hidden   " style="background-color: rgba(255, 255, 255, 0.8);">
         <div class="card-title d-flex justify-content-center">
             <label class="loginpagetitle">Register Page</label>
         </div>
         <form [formGroup]="userRegistrationForm" (ngSubmit)="onClickRegister()">
             <div class="mb-3">
                 <label for="userName" class="form-label fw-bolder">User Name</label>
-                <input type="text" class="form-control" id="userName" placeholder="Enter Username" formControlName="userName">
-                <div *ngIf="userRegistrationForm.get('userName')?.hasError('required') && userRegistrationForm.get('userName')?.touched" class="text-danger">
+                <div class=" passwordFielddiv">
+
+                    <input type="text" pInputText placeholder="Enter User Name" id="userName"
+                        formControlName="userName" [autocomplete]="false" />
+                </div>
+                <div *ngIf="userRegistrationForm.get('userName')?.hasError('required') && userRegistrationForm.get('userName')?.touched"
+                    class="text-danger">
                     Username is required.
                 </div>
-                <div *ngIf="userRegistrationForm.get('userName')?.hasError('minlength') && userRegistrationForm.get('userName')?.touched" class="text-danger">
+                <div *ngIf="userRegistrationForm.get('userName')?.hasError('minlength') && userRegistrationForm.get('userName')?.touched"
+                    class="text-danger">
                     Minimum length is 5 characters.
                 </div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label fw-bolder">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter Email" formControlName="email">
-                <div *ngIf="userRegistrationForm.get('email')?.hasError('required') && userRegistrationForm.get('email')?.touched" class="text-danger">
+                <div class=" passwordFielddiv">
+                    <input type="email" pInputText placeholder="Enter Email Address" id="email"
+                        formControlName="email" />
+                </div>
+                <div *ngIf="userRegistrationForm.get('email')?.hasError('required') && userRegistrationForm.get('email')?.touched"
+                    class="text-danger">
                     Email is required.
                 </div>
-                <div *ngIf="userRegistrationForm.get('email')?.hasError('email') && userRegistrationForm.get('email')?.touched" class="text-danger">
+                <div *ngIf="userRegistrationForm.get('email')?.hasError('email') && userRegistrationForm.get('email')?.touched"
+                    class="text-danger">
                     Enter a valid email address.
                 </div>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label fw-bolder">Password</label>
-                <div class="input-group">
-                    <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" id="password" placeholder="Enter Password" formControlName="password">
-                    <span class="input-group-text" (click)="OnShowPassword()">
-                        <i class="fa" [ngClass]="{ 'fa-eye': showPassword, 'fa-eye-slash': !showPassword }"></i>
-                    </span>
+                <div class="input-group  passwordFielddiv">
+                    <p-password class="pnPasswordfield" formControlName="password" placeholder="Enter Password"
+                        [toggleMask]="true"></p-password>
                 </div>
-                <div *ngIf="userRegistrationForm.get('password')?.hasError('required') && userRegistrationForm.get('password')?.touched" class="text-danger">
+                <div *ngIf="userRegistrationForm.get('password')?.hasError('required') && userRegistrationForm.get('password')?.touched"
+                    class="text-danger">
                     Password is required.
                 </div>
-                <div *ngIf="userRegistrationForm.get('password')?.hasError('minlength') && userRegistrationForm.get('password')?.touched" class="text-danger">
+                <div *ngIf="userRegistrationForm.get('password')?.hasError('minlength') && userRegistrationForm.get('password')?.touched"
+                    class="text-danger">
                     Minimum length is 10 characters.
                 </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3  ">
                 <label for="confirmPassword" class="form-label fw-bolder">Confirm Password</label>
-                <input type="{{ showPassword ? 'text' : 'password' }}" class="form-control" id="confirmPassword" placeholder="Enter Confirm Password" formControlName="confirmPassword">
-                <div *ngIf="userRegistrationForm.hasError('mismatch') && userRegistrationForm.get('confirmPassword')?.touched" class="text-danger">
+                <div class="input-group  passwordFielddiv">
+                    <p-password class="pnPasswordfield" formControlName="confirmPassword"
+                        placeholder="Enter Confirm Password" [toggleMask]="true"></p-password>
+                </div>
+                <div *ngIf="userRegistrationForm.hasError('mismatch') && userRegistrationForm.get('confirmPassword')?.touched"
+                    class="text-danger">
                     Passwords do not match.
                 </div>
             </div>
-            <div class="mb-3 d-flex  align-items-center ">
+            <div class="mb-3  ">
                 <label for="userRoles" class="form-label fw-bolder mx-2 align-self-center ">Select Role </label>
                 <div class="dropdowmWrapper">
-                <p-dropdown formControlName="selectedRole" [autoOptionFocus]="true" appendTo="body" [options]="userRoles" optionLabel="roleName"
-                    placeholder="Select a City"></p-dropdown>
-                    </div>
+                    <p-dropdown formControlName="selectedRole" [autoOptionFocus]="true" appendTo="body"
+                        [options]="userRoles" optionLabel="roleName" placeholder="Select a City"></p-dropdown>
+                </div>
             </div>
-                
+
             <div class="button d-flex justify-content-end">
                 <a type="submit" class="btn btn-outline-success btn-lg mx-2" routerLink="/u/loginpage">Go Login</a>
                 <button type="submit" class="btn btn-outline-success btn-lg">Register</button>
             </div>
         </form>
-        
+
     </div>
 </div>
 
 <p-toast></p-toast>
-

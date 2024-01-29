@@ -10,6 +10,7 @@ import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PrimengModule } from 'src/app/primeng/primeng.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
+    PrimengModule,
     ToastModule,
     DropdownModule
   ]
