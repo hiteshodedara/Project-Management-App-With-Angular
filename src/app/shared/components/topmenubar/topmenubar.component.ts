@@ -254,6 +254,11 @@ export class TopmenubarComponent implements OnInit {
     if (this.User_infoSetting_form.dirty) {
       this.authService.updateUser(this.User_infoSetting_form.value, this.currunt_user_object.role, this.currunt_user_object.id).subscribe(res => {
         this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `User Updated Successfully`, life: 3000 });
+
+        setTimeout(() => {
+          this.on_Logout_click()
+        }, 1000);
+
       }, (error) => {
         this.messageService.add({ severity: 'error', summary: 'Server Error', detail: `User Not Updated!`, life: 3000 });
       });
@@ -261,6 +266,11 @@ export class TopmenubarComponent implements OnInit {
     } else {
       console.error("Enter fields!");
     }
+  }
+
+  on_Logout_click(){
+    localStorage.removeItem('loginuser')
+    location.reload()
   }
 
 
