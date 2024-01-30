@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./board.component.sass']
 })
 export class BoardComponent {
-  sidebar_show: boolean = true;
+  sidebar_show: boolean = false;
   currunt_boardID!: any;
 
   close_sidebar() {
