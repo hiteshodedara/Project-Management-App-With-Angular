@@ -43,9 +43,9 @@
             </ng-template>
         </p-menubar>
     </div>
-    <div class="boardshowbody  overflow-x-scroll ">
-        <div class="todolistviews d-flex  ">
-            <div class=" my-3 mx-2   " *ngFor="let item of all_todolists|async">
+    <div class="boardshowbody  ">
+        <div class="todolistviews d-flex flex-row  ">
+            <div class=" my-3 mx-2" *ngFor="let item of all_todolists|async">
                 <app-boardtodolist [todolist]="item"></app-boardtodolist>
             </div>
 

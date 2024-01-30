@@ -1,32 +1,31 @@
 .col
-    width: 100%
     padding: 0
     margin: 0
 
 .row
-  --bs-gutter-x: 0
-  --bs-gutter-y: 0
+    --bs-gutter-x: 0
+    --bs-gutter-y: 0
 
 .sidebarmenu
-  min-width: 280px
-  max-width: 280px
+    position: absolute
+    z-index: 1
+    max-width: 280px
+    width: 20%
+
+.dashboard
+    width: 80%
+
 
 .mainbody
-  width: 100vw
-
-.mainbody
-  flex-wrap: nowrap
+    flex-wrap: nowrap
 
 .sidebaropenbtn
     transition: all
     animation: normal
-    // position: absolute
     background: #0d6efd
-    height: 95.2vh
     max-width: 15px
     position: relative
     &:hover
-        // cursor: pointer
         background: #1D4ED8
     button
         position: absolute
@@ -41,5 +40,5 @@
             cursor: pointer
             background: #1D4ED8
         i
-            font-size:10px
+            font-size: 10px
             color: #000

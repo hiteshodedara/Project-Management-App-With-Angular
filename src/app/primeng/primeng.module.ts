@@ -14,6 +14,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 @NgModule({
   
   exports:[
@@ -31,7 +32,8 @@ import { InputTextModule } from 'primeng/inputtext';
     MenubarModule,
     OverlayPanelModule,
     PasswordModule,
-    InputTextModule
+    InputTextModule,
+    DynamicDialogModule
   ]
 })
 export class PrimengModule { }
