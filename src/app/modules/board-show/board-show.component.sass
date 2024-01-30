@@ -68,31 +68,46 @@ $color-9: #ff9800
             border: 1px solid #000000        
 
 .boardshowmaindiv
-
+    
     background-image: url('../../../assets/images/todosbg.png')
     background-size: cover
     background-repeat: no-repeat
+    // width: 80%
 
 .boardshowbody
-    height: 89vh
+    height: 87.5vh 
+    overflow-x: scroll
+    white-space: nowrap
+
+
 
 .workspaceusersicon
     display: block
 
 .boardtitle
     p
-        font-size: 30px
+        font-size: 2vw
         font-weight: 500
-        word-break: keep-all
 
 .boardmembersicon
     display: none
+
+
+@media  (max-width: 1740px) 
+    .boardshowbody
+        height: 88.9vh 
     
+@media (max-width: 600px) 
+    .boardshowbody
+        height: 89.1vh 
+
+@media (max-width: 380px) 
+    .boardshowbody
+        height: 90vh 
+
+
 @media( max-width: 530px )
-    .boardtitle
-        p
-            font-size: 15px 
-            font-weight: 500
+
     .workspaceusersicon
         display: none
     
@@ -104,6 +119,9 @@ $color-9: #ff9800
 
 
 @media( max-width: 380px )
+    .boardtitle
+        p
+            font-size: 2vw
     .workspacevisiablediv
         display: none
 
@@ -112,5 +130,8 @@ $color-9: #ff9800
     .favoritebtndiv
         display: none
 
-
+@media screen and ( max-width: 450 )
+    .boardshowbody
+        overflow-x: scroll
+    
     

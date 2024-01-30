@@ -1,47 +1,61 @@
 <div class="boardshowmaindiv">
 
-<div class="container-fluid p-0 boardtopmenuwrapper">
-    <p-menubar class="">
-        <ng-template pTemplate="start" class="">
-            <div class="mx-2  d-flex justify-content-center align-items-center gap-2 ">
-                <div class="boardtitle">
-                    <p class="m-0 ">{{currunt_boardObject?.title}}</p>
+    <div class="container-fluid p-0 boardtopmenuwrapper">
+        <p-menubar class="">
+            <ng-template pTemplate="start" class="">
+                <div class="mx-2  d-flex justify-content-center align-items-center gap-2 ">
+                    <div class="boardtitle">
+                        <p class="m-0 ">{{currunt_boardObject?.title}}</p>
+                    </div>
+
+                    <div class="favoritebtndiv   ">
+                        <button class="Favorite btn d-flex justify-content-center align-items-center p-1 "
+                            (click)="on_click_FavoriteToggle(currunt_boardObject?.id)">
+                            <i class="fs-5 "
+                                [class]="currunt_boardObject?.isFavorite?'pi pi-star-fill':'pi pi-star'"></i>
+                        </button>
+                    </div>
+
+                    <div class="workspacevisiablediv  ">
+                        <button
+                            class="workspace_isprivatebtn btn rounded-0 d-flex justify-content-center align-items-center ">
+                            <i class="pi pi-users mx-1 workspaceusersicon"></i>workspace visible
+                        </button>
+                    </div>
                 </div>
 
-                <div class="favoritebtndiv   ">
-                    <button class="Favorite btn d-flex justify-content-center align-items-center p-1 "
-                    (click)="on_click_FavoriteToggle(currunt_boardObject?.id)">
-                        <i class="fs-5 " [class]="currunt_boardObject?.isFavorite?'pi pi-star-fill':'pi pi-star'"></i>
+
+            </ng-template>
+            <ng-template pTemplate="end">
+
+                <div class=" mx-2 d-flex  justify-content-center align-items-center  board_friendlist">
+                    <button class=" p-1 btn    ">
+                        <i class="pi pi-users boardmembersicon"></i>
+                        <label id="boardusers" class="boardmembers">Memebers</label>
                     </button>
                 </div>
 
-                <div class="workspacevisiablediv  ">
-                    <button class="workspace_isprivatebtn btn rounded-0 d-flex justify-content-center align-items-center ">
-                        <i class="pi pi-users mx-1 workspaceusersicon"></i>workspace visible
+                <div class=" d-flex   justify-content-center align-items-center   boardsetting ">
+                    <button class=" btn p-1  rounded-2 ">
+                        <i class=" pi pi-ellipsis-h"></i>
                     </button>
                 </div>
+            </ng-template>
+        </p-menubar>
+    </div>
+    <div class="boardshowbody  ">
+        <div class="todolistviews d-flex flex-row  ">
+            <div class=" my-3 mx-2" *ngFor="let item of all_todolists|async">
+                <app-boardtodolist [todolist]="item"></app-boardtodolist>
             </div>
 
 
-        </ng-template>
-        <ng-template pTemplate="end">
-
-            <div class=" mx-2 d-flex  justify-content-center align-items-center  board_friendlist">
-                <button class=" p-1 btn    ">
-                    <i class="pi pi-users boardmembersicon"></i>
-                    <label id="boardusers" class="boardmembers">Memebers</label>
+            <div class=" my-3 mx-2">
+                <button class="btn btn-outline-secondary d-flex flex-row justify-content-center  addlistbutton">
+                    <i class="pi pi-plus addlisttag"></i>
+                    Add New List
                 </button>
             </div>
+        </div>
 
-            <div class=" d-flex   justify-content-center align-items-center   boardsetting ">
-                <button class=" btn p-1  rounded-2 ">
-                    <i class=" pi pi-ellipsis-h"></i>
-                </button>
-            </div>
-        </ng-template>
-    </p-menubar>
-</div>
-<div class="boardshowbody">
-
-</div>
-</div>
+    </div>
