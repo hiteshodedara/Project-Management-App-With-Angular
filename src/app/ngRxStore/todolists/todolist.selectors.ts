@@ -8,4 +8,15 @@ export const selectTodolists = createSelector(
   (state: TodolistState) => state.todolists
 );
 
+export const selectArchivedTodolists = createSelector(
+  selectTodolistState,
+  (state: TodolistState) => state.archivedTodolists
+);
+
+export const selectUnArchivedTodolists = createSelector(
+  selectTodolistState,
+  (state: TodolistState) => state.unArchivedTodolists
+);
+
+
 // Add other selectors for specific properties if needed

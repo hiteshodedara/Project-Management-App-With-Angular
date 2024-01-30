@@ -24,7 +24,7 @@ export class TodolistEffects {
       ofType(TodolistActions.addTodoList),
       switchMap(({ workspaceId, boardId, newTodoList }) =>
         this.todolistserivce.addTodoList(workspaceId, boardId, newTodoList).pipe(
-          map(() => TodolistActions.loadTodoLists({ workspaceId, boardId })),
+          map(() => TodolistActions.loadUnArchivedTodoLists({ workspaceId, boardId })),
           catchError(error => of(TodolistActions.loadTodoListsFailure({ error })))
         )
       )
@@ -50,6 +50,30 @@ export class TodolistEffects {
         this.todolistserivce.toggleArchiveStatus(workspaceId, boardId, todoListId).pipe(
           map(() => TodolistActions.loadTodoLists({ workspaceId, boardId })), // Load todolists after toggling archive status
           catchError(error => of(TodolistActions.loadTodoListsFailure({ error })))
+        )
+      )
+    )
+  );
+
+  loadArchivedTodoLists$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TodolistActions.loadArchivedTodoLists),
+      switchMap(({ workspaceId, boardId }) =>
+        this.todolistserivce.getArchivedTodoLists(workspaceId, boardId).pipe(
+          map(archivedTodolists => TodolistActions.loadArchivedTodoListsSuccess({ archivedTodolists })),
+          catchError(error => of(TodolistActions.loadArchivedTodoListsFailure({ error })))
+        )
+      )
+    )
+  );
+
+  loadUnArchivedTodoLists$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(TodolistActions.loadUnArchivedTodoLists),
+      switchMap(({ workspaceId, boardId }) =>
+        this.todolistserivce.getUnArchivedTodoLists(workspaceId, boardId).pipe(
+          map(unArchivedTodolists => TodolistActions.loadUnArchivedTodoListsSuccess({ unArchivedTodolists })),
+          catchError(error => of(TodolistActions.loadUnArchivedTodoListsFailure({ error })))
         )
       )
     )

@@ -45,17 +45,35 @@
     </div>
     <div class="boardshowbody  ">
         <div class="todolistviews d-flex flex-row  ">
-            <div class=" my-3 mx-2" *ngFor="let item of all_todolists|async">
+            <div class=" my-3 mx-2" *ngFor="let item of all_todolists$|async">
                 <app-boardtodolist [todolist]="item"></app-boardtodolist>
             </div>
 
 
             <div class=" my-3 mx-2">
-                <button class="btn btn-outline-secondary d-flex flex-row justify-content-center  addlistbutton">
-                    <i class="pi pi-plus addlisttag"></i>
+                <button (click)="on_addTodolistDialogbox_Show()" class="btn btn-outline-secondary d-flex flex-row align-items-center  addlistbutton">
+                    <i class="pi pi-plus addlisttag mx-2"></i>
                     Add New List
                 </button>
             </div>
         </div>
+    </div>  
 
-    </div>
+<p-confirmPopup></p-confirmPopup>
+
+<p-toast></p-toast>
+
+
+<p-dialog *ngIf="addTodolistForm" header="Add Todolist" [(visible)]="addTodolistDialogBoxShow" [modal]="true" [style]="{ width: '30rem' }"
+    [draggable]="false" [modal]="true" [dismissableMask]="true">
+    <form [formGroup]="addTodolistForm" (ngSubmit)="on_addTodolistFormSubmit()">
+        <div class="mb-3">
+            <label for="todolistname" class="form-label">Add List Name</label>
+            <input type="text" autocomplete="off" [autofocus]="true" class="form-control" id="todolistname"
+                formControlName="todolistname" >
+        </div>
+        <div class="button d-flex justify-content-end">
+            <button type="submit" class="btn btn-success ">Submit</button>
+        </div>
+    </form>
+</p-dialog>

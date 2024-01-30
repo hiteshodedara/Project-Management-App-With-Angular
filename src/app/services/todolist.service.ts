@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
 import { BoardService } from './board.service';
+import { Todolist } from '../models/todolist';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodolistService {
+ 
+  
 
   private DBurl = "http://localhost:8080/api/v1/workspaces";
 
@@ -32,6 +35,14 @@ export class TodolistService {
   }
   toggleArchiveStatus(workspaceId: number, boardId: number, todoListId: number): Observable<any>{
     return this.http.patch(`${this.DBurl}/${workspaceId}/boards/${boardId}/todolists/${todoListId}/toggleArchive`,'')
+  }
+
+  getArchivedTodoLists(workspaceId: number, boardId: number): Observable<any> {
+    return this.http.get<Todolist[]>(`${this.DBurl}/${workspaceId}/boards/${boardId}/todolists`).pipe(map(todolists=>todolists.filter(item=>item.isArchive===true)))
+  }
+
+  getUnArchivedTodoLists(workspaceId: number, boardId: number): Observable<any> {
+    return this.http.get<Todolist[]>(`${this.DBurl}/${workspaceId}/boards/${boardId}/todolists`).pipe(map(todolists => todolists.filter(item => item.isArchive !== true)))
   }
 
 }
