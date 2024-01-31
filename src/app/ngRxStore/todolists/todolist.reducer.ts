@@ -17,14 +17,14 @@ export const todolistReducer = createReducer(
   }),
   on(TodolistActions.updateTodoList, (state, {  boardId, todoListId, updatedTodoList }) => ({
     ...state,
-    todolists: state.todolists.map(todolist =>
+    todoliasts: state.todolists.map(todolist =>
        todolist.boardId === boardId && todolist.id === todoListId
         ? { ...todolist, ...updatedTodoList }
         : todolist
     ),
   })),
 
-  on(TodolistActions.toggleArchiveStatus, (state, { boardId, todoListId }) => ({
+  on(TodolistActions.toggletodolistArchiveStatus, (state, { boardId, todoListId }) => ({
     ...state,
     todolists: state.todolists.map(todolist =>
        todolist.boardId === boardId && todolist.id === todoListId

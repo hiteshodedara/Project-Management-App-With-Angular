@@ -7,7 +7,8 @@ export const loadTodoListsFailure = createAction('[Todolist] Load TodoLists Fail
 
 export const addTodoList = createAction('[Todolist] Add TodoList', props<{ workspaceId: number, boardId: number, newTodoList: any }>());
 export const updateTodoList = createAction('[Todolist] Update TodoList', props<{ workspaceId: number, boardId: number, todoListId: number, updatedTodoList: any }>());
-export const toggleArchiveStatus = createAction('[Todolist] Toggle Archive Status', props<{ workspaceId: number, boardId: number, todoListId: number }>());
+export const toggletodolistArchiveStatus = createAction('[Todolist] Toggle Archive Status', props<{ workspaceId: number, boardId: number, todoListId: number }>());
+export const undotoggletodolistArchiveStatus = createAction('[Todolist] Undo Toggle Archive Status', props<{ workspaceId: number, boardId: number, todoListId: number }>());
 
 
 export const loadArchivedTodoLists = createAction('[Todolist] Load Archived TodoLists', props<{ workspaceId: number, boardId: number }>());

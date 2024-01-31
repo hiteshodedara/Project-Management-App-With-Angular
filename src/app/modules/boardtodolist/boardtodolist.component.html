@@ -3,7 +3,10 @@
         <div class="todolisttitle mx-2">
             <h3 class="py-2 fw-bold text-center">{{todolist.name}}</h3>
         </div>
-        <i class="pi pi-ellipsis-h todolistsetting p-2  mx-2" ></i>
+        <button class="btn bg-transparent  px-2  mx-2 "(click)="on_save_CurruntTodolist(todolist)" (click)="todolistsetting.toggle($event)">
+            <i class="pi pi-ellipsis-h todolistsetting " ></i>
+        </button>
+        
     </div>
 
 
@@ -21,3 +24,44 @@
 
     
 </div>
+
+
+
+<p-toast></p-toast>
+<p-confirmPopup></p-confirmPopup>
+
+
+<p-tieredMenu #todolistsetting [model]="todolistItemSetting" [popup]="true"></p-tieredMenu>
+
+
+<p-dialog *ngIf="updateTodolistForm" header="Update Todolist" [(visible)]="updateTodolistDialogBoxShow" [modal]="true"
+    [style]="{ width: '30rem' }" [draggable]="false" [modal]="true" [dismissableMask]="true">
+    <form [formGroup]="updateTodolistForm" (ngSubmit)="on_updateTodolistFormSubmit()">
+        <div class="mb-3">
+            <label for="todolistname" class="form-label">List Name</label>
+            <input type="text" autocomplete="off" [autofocus]="true" class="form-control" id="todolistname"
+                formControlName="todolistname" />
+        </div>
+        <div class="my-2 d-flex gap-2 ">
+            <div class="formcontrollable">
+                <label for="todolistname" class="form-label">Archive</label>
+            </div>
+            <div class="formcontrolinput">
+                <p-inputSwitch formControlName="todolistisArchive"></p-inputSwitch>
+            </div>
+        </div>
+        <div class="my-2 d-flex gap-2 ">
+            <div class="formcontrollable">
+                <label for="todolistname" class="form-label">Todolist Index</label>
+            </div>
+            <div class="formcontrolinput">
+                    <p-dropdown formControlName="todolistIndex" [options]="DropDownItems" optionValue="itemindex" optionLabel="listindex" appendTo="body"
+                        placeholder="Select a Index"></p-dropdown>
+
+            </div>
+        </div>
+        <div class="button d-flex justify-content-end">
+            <button type="submit" class="btn btn-success">Update</button>
+        </div>
+    </form>
+</p-dialog>

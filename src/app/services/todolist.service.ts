@@ -42,7 +42,11 @@ export class TodolistService {
   }
 
   getUnArchivedTodoLists(workspaceId: number, boardId: number): Observable<any> {
-    return this.http.get<Todolist[]>(`${this.DBurl}/${workspaceId}/boards/${boardId}/todolists`).pipe(map(todolists => todolists.filter(item => item.isArchive !== true)))
+    return this.http.get<Todolist[]>(`${this.DBurl}/${workspaceId}/boards/${boardId}/todolists`)
+      .pipe(
+        map(todolists => todolists.filter(item => item.isArchive !== true)),
+        map(todolist => todolist.sort((itemA, itemB) => itemA.todolistIndex - itemB.todolistIndex))
+      );
   }
 
 }

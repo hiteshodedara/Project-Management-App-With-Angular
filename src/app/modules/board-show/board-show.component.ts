@@ -10,7 +10,7 @@ import { Workspace } from 'src/app/models/workspace';
 import { AppState } from 'src/app/ngRxStore/app.state';
 import { setCurrentBoardId } from 'src/app/ngRxStore/boardID/boardID.actions';
 import { favoriteToggle } from 'src/app/ngRxStore/boards/board.actions';
-import { addTodoList, loadArchivedTodoLists, loadTodoLists, loadUnArchivedTodoLists } from 'src/app/ngRxStore/todolists/todolist.actions';
+import { addTodoList, loadArchivedTodoLists, loadTodoLists, loadUnArchivedTodoLists, undotoggletodolistArchiveStatus } from 'src/app/ngRxStore/todolists/todolist.actions';
 import { selectArchivedTodolists, selectTodolists, selectUnArchivedTodolists } from 'src/app/ngRxStore/todolists/todolist.selectors';
 import { BoardService } from 'src/app/services/board.service';
 import { WorkspaceService } from 'src/app/services/workspace.service';
@@ -30,9 +30,14 @@ export class BoardShowComponent implements OnInit {
   addTodolistForm!: FormGroup;
 
   addTodolistDialogBoxShow: boolean = false;
+  Show_ArchiveTodolists:boolean=false;
 
+  BoardMenuSettingItems!:MenuItem[];
 
-  all_todolists$: Observable<Todolist[]> = this.store.select(selectUnArchivedTodolists)
+  AllTodoList$:Observable<Todolist[]>=this.store.select(selectTodolists);
+  ArhivedTodoList$:Observable<Todolist[]>=this.store.select(selectArchivedTodolists);
+
+  UnArchivedTodolists$: Observable<Todolist[]> = this.store.select(selectUnArchivedTodolists)
 
   items: MenuItem[] | undefined;
   constructor(
@@ -47,9 +52,11 @@ export class BoardShowComponent implements OnInit {
 
   ngOnInit(): void {
     this.setBoardId()
-    this.getBoardId();
+    this.getBoardId()
     this.getWorkspaceId();
     this.get_all_TodoLists()
+    this.get_ArchivedTodolists
+    this.initailaze_boardMenuSettingitems()
 
   }
 
@@ -73,7 +80,9 @@ export class BoardShowComponent implements OnInit {
       this.currunt_boardId = BoardidState.currentBoardId;
       this.getWorkspaceId();
       this.get_all_TodoLists();
-      this.getBoardObject()
+      this.getBoardObject();
+      this.get_ArchivedTodolists()
+      
     });
   }
 
@@ -103,6 +112,7 @@ export class BoardShowComponent implements OnInit {
 
   get_all_TodoLists() {
     this.store.dispatch(loadUnArchivedTodoLists({ boardId: this.currunt_boardId, workspaceId: this.currunt_workspaceId }))
+    this.store.dispatch(loadTodoLists({ boardId: this.currunt_boardId, workspaceId: this.currunt_workspaceId }))
   }
 
   Initialize_addTodolistForm() {
@@ -120,18 +130,20 @@ export class BoardShowComponent implements OnInit {
     const todolistdata = this.addTodolistForm.value
     if (todolistdata.todolistname != '') {
       let tempindex = 0
-      this.all_todolists$.subscribe(res => {
+      this.AllTodoList$.subscribe(res => {
         tempindex = res.length + 1
+        
       })
-
+      
       const tempkey: string = todolistdata.todolistname
-
+      
       const tempTodolist = {
         name: todolistdata.todolistname,
         todolistKey: tempkey.toLowerCase(),
         todolistIndex: tempindex,
         isArchive: false
       }
+      console.log(tempindex);
 
       this.store.dispatch(addTodoList({boardId:this.currunt_boardId,
                                       workspaceId:this.currunt_workspaceId,
@@ -140,11 +152,41 @@ export class BoardShowComponent implements OnInit {
       
       this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `Your ${tempTodolist.name} Todolist Added!`, life: 3000 });
       this.addTodolistDialogBoxShow=false;
-
+      
     } else {
       console.error("enter all filds!");
+      
+    }
+  }
+  
+  initailaze_boardMenuSettingitems(){
+    this.BoardMenuSettingItems=[
+      {
+        label:"Archived TodoList",
+        command:()=>{
+          this.on_Show_ArchivedTodolist()
+          
+        }
+      }
+    ]
+  }
+
+  on_Show_ArchivedTodolist(){
+    this.get_ArchivedTodolists()
+    this.Show_ArchiveTodolists=true;
+  }
+  
+  get_ArchivedTodolists(){
+    this.store.dispatch(loadArchivedTodoLists({ workspaceId: this.currunt_workspaceId, boardId: this.currunt_boardId }))
+  }
+
+  on_unduArchivedTodolist_click(todolistId?:number,todolistname?:string){
+    if(todolistId){
+      this.store.dispatch(undotoggletodolistArchiveStatus({boardId:this.currunt_boardId,workspaceId:this.currunt_workspaceId,todoListId:todolistId}))
+      this.messageService.add({ severity: 'success', summary: 'Confirmed', detail: `Your ${todolistname} Todolist Now UnArchivedd!`, life: 3000 });
 
     }
+    
   }
 
 }

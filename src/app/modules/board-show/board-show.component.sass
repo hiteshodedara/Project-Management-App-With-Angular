@@ -8,14 +8,20 @@ $color-6: #afdf0a
 $color-7: #a7b61a
 $color-8: #f3e562
 $color-9: #ff9800
-   
-    
-    
-:host ::ng-deep    
+
+:host ::ng-deep
+    .boardtopmenuwrapper
+        .p-tieredmenu
+            padding: 0
+
+        .p-tieredmenu-root-list
+            padding: 1px
+            margin: 1px
+
     .p-menubar
         background-color: #0037ff o !important
         border: none
-        border-radius: 0 
+        border-radius: 0
 
     .p-menubar-end
         display: flex
@@ -36,18 +42,15 @@ $color-9: #ff9800
         display: flex
         align-items: center
 
-
-
 .board_friendlist
     border-radius: 10%
     background: #fb3c2be5
-    
+
     button
         &:focus
             border: 1px solid #000000
     &:hover
         background-color: #a3a6b2
-   
 
 .boardsetting
     border-radius: 40%
@@ -56,6 +59,8 @@ $color-9: #ff9800
             background-color: #a3a6b2
         &:focus
             border: 1px solid #000000
+        &:active
+            background-color: #a3a6b2
 
 .workspacevisiablediv
     button
@@ -65,73 +70,80 @@ $color-9: #ff9800
 .favoritebtndiv
     button
         &:focus
-            border: 1px solid #000000        
+            border: 1px solid #000000
 
 .boardshowmaindiv
-    
+
     background-image: url('../../../assets/images/todosbg.png')
     background-size: cover
     background-repeat: no-repeat
     // width: 80%
 
 .boardshowbody
-    height: 87.5vh 
+    height: 88.7vh
     overflow-x: scroll
     white-space: nowrap
-
-
 
 .workspaceusersicon
     display: block
 
 .boardtitle
     p
-        font-size: 2vw
+        font-size: 2rem
         font-weight: 500
 
 .boardmembersicon
     display: none
 
 
-@media  (max-width: 1740px) 
-    .boardshowbody
-        height: 88.9vh 
+
+
+
+
+
+
     
-@media (max-width: 600px) 
+@media  (max-width: 1740px)
     .boardshowbody
-        height: 89.1vh 
+        height: 88.9vh
 
-@media (max-width: 380px) 
+@media (max-width: 600px)
     .boardshowbody
-        height: 90vh 
+        height: 89.1vh
 
+@media (max-width: 380px)
+    .boardshowbody
+        height: 90vh
 
-@media( max-width: 530px )
+@media( max-width: 560px )
+    .boardtitle
+        p
+            font-size: 1.5rem
 
     .workspaceusersicon
         display: none
-    
+
     .boardmembersicon
         display: block
-    
+
     .boardmembers
         display: none
-
 
 @media( max-width: 380px )
     .boardtitle
         p
-            font-size: 2vw
+            font-size: 0.8rem
+
     .workspacevisiablediv
         display: none
-
 
 @media( max-width: 180px )
     .favoritebtndiv
         display: none
 
-@media screen and ( max-width: 450 )
+@media  ( max-width: 450px )
+    .boardtitle
+        p
+            font-size: 1rem
     .boardshowbody
         overflow-x: scroll
-    
-    
